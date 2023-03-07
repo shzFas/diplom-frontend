@@ -7,6 +7,7 @@ import Mark from '../Mark';
 import styles from './Journal.module.scss';
 import ModalMark from '../ModalMark';
 import { url } from '../../url';
+import './custom.css';
 
 function Journal({ userData }) {
   const urlLink = useParams();
@@ -57,7 +58,7 @@ function Journal({ userData }) {
       </div>
       <div className="">
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          <Table sx={{ width: 'initial' }} size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
                 <TableCell>Ученики</TableCell>
@@ -80,8 +81,9 @@ function Journal({ userData }) {
                     <TableCell component="th" scope="row">
                       {data.fullName}
                     </TableCell>
+                  
                     {ktp.map((mark) => (
-                      <TableCell key={mark._id}>
+                      <TableCell className={mark.ktpSorSoch} key={mark._id}>
                         <div className={styles.journal__mark}>
                           <Mark key={mark._id + data._id} modal={modal} studentId={data._id} ktpId={mark._id} />
                           <Link to={`${data._id}/${userData._id}/${mark._id}`}>
