@@ -1,0 +1,136 @@
+import { Button, MenuItem, Select, Snackbar, TextField } from '@mui/material';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
+import styles from './KTPForm.module.scss';
+import MuiAlert from '@mui/material/Alert';
+import { url } from '../../url';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+function KTPForm({ userData }) {
+  const urlLink = useParams();
+  const [classes, setClasses] = useState([]);
+  const [predmet, setPredmet] = useState([]);
+  const [ktpTitle, setKtpTitle] = useState('');
+  const [ktpDate, setKtpDate] = useState('');
+  const [ktpSorSoch, setKtpSorSoch] = useState('');
+  const [alertOpen, setAlertOpen] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`${url}classList/${urlLink.classId}`)
+      .then((data) => {
+        setClasses(data.data)
+      })
+  }, [urlLink.classId])
+
+  useEffect(() => {
+    axios
+      .get(`${url}predmet/${urlLink.predmetId}`)
+      .then((data) => {
+        setPredmet(data.data)
+      })
+  }, [urlLink.predmetId])
+
+  const handleInputKtpTitle = (e) => {
+    setKtpTitle(e.target.value)
+  }
+
+  const handleInputKtpDate = (e) => {
+    setKtpDate(e.target.value)
+  }
+
+  const handleInputKtpSorSoch = (e) => {
+    setKtpSorSoch(e.target.value);
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlertOpen(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    try {
+      axios
+        .post(`${url}ktp`, {
+          ktpTitle: ktpTitle,
+          ktpDate: ktpDate,
+          ktpPredmet: urlLink.predmetId,
+          ktpClass: urlLink.classId,
+          ktpTeacher: userData._id,
+          ktpSorSoch: ktpSorSoch,
+        })
+        .then((res) => {
+          setAlertOpen(true);
+          setKtpTitle('');
+          setKtpDate('');
+          setKtpSorSoch('');
+        })
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  return (
+    <>
+      <div>
+        <h1>Создайте план на урок:</h1>
+      </div>
+      <div className={styles.title}>
+        <p><span>{predmet.predmetName}</span> {classes.className} Класс</p>
+      </div>
+      <form onSubmit={handleSubmit} className={styles.form__inner}>
+        <div className={styles.form__item}>
+          <p className={styles.form__label}>Тема урока</p>
+          <TextField
+            type="text"
+            required
+            fullWidth
+            onChange={handleInputKtpTitle}
+            value={ktpTitle}
+          />
+        </div>
+        <div className={styles.form__item}>
+          <p className={styles.form__label}>Дата</p>
+          <input
+            className={styles.date_picker}
+            required
+            type="date"
+            onChange={handleInputKtpDate}
+            value={ktpDate}
+          />
+        </div>
+        <div className={styles.form__item_sor}>
+          <p className={styles.form__label}>Выбор урока</p>
+          <Select
+            value={ktpSorSoch}
+            onChange={handleInputKtpSorSoch}
+            className={styles.form__switch}
+          >
+            <MenuItem value="sor">СОР</MenuItem>
+            <MenuItem value="soch">СОЧ</MenuItem>
+            <MenuItem value="default">Обычный урок</MenuItem>
+          </Select>
+        </div>
+        <div className={styles.form__item}>
+          <Button type="submit" size="large" variant="contained" fullWidth>
+            Добавить тему урока
+          </Button>
+        </div>
+      </form>
+      <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          План успешно добавлен
+        </Alert>
+      </Snackbar>
+    </>
+  )
+}
+
+export default KTPForm
