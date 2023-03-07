@@ -18,6 +18,8 @@ function KTPForm({ userData }) {
   const [ktpDate, setKtpDate] = useState('');
   const [ktpSorSoch, setKtpSorSoch] = useState('');
   const [alertOpen, setAlertOpen] = useState(false);
+  const [alertOpenError, setAlertOpenError] = useState(false);
+  const [alertOpenErrorText, setAlertOpenErrorText] = useState('');
 
   useEffect(() => {
     axios
@@ -72,8 +74,14 @@ function KTPForm({ userData }) {
           setKtpDate('');
           setKtpSorSoch('');
         })
+        .catch((err) => {
+          setAlertOpenErrorText(err.response.data)
+          setAlertOpenError(true);
+          setKtpTitle('');
+          setKtpDate('');
+          setKtpSorSoch('');
+        })
     } catch(err) {
-      console.log(err)
     }
   }
 
@@ -127,6 +135,11 @@ function KTPForm({ userData }) {
       <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
           План успешно добавлен
+        </Alert>
+      </Snackbar>
+      <Snackbar open={alertOpenError} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          {alertOpenErrorText.message}
         </Alert>
       </Snackbar>
     </>
