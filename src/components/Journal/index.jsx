@@ -16,7 +16,7 @@ function Journal({ userData }) {
 
   useEffect(() => {
     axios
-      .get(`${url}ktp/${urlLink.id}/${urlLink.classId}`)
+      .get(`${url}ktp/${urlLink.id}/${urlLink?.classId}`)
       .then((data) => {
         setKtp(data.data);
       })
@@ -24,7 +24,7 @@ function Journal({ userData }) {
 
   useEffect(() => {
     axios
-      .get(`${url}students/${urlLink.classId}`)
+      .get(`${url}students/${urlLink?.classId}`)
       .then((data) => {
         setStudent(data.data);
       })
@@ -63,7 +63,7 @@ function Journal({ userData }) {
                 <TableCell>Ученики</TableCell>
                 {ktp.sort(sortByDate).map((data) => {
                   return (
-                    <TableCell className={data.ktpSorSoch} title={data.ktpTitle}>
+                    <TableCell key={data._id} className={data.ktpSorSoch} title={data.ktpTitle}>
                       {data.ktpDate.split("-").reverse().join(".")}
                     </TableCell>
                   )
