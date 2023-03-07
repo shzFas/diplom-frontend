@@ -6,6 +6,7 @@ import { Header } from "./components/Header";
 import { Home, Registration, Login } from "./pages";
 import { fetchAuthMe, selectIsAuth } from "./redux/slices/auth";
 import PredmetTeacher from "./components/PredmetTeacher";
+import PredmetClassList from './components/PredmetClassList';
 import UserMe from "./components/UserMe";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                   path="journal"
                   element={<PredmetTeacher userData={userData} />}
                 />
+                <Route path="journal/:id" element={<PredmetClassList />} />
                 <Route path="me" element={<UserMe userData={userData} />} />
               </Route>
               <Route path="*" element={<Navigate to="/" />} />
