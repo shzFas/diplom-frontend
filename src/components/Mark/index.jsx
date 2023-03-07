@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { url } from '../../url';
+import './style.css'
 
 function Mark({ studentId, ktpId, modal }) {
 
@@ -24,30 +25,22 @@ function Mark({ studentId, ktpId, modal }) {
   const markColor = (mark) => {
     if(mark === 0) {
       return {
-        color: `white`,
         backgroundColor: `gray`,
-        padding: `2px`
       }
     }
     if(mark < 4) {
       return {
-        color: `white`,
         backgroundColor: `red`,
-        padding: `2px`
       }
     }
     if(mark < 7) {
       return {
-        color: `white`,
         backgroundColor: `orange`,
-        padding: `2px`
       }
     }
     if(mark < 30) {
       return {
-        color: `white`,
         backgroundColor: `green`,
-        padding: `2px`
       }
     }
   }
@@ -56,7 +49,7 @@ function Mark({ studentId, ktpId, modal }) {
     <div>
       {mark.map((data) => {
         return (
-          <span style={markColor(data?.markValue)} key={data._id}>
+          <span className='styleMarkDefault' style={markColor(data?.markValue)} key={data._id}>
             {validationMark(data?.markValue)}
           </span>
         )
