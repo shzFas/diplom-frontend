@@ -14,7 +14,7 @@ function ModalMark({ handleModalMarkClose, open, setModal }) {
 
     useEffect(() => {
         axios
-            .get(`${url}student/${urlLink.studentId}`)
+            .get(`${url}student/${urlLink?.studentId}`)
             .then((data) => {
                 setStudent(data.data)
             })
@@ -30,10 +30,11 @@ function ModalMark({ handleModalMarkClose, open, setModal }) {
     const handleInputStudentFalse = (e) => {
         if (e.target.checked === true) {
             setStudentFalse(true);
-        }
+            setMark(0);
+        };
         if (e.target.checked === false) {
             setStudentFalse(false);
-        }
+        };
     }
 
     const handleMarkValue = (e) => {
@@ -44,9 +45,6 @@ function ModalMark({ handleModalMarkClose, open, setModal }) {
             setMark(Number(e.target.value));
         }
     }
-
-    console.log(studentFalse);
-    console.log(mark);
 
     const handleSubmit = (e) => {
         e.preventDefault();
