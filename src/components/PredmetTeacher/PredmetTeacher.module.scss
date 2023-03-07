@@ -1,0 +1,25 @@
+.permission__inner {
+    display: grid;
+    grid-template-columns: repeat(3, 320px);
+    gap: 20px;
+}
+.permission__item {
+    max-width: 320px;
+}
+@media(max-width: 1050px) {
+    .permission__inner {
+        display: grid;
+        grid-template-columns: repeat(2, 320px);
+        gap: 20px;
+    }
+}
+@media(max-width: 800px) {
+    .permission__inner {
+        display: grid;
+        grid-template-columns: repeat(1, auto);
+        gap: 20px;
+    }
+    .permission__item {
+       max-width: 100%;
+    }
+}

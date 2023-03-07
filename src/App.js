@@ -1,10 +1,11 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import Container from '@mui/material/Container';
-import { Header } from './components/Header';
-import { Home, Registration, Login } from './pages';
-import { fetchAuthMe, selectIsAuth } from './redux/slices/auth';
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Container from "@mui/material/Container";
+import { Header } from "./components/Header";
+import { Home, Registration, Login } from "./pages";
+import { fetchAuthMe, selectIsAuth } from "./redux/slices/auth";
+import PredmetTeacher from "./components/PredmetTeacher";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,7 +23,12 @@ function App() {
           <Container maxWidth="lg">
             <Header userData={userData} />
             <Routes>
-              <Route path="/" element={<Home userData={userData} />} />
+              <Route path="/" element={<Home userData={userData} />}>
+                <Route
+                  path="journal"
+                  element={<PredmetTeacher userData={userData} />}
+                />
+              </Route>
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </Container>
