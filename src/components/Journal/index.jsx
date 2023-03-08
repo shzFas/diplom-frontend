@@ -61,7 +61,7 @@ function Journal({ userData }) {
           <Table sx={{ width: 'initial' }} size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
-                <TableCell>Ученики</TableCell>
+                <TableCell className={styles.tableItemScroll}>Ученики</TableCell>
                 {ktp.sort(sortByDate).map((data) => {
                   return (
                     <TableCell key={data._id} className={data.ktpSorSoch} title={data.ktpTitle}>
@@ -78,7 +78,7 @@ function Journal({ userData }) {
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     key={data._id}
                   >
-                    <TableCell component="th" scope="row">
+                    <TableCell className={styles.tableItemScroll} component="th" scope="row">
                       {data.fullName}
                     </TableCell>
                   
@@ -86,7 +86,7 @@ function Journal({ userData }) {
                       <TableCell className={mark.ktpSorSoch} key={mark._id}>
                         <div className={styles.journal__mark}>
                           <Mark key={mark._id + data._id} modal={modal} studentId={data._id} ktpId={mark._id} />
-                          <Link to={`${data._id}/${userData._id}/${mark._id}`}>
+                          <Link to={`${data._id}/${userData._id}/${mark._id}/${mark.ktpSorSoch}`}>
                             <IconButton onClick={handleModalMark} color="success">
                               <AddIcon />
                             </IconButton>

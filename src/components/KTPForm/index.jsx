@@ -54,6 +54,7 @@ function KTPForm({ userData }) {
       return;
     }
     setAlertOpen(false);
+    setAlertOpenError(false);
   };
 
   const handleSubmit = (e) => {
@@ -115,7 +116,7 @@ function KTPForm({ userData }) {
           />
         </div>
         <div className={styles.form__item_sor}>
-          <p className={styles.form__label}>Выбор урока</p>
+          <p className={styles.form__label}>Тип урока</p>
           <Select
             value={ktpSorSoch}
             onChange={handleInputKtpSorSoch}
