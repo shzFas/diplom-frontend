@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import styles from './KTPForm.module.scss';
 import MuiAlert from '@mui/material/Alert';
 import { url } from '../../url';
+import TableKTP from '../TableKTP';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -133,6 +134,7 @@ function KTPForm({ userData }) {
           </Button>
         </div>
       </form>
+      <TableKTP urlLink={urlLink} alertOpen={alertOpen} />
       <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
           План успешно добавлен
