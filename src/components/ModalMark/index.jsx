@@ -94,8 +94,6 @@ function ModalMark({ handleModalMarkClose, open, setModal }) {
     }
   };
 
-  console.log(markMax);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
