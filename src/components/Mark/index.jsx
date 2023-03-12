@@ -11,7 +11,7 @@ function Mark({ studentId, ktpId, modal }) {
     axios
       .get(`${url}mark/${studentId}/${ktpId}`)
       .then((data) => {
-        setMark(data.data)
+        setMark(data.data);
       })
   }, [modal])
 
