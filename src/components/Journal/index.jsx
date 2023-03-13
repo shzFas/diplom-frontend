@@ -18,6 +18,7 @@ import ModalMark from "../ModalMark";
 import ProgressReload from "../ProgressReload";
 import { url } from "../../url";
 import "./custom.css";
+import FinalMark from "../FinalMark";
 
 function Journal({ userData }) {
   const urlLink = useParams();
@@ -104,6 +105,9 @@ function Journal({ userData }) {
                     <TableCell className={styles.tableItemScrollItog}>
                       Итог:
                     </TableCell>
+                    <TableCell className={styles.tableItemScrollItog}>
+                      Рекомендуемая оценка:
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -147,6 +151,11 @@ function Journal({ userData }) {
                             </div>
                           </TableCell>
                         ))}
+                        <FinalMark
+                          studentId={data._id}
+                          predmetId={urlLink.id}
+                          modal={modal}
+                        />
                       </TableRow>
                     </>
                   ))}
