@@ -71,7 +71,7 @@ function Journal({ userData }) {
   return (
     <>
       {isLoading ? (
-        <ProgressReload />
+        <ProgressReload textInfo={"Добавьте КТП чтобы выставить оценки"} />
       ) : (
         <div>
           <div className="">
