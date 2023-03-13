@@ -27,32 +27,29 @@ function Journal({ userData }) {
   const [studentValue, setStudentValue] = useState(false);
   const [modal, setModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [markValue, setMarkValue] = useState(false);
 
   useEffect(() => {
     axios.get(`${url}ktp/${urlLink.id}/${urlLink?.classId}`).then((data) => {
-      if(data.data.length > 0) {
+      if (data.data.length > 0) {
         setKtpValue(true);
-      };
+      }
       setKtp(data.data);
     });
   }, [urlLink]);
 
-  console.log(ktpValue)
-
   useEffect(() => {
     axios.get(`${url}students/${urlLink?.classId}`).then((data) => {
-      if(data.data.length > 0) {
+      if (data.data.length > 0) {
         setStudentValue(true);
-      };
+      }
       setStudent(data.data);
     });
   }, [urlLink]);
 
-  console.log(studentValue)
-
   useEffect(() => {
-    if(studentValue === true && ktpValue === true) setIsLoading(false)
-  }, [studentValue, ktpValue])
+    if (markValue === true || studentValue === true && ktpValue === true) setIsLoading(false);
+  }, [studentValue, ktpValue, markValue]);
 
   const handleModalMark = () => setModal(true);
   const handleModalMarkClose = () => setModal(false);
@@ -134,6 +131,8 @@ function Journal({ userData }) {
                                 modal={modal}
                                 studentId={data._id}
                                 ktpId={mark._id}
+                                setMarkValue={setMarkValue}
+                                isLoading={isLoading}
                               />
                               <Link
                                 to={`${data._id}/${userData._id}/${mark._id}/${mark.ktpSorSoch}`}

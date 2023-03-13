@@ -18,7 +18,6 @@ function TableKTP({ urlLink, alertOpen }) {
         axios
             .get(`${url}ktp/${urlLink.predmetId}/${urlLink.classId}`)
             .then((data) => {
-                console.log(data)
                 if (data.data.length > 0) setValue(true)
                 setKtp(data.data)
             })
