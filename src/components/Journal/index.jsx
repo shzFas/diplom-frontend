@@ -71,7 +71,7 @@ function Journal({ userData }) {
   return (
     <>
       {isLoading ? (
-        <ProgressReload />
+        <ProgressReload textInfo={"Добавьте КТП чтобы выставить оценки"} />
       ) : (
         <div>
           <div className="">
@@ -135,7 +135,7 @@ function Journal({ userData }) {
                                 isLoading={isLoading}
                               />
                               <Link
-                                to={`${data._id}/${userData._id}/${mark._id}/${mark.ktpSorSoch}`}
+                                to={`${data._id}/${userData._id}/${mark._id}/${mark.ktpSorSoch}/${mark.ktpMaxValue}`}
                               >
                                 <IconButton
                                   onClick={handleModalMark}

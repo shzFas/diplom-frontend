@@ -12,9 +12,9 @@ export const Home = () => {
         <Link to="/ktp" className="predmetList__btn">
           <Button variant="contained">КТП</Button>
         </Link>
-        <Link to="/me" className="predmetList__btn">
+{/*         <Link to="/me" className="predmetList__btn">
           <Button variant="contained">Личный кабинет</Button>
-        </Link>
+        </Link> */}
       </div>
       <Outlet />
     </>
