@@ -21,22 +21,19 @@ function ModalMark({ handleModalMarkClose, open, setModal }) {
   const [alertErrorOpen, setAlertErrorOpen] = useState(false);
   const [studentFalse, setStudentFalse] = useState(false);
   const [mark, setMark] = useState(Number);
-  const [markMax, setMarkMax] = useState(Number);
   const [defaultLecture, setDefaultLecture] = useState(false);
 
   useEffect(() => {
     axios.get(`${url}student/${urlLink?.studentId}`).then((data) => {
-      setStudent(data.data);
+      setStudent(data?.data);
     });
   }, [urlLink]);
 
   useEffect(() => {
     if (urlLink.type === "default") {
       setDefaultLecture(true);
-      setMarkMax(10);
     } else {
       setDefaultLecture(false);
-      setMarkMax(Number);
     }
   }, [urlLink]);
 
@@ -59,39 +56,7 @@ function ModalMark({ handleModalMarkClose, open, setModal }) {
   };
 
   const handleMarkValue = (e) => {
-    if (e.target.value >= 10) {
-      setMark(10);
-    }
-    if (e.target.value < 10) {
-      setMark(Number(e.target.value));
-    }
-    if (e.target.value === 0) {
-        setStudentFalse(true);
-    }
-  };
-
-  const handleMarkSorSochValue = (e) => {
-    if (e.target.value >= 30) {
-      setMark(30);
-    }
-    if (e.target.value < 30) {
-      setMark(Number(e.target.value));
-    }
-    if (e.target.value === 0) {
-        setStudentFalse(true);
-    }
-  };
-
-  const handleMarkMaxValue = (e) => {
-    if (e.target.value >= 30) {
-      setMarkMax(30);
-    }
-    if (e.target.value < 30) {
-      setMarkMax(Number(e.target.value));
-    }
-    if (e.target.value === 0) {
-        setStudentFalse(true);
-    }
+    setMark(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -105,13 +70,15 @@ function ModalMark({ handleModalMarkClose, open, setModal }) {
           markClassStudent: urlLink.classId,
           markDate: urlLink.ktpId,
           markFalse: studentFalse,
-          markMaxValue: markMax,
+          markMaxValue: urlLink.max,
           markValue: mark,
+          markSochSor: urlLink.type,
         })
         .then((res) => {
           setAlertOpen(true);
           setMark();
           setModal(false);
+          setStudentFalse(false);
         })
         .catch(() => {
           setAlertErrorOpen(true);
@@ -146,11 +113,11 @@ function ModalMark({ handleModalMarkClose, open, setModal }) {
                       type="number"
                       required
                       min={1}
-                      max={10}
+                      max={urlLink.max}
                       onChange={handleMarkValue}
                       value={mark}
                     />
-                    <p>Максимальный балл за ФО: 10 баллов</p>
+                    <p>Максимальный балл за ФО: {urlLink.max} баллов</p>
                   </>
                 ) : (
                   <>
@@ -160,22 +127,11 @@ function ModalMark({ handleModalMarkClose, open, setModal }) {
                       type="number"
                       required
                       min={1}
-                      max={30}
-                      onChange={handleMarkSorSochValue}
+                      max={urlLink.max}
+                      onChange={handleMarkValue}
                       value={mark}
                     />
-                    <p>Максимальный балл за СОР / СОЧ: 30</p>
-                    <input
-                      className={styles.inputNumber}
-                      id="outlined-number"
-                      label="Максимальный балл"
-                      type="number"
-                      required
-                      max={30}
-                      min={1}
-                      onChange={handleMarkMaxValue}
-                      value={markMax}
-                    />
+                    <p>Максимальный балл за СОР / СОЧ: {urlLink.max}</p>
                   </>
                 )}
               </>

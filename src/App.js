@@ -37,7 +37,7 @@ function App() {
                 />
                 <Route path="journal/:id" element={<PredmetClassList />} />
                 <Route path="journal/:id/:classId" element={<Journal userData={userData} />}>
-                  <Route path=":studentId/:teacherId/:ktpId/:type" element={<ModalMark />} />
+                  <Route path=":studentId/:teacherId/:ktpId/:type/:max" element={<ModalMark />} />
                 </Route>
                 <Route path="ktp" element={<KTP userData={userData}/>} />
                 <Route path="ktp/:predmetId" element={<KTPClass userData={userData}/>} />
