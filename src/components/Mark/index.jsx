@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { url } from "../../url";
 import "./style.css";
 
-function Mark({ studentId, ktpId, modal, setMarkValue, isLoading }) {
+function Mark({ studentId, ktpId, modal, setMarkValue, isLoading, modalDelete }) {
   const [mark, setMark] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     axios.get(`${url}mark/${studentId}/${ktpId}`).then((data) => {
@@ -12,8 +14,9 @@ function Mark({ studentId, ktpId, modal, setMarkValue, isLoading }) {
         setMark(data.data);
         setMarkValue(true);
       }
+      setMark(data.data);
     });
-  }, [modal]);
+  }, [modal, modalDelete, location]);
 
   const validationMark = (mark) => {
     if (mark === 0) {
@@ -54,13 +57,15 @@ function Mark({ studentId, ktpId, modal, setMarkValue, isLoading }) {
           <div>
             {mark.map((data) => {
               return (
-                <span
-                  className="styleMarkDefault"
-                  style={markColor(data?.markValue)}
-                  key={data._id}
-                >
-                  {validationMark(data?.markValue)}
-                </span>
+                <>
+                  <span
+                    className="styleMarkDefault"
+                    style={markColor(data?.markValue)}
+                    key={data._id}
+                  >
+                    {validationMark(data?.markValue)}
+                  </span>
+                </>
               );
             })}
           </div>
