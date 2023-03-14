@@ -13,6 +13,7 @@ import KTPForm from './components/KTPForm';
 import UserMe from "./components/UserMe";
 import Journal from './components/Journal';
 import ModalMark from './components/ModalMark';
+import ModalMarkDelete from "./components/ModalMarkDelete";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
                 <Route path="journal/:id" element={<PredmetClassList />} />
                 <Route path="journal/:id/:classId" element={<Journal userData={userData} />}>
                   <Route path=":studentId/:teacherId/:ktpId/:type/:max" element={<ModalMark />} />
+                  <Route path="delete/:idStudent/:idKtp" element={<ModalMarkDelete />} />
                 </Route>
                 <Route path="ktp" element={<KTP userData={userData}/>} />
                 <Route path="ktp/:predmetId" element={<KTPClass userData={userData}/>} />
