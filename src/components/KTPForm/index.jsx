@@ -18,6 +18,7 @@ function KTPForm({ userData }) {
   const [ktpTitle, setKtpTitle] = useState("");
   const [ktpDate, setKtpDate] = useState("");
   const [ktpSorSoch, setKtpSorSoch] = useState("");
+  const [ktpPeriod, setKtpPeriod] = useState("");
   const [ktpMaxValue, setKtpMaxValue] = useState(Number);
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertOpenError, setAlertOpenError] = useState(false);
@@ -57,6 +58,10 @@ function KTPForm({ userData }) {
     setKtpSorSoch(e.target.value);
   };
 
+  const handleInputKtpPeriod = (e) => {
+    setKtpPeriod(e.target.value)
+  };
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -77,12 +82,14 @@ function KTPForm({ userData }) {
           ktpTeacher: userData._id,
           ktpSorSoch: ktpSorSoch,
           ktpMaxValue: ktpMaxValue,
+          ktpPeriod: ktpPeriod,
         })
         .then((res) => {
           setAlertOpen(true);
           setKtpTitle("");
           setKtpDate("");
           setKtpSorSoch("");
+          setKtpPeriod("");
         })
         .catch((err) => {
           setAlertOpenErrorText(err.response.data);
@@ -91,6 +98,7 @@ function KTPForm({ userData }) {
           setKtpDate("");
           setKtpSorSoch("");
           setKtpMaxValue(0);
+          setKtpPeriod("");
         });
     } catch (err) {}
   };
@@ -136,6 +144,19 @@ function KTPForm({ userData }) {
             <MenuItem value="sor">СОР</MenuItem>
             <MenuItem value="soch">СОЧ</MenuItem>
             <MenuItem value="default">Обычный урок</MenuItem>
+          </Select>
+        </div>
+        <div className={styles.form__item_sor}>
+          <p className={styles.form__label}>Четверть</p>
+          <Select
+            value={ktpPeriod}
+            onChange={handleInputKtpPeriod}
+            className={styles.form__switch}
+          >
+            <MenuItem value="1">1 четверть</MenuItem>
+            <MenuItem value="2">2 четверть</MenuItem>
+            <MenuItem value="3">3 четверть</MenuItem>
+            <MenuItem value="4">4 четверть</MenuItem>
           </Select>
         </div>
         {maxValue ? (

@@ -34,7 +34,7 @@ function Journal({ userData }) {
   const [markValue, setMarkValue] = useState(false);
 
   useEffect(() => {
-    axios.get(`${url}ktp/${urlLink.id}/${urlLink?.classId}`).then((data) => {
+    axios.get(`${url}ktp/period/${urlLink?.classId}/${urlLink?.period}/${urlLink.id}`).then((data) => {
       if (data.data.length > 0) {
         setKtpValue(true);
       }

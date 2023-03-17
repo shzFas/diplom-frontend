@@ -15,6 +15,8 @@ import UserMe from "./components/UserMe";
 import Journal from "./components/Journal";
 import ModalMark from "./components/ModalMark";
 import ModalMarkDelete from "./components/ModalMarkDelete";
+import TableKTP from "./components/TableKTP";
+import JournalPeriod from "./components/JournalPeriod";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,8 +56,9 @@ function App() {
                       element={<PredmetTeacher userData={userData} />}
                     />
                     <Route path="journal/:id" element={<PredmetClassList />} />
+                    <Route path="journal/:id/:classId" element={<JournalPeriod />} />
                     <Route
-                      path="journal/:id/:classId"
+                      path="journal/:id/:classId/:period"
                       element={<Journal userData={userData} />}
                     >
                       <Route
@@ -75,7 +78,12 @@ function App() {
                     <Route
                       path="ktp/:predmetId/:classId"
                       element={<KTPForm userData={userData} />}
-                    />
+                    >
+                      <Route
+                        path="period/:period"
+                        element={<TableKTP/>}
+                      />
+                    </Route>
                     <Route path="me" element={<UserMe userData={userData} />} />
                   </Route>
                   <Route path="*" element={<Navigate to="/" />} />
