@@ -73,6 +73,7 @@ function ModalMark({ handleModalMarkClose, open, setModal }) {
           markMaxValue: urlLink.max,
           markValue: mark,
           markSochSor: urlLink.type,
+          markPeriod: urlLink.period,
         })
         .then((res) => {
           setAlertOpen(true);

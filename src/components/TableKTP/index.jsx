@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 import { url } from "../../url";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, MenuItem, Select } from "@mui/material";
+import { Button } from "@mui/material";
 import styles from "./TableKTP.module.scss";
 import { Link, useParams } from "react-router-dom";
 
@@ -39,7 +39,7 @@ function TableKTP({ urlLink, alertOpen }) {
   return (
     <>
       <div className={styles.buttonLink}>
-        <p>Четверть</p>
+        <p>Четверть {urlLinkPeriod?.period}</p>
         <Link to="period/1" className="predmetList__btn">
           <Button variant="contained">1 четверть</Button>
         </Link>
