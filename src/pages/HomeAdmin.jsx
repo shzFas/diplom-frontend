@@ -12,6 +12,15 @@ export const HomeAdmin = () => {
         <Link to="/teacher" className="predmetList__btn">
           <Button variant="contained">Учителя</Button>
         </Link>
+        <Link to="/predmet" className="predmetList__btn">
+          <Button color="success" variant="contained">Добавить предмет</Button>
+        </Link>
+        <Link to="/register/teacher" className="predmetList__btn">
+          <Button color="success" variant="contained">Регистрация Учителя</Button>
+        </Link>
+        <Link to="/register/student" className="predmetList__btn">
+          <Button color="success" variant="contained">Регистрация Ученика</Button>
+        </Link>
       </div>
       <Outlet />
     </>

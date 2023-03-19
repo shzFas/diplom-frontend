@@ -4,7 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import Container from "@mui/material/Container";
 import { Header } from "./components/Header";
 import { Home, HomeAdmin, Registration, Login } from "./pages";
-import { StudentList, TeacherList } from "./components/Admin";
+import {
+  ClassList,
+  PredmetForm,
+  StudentList,
+  StudentRegisterForm,
+  TeacherList,
+  TeacherRegisterForm,
+} from "./components/Admin";
 import { fetchAuthMe, selectIsAuth } from "./redux/slices/auth";
 import PredmetTeacher from "./components/PredmetTeacher";
 import PredmetClassList from "./components/PredmetClassList";
@@ -38,8 +45,18 @@ function App() {
                 <Header userData={userData} />
                 <Routes>
                   <Route path="/" element={<HomeAdmin userData={userData} />}>
-                    <Route path="student" element={<StudentList/>}/>
-                    <Route path="teacher" element={<TeacherList/>}/>
+                    <Route path="student" element={<ClassList />} />
+                    <Route path="student/:classId" element={<StudentList />}/>
+                    <Route path="teacher" element={<TeacherList />} />
+                    <Route path="predmet" element={<PredmetForm />} />
+                    <Route
+                      path="register/teacher"
+                      element={<TeacherRegisterForm />}
+                    />
+                    <Route
+                      path="register/student"
+                      element={<StudentRegisterForm />}
+                    />
                   </Route>
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
@@ -56,7 +73,10 @@ function App() {
                       element={<PredmetTeacher userData={userData} />}
                     />
                     <Route path="journal/:id" element={<PredmetClassList />} />
-                    <Route path="journal/:id/:classId" element={<JournalPeriod />} />
+                    <Route
+                      path="journal/:id/:classId"
+                      element={<JournalPeriod />}
+                    />
                     <Route
                       path="journal/:id/:classId/:period"
                       element={<Journal userData={userData} />}
@@ -79,10 +99,7 @@ function App() {
                       path="ktp/:predmetId/:classId"
                       element={<KTPForm userData={userData} />}
                     >
-                      <Route
-                        path="period/:period"
-                        element={<TableKTP/>}
-                      />
+                      <Route path="period/:period" element={<TableKTP />} />
                     </Route>
                     <Route path="me" element={<UserMe userData={userData} />} />
                   </Route>
