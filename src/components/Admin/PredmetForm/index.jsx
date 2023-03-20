@@ -19,14 +19,14 @@ export const PredmetForm = () => {
   }, []);
 
   const handleCheckboxChange = (event) => {
-    const id = event.target.id;
+    const _id = event.target.id;
     const className = event.target.className;
     const checked = event.target.checked;
     if (checked) {
-      setClasses((prevClasses) => [...prevClasses, { id, className }]);
+      setClasses((prevClasses) => [...prevClasses, { _id, className }]);
     } else {
       setClasses((prevClasses) =>
-        prevClasses.filter((c) => c.id !== id && c.className !== className)
+        prevClasses.filter((c) => c.id !== _id && c.className !== className)
       );
     }
   };
