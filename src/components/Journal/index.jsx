@@ -20,7 +20,6 @@ import { url } from "../../url";
 import "./custom.css";
 import FinalMark from "../FinalMark";
 import ModalMarkDelete from "../ModalMarkDelete";
-import { style } from "@mui/system";
 
 function Journal({ userData }) {
   const urlLink = useParams();

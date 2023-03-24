@@ -41,7 +41,7 @@ function App() {
         <>
           {isAdmin ? (
             <>
-              <Container maxWidth="lg">
+              <Container className="main-container" maxWidth="lg">
                 <Header userData={userData} />
                 <Routes>
                   <Route path="/" element={<HomeAdmin userData={userData} />}>
@@ -64,7 +64,7 @@ function App() {
             </>
           ) : (
             <>
-              <Container maxWidth="lg">
+              <Container className="main-container" maxWidth="lg">
                 <Header userData={userData} />
                 <Routes>
                   <Route path="/" element={<Home userData={userData} />}>
@@ -111,10 +111,10 @@ function App() {
         </>
       ) : (
         <>
-          <Container maxWidth="lg">
+          <Container className="main-container" maxWidth="lg">
             <Routes>
               <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Registration />} />
+              {/* <Route path="/register" element={<Registration />} /> */} {/* Доступно !, только с админ панели :) */}
               <Route path="*" element={<Navigate to="/login" />} />
             </Routes>
           </Container>

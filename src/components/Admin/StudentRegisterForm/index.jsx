@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "../../../url";
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, Button, Snackbar } from "@mui/material";
 import styles from "./StudentRegisterForm.module.scss";
 
 export const StudentRegisterForm = () => {
@@ -119,7 +119,9 @@ export const StudentRegisterForm = () => {
             ))}
           </div>
         </div>
-        <button type="submit">Submit</button>
+        <Button type="submit" variant="contained" color="success">
+          Зарегистрировать
+        </Button>
       </form>
       <Snackbar
         open={openSuccess}
