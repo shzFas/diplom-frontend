@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 
 import styles from "./Header.module.scss";
 import Container from "@mui/material/Container";
-import { logout } from "../../redux/slices/auth";
+import { logout, logoutStudent } from "../../redux/slices/auth";
 
 export const Header = ({ userData }) => {
   const dispatch = useDispatch();
@@ -26,6 +26,7 @@ export const Header = ({ userData }) => {
   const onClickLogout = () => {
     if (window.confirm("Вы действительно хотите выйти?")) {
       dispatch(logout());
+      dispatch(logoutStudent());
       window.localStorage.removeItem("token");
     }
   };
