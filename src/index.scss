@@ -6,6 +6,16 @@ body {
   background-color: #F5F5F5 !important;
 }
 
+.main__menu {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .predmetList__btn {
   padding-right: 20px;
+  padding-bottom: 20px;
+}
+
+.main-container {
+  padding-bottom: 100px;
 }

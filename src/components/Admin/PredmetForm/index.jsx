@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "../../../url";
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, Button, Snackbar } from "@mui/material";
 import styles from "./PredmetForm.module.scss";
 
 export const PredmetForm = () => {
@@ -98,7 +98,9 @@ export const PredmetForm = () => {
             ))}
           </div>
         </div>
-        <button type="submit">Submit</button>
+        <Button type="submit" variant="contained" color="success">
+          Добавить предмет
+        </Button>
       </form>
       <Snackbar
         open={openSuccess}

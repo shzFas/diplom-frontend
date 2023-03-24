@@ -1,20 +1,32 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
 
-import styles from './Header.module.scss';
-import Container from '@mui/material/Container';
-import { logout, selectIsAuth } from '../../redux/slices/auth';
+import styles from "./Header.module.scss";
+import Container from "@mui/material/Container";
+import { logout } from "../../redux/slices/auth";
 
 export const Header = ({ userData }) => {
   const dispatch = useDispatch();
-  const isAuth = useSelector(selectIsAuth);
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    if (userData.fullName !== "admin") {
+      const fullName = userData.fullName;
+      const nameParts = fullName.split(" ");
+      const firstName = nameParts[0];
+      const lastNameInitial = nameParts[1].charAt(0);
+      setUserName(firstName + " " + lastNameInitial + ".");
+    } else {
+      setUserName(userData.fullName);
+    }
+  }, [userData]);
 
   const onClickLogout = () => {
-    if (window.confirm('Вы действительно хотите выйти?')) {
+    if (window.confirm("Вы действительно хотите выйти?")) {
       dispatch(logout());
-      window.localStorage.removeItem('token');
+      window.localStorage.removeItem("token");
     }
   };
 
@@ -26,7 +38,7 @@ export const Header = ({ userData }) => {
             <div>Diplom</div>
           </Link>
           <div className={styles.buttons}>
-            Здравствуйте, {userData.fullName}
+            <span>Здравствуйте,</span> {userName}
             <Button onClick={onClickLogout} variant="contained" color="error">
               Выйти
             </Button>

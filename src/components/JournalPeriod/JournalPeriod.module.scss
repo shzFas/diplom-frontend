@@ -1,22 +1,9 @@
-.predmetClass__inner {
-    display: grid;
-    grid-template-columns: repeat(3, 320px);
-    gap: 20px;
+.predmetList__btn {
+    padding-right: 20px;
+    padding-bottom: 20px;
 }
-@media(max-width: 1050px) {
-    .predmetClass__inner {
-        display: grid;
-        grid-template-columns: repeat(2, 320px);
-        gap: 20px;
-    }
-}
-@media(max-width: 800px) {
-    .predmetClass__inner {
-        display: grid;
-        grid-template-columns: repeat(1, auto);
-        gap: 20px;
-    }
-    .predmetClass__item {
-       max-width: 100%;
-    }
+
+.buttonLink {
+    display: flex;
+    flex-wrap: wrap;
 }

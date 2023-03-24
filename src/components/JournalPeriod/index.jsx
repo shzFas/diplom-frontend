@@ -17,20 +17,22 @@ function JournalPeriod() {
       <div className="predmetClass__title">
         <h1>Список классов:</h1>
       </div>
-      <div className={styles.buttonLink}>
+      <div>
         <p>Четверть</p>
-        <Link to="1" className="predmetList__btn">
-          <Button variant="contained">1 четверть</Button>
-        </Link>
-        <Link to="2" className="predmetList__btn">
-          <Button variant="contained">2 четверть</Button>
-        </Link>
-        <Link to="3" className="predmetList__btn">
-          <Button variant="contained">3 четверть</Button>
-        </Link>
-        <Link to="4" className="predmetList__btn">
-          <Button variant="contained">4 четверть</Button>
-        </Link>
+        <div className={styles.buttonLink}>
+          <Link to="1" className={styles.predmetList__btn}>
+            <Button variant="contained">1 четверть</Button>
+          </Link>
+          <Link to="2" className={styles.predmetList__btn}>
+            <Button variant="contained">2 четверть</Button>
+          </Link>
+          <Link to="3" className={styles.predmetList__btn}>
+            <Button variant="contained">3 четверть</Button>
+          </Link>
+          <Link to="4" className={styles.predmetList__btn}>
+            <Button variant="contained">4 четверть</Button>
+          </Link>
+        </div>
       </div>
     </>
   );

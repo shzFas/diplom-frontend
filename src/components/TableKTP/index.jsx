@@ -40,18 +40,20 @@ function TableKTP({ urlLink, alertOpen }) {
     <>
       <div className={styles.buttonLink}>
         <p>Четверть {urlLinkPeriod?.period}</p>
-        <Link to="period/1" className="predmetList__btn">
-          <Button variant="contained">1 четверть</Button>
-        </Link>
-        <Link to="period/2" className="predmetList__btn">
-          <Button variant="contained">2 четверть</Button>
-        </Link>
-        <Link to="period/3" className="predmetList__btn">
-          <Button variant="contained">3 четверть</Button>
-        </Link>
-        <Link to="period/4" className="predmetList__btn">
-          <Button variant="contained">4 четверть</Button>
-        </Link>
+        <div className={styles.btnPeriod}>
+          <Link to="period/1" className={styles.btnPeriodLink}>
+            <Button variant="contained">1 четверть</Button>
+          </Link>
+          <Link to="period/2" className={styles.btnPeriodLink}>
+            <Button variant="contained">2 четверть</Button>
+          </Link>
+          <Link to="period/3" className={styles.btnPeriodLink}>
+            <Button variant="contained">3 четверть</Button>
+          </Link>
+          <Link to="period/4" className={styles.btnPeriodLink}>
+            <Button variant="contained">4 четверть</Button>
+          </Link>
+        </div>
       </div>
       <div>
         <TableContainer component={Paper}>
@@ -61,6 +63,7 @@ function TableKTP({ urlLink, alertOpen }) {
                 <TableCell>Тема урока</TableCell>
                 <TableCell>Содержание урока</TableCell>
                 <TableCell>Дата проведения</TableCell>
+                <TableCell>Макс. балл</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -74,6 +77,7 @@ function TableKTP({ urlLink, alertOpen }) {
                   <TableCell>
                     {row.ktpDate.split("-").reverse().join(".")}
                   </TableCell>
+                  <TableCell>{row.ktpMaxValue}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

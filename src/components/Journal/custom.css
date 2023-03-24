@@ -5,3 +5,15 @@
 .soch {
     background-color: rgba(255, 0, 0, 0.6);
 }
+
+@media (max-width: 720px) {
+    .sor {
+        font-size: 12px !important;
+    }
+    .soch {
+        font-size: 12px !important;
+    }
+    .default {
+        font-size: 12px !important;
+    }
+}
