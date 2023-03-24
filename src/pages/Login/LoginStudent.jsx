@@ -9,10 +9,10 @@ import Button from '@mui/material/Button';
 import { useForm } from 'react-hook-form';
 
 import styles from './Login.module.scss';
-import { fetchAuth, selectIsAuth } from '../../redux/slices/auth';
+import { fetchAuthStudent, selectIsAuthStudent } from '../../redux/slices/auth';
 
-export const Login = () => {
-  const isAuth = useSelector(selectIsAuth);
+export const LoginStudent = () => {
+  const isAuthStudent = useSelector(selectIsAuthStudent);
   const dispatch = useDispatch();
   const {
     register,
@@ -20,14 +20,14 @@ export const Login = () => {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      email: 'user1@mail.ru',
+      email: 'student1@student.com',
       password: '12345',
     },
     mode: 'onChange',
   });
 
   const onSubmit = async (values) => {
-    const data = await dispatch(fetchAuth(values));
+    const data = await dispatch(fetchAuthStudent(values));
 
     if (!data.payload) {
       return alert('Не удалось авторизоваться!');
@@ -38,14 +38,14 @@ export const Login = () => {
     }
   };
 
-  if (isAuth) {
+  if (isAuthStudent) {
     return <Navigate to="/" />;
   }
 
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
-        Вход в аккаунт (учитель)
+        Вход в аккаунт (ученик)
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
@@ -69,9 +69,9 @@ export const Login = () => {
         <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>
           Войти
         </Button>
-        <Link to="/loginStudent" className={styles.linkTeachStudent}>
+        <Link to="/login" className={styles.linkTeachStudent}>
           <Button className={styles.linkTeachStudentBtn} size="large" variant="contained" fullWidth>
-            Я ученик
+            Я учитель
           </Button>
         </Link>
       </form>
