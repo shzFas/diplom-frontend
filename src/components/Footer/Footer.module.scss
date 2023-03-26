@@ -18,8 +18,8 @@
 
 .logoImg {
     img {
-        width: 75px;
-        height: 75px;
+        width: 50px;
+        height: 50px;
         cursor: pointer;
     }
 }
@@ -28,8 +28,24 @@
     outline: none;
     text-decoration: none;
     img {
-        width: 60px;
-        height: 60px;
+        width: 40px;
+        height: 40px;
         cursor: pointer;
+    }
+}
+
+@media (max-width: 720px) {
+    .logoImg {
+        img {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    .logoGit {
+        img {
+            width: 20px;
+            height: 20px;
+        }
     }
 }
