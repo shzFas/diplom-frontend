@@ -36,7 +36,7 @@ export const Header = ({ userData }) => {
       <Container maxWidth="lg">
         <div className={styles.inner}>
           <Link className={styles.logo} to="/">
-            <div>Diplom</div>
+            <div>Білім</div>
           </Link>
           <div className={styles.buttons}>
             <span>Здравствуйте,</span> {userName}
