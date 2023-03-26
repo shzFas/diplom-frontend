@@ -36,6 +36,7 @@ import ModalMark from "./components/ModalMark";
 import ModalMarkDelete from "./components/ModalMarkDelete";
 import TableKTP from "./components/TableKTP";
 import JournalPeriod from "./components/JournalPeriod";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -167,6 +168,7 @@ function App() {
           </Container>
         </>
       )}
+      <Footer/>
     </>
   );
 }
