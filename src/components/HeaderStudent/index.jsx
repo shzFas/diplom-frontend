@@ -7,7 +7,7 @@ import styles from "./Header.module.scss";
 import Container from "@mui/material/Container";
 import { logout, logoutStudent } from "../../redux/slices/auth";
 
-export const Header = ({ userData }) => {
+export const HeaderStudent = ({ userData }) => {
   const dispatch = useDispatch();
   const [userName, setUserName] = useState("");
 

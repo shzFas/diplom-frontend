@@ -2,11 +2,11 @@ import { Alert, Button, Snackbar } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { logout } from "../../redux/slices/auth";
+import { logoutStudent } from "../../redux/slices/auth";
 import { url } from "../../url";
 import styles from "./UserMe.module.scss";
 
-function UserMe({
+function UserMeStudent({
   userData,
   setMessagePassword,
   setOpenSuccessChangePassword,
@@ -24,7 +24,7 @@ function UserMe({
     e.preventDefault();
 
     axios
-      .post(`${url}auth/change-password/teacher/${userData._id}`, {
+      .post(`${url}auth/change-password/student/${userData._id}`, {
         oldPassword: oldPassword,
         newPassword: newPassword,
       },
@@ -36,7 +36,7 @@ function UserMe({
       .then((data) => {
         setMessagePassword(data.data.message);
         setOpenSuccessChangePassword(true);
-        dispatch(logout());
+        dispatch(logoutStudent());
         window.localStorage.removeItem("token");
       })
       .catch((err) => {
@@ -104,4 +104,4 @@ function UserMe({
   );
 }
 
-export default UserMe;
+export default UserMeStudent;
