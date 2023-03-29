@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "@mui/material/Container";
@@ -37,6 +37,9 @@ import ModalMarkDelete from "./components/ModalMarkDelete";
 import TableKTP from "./components/TableKTP";
 import JournalPeriod from "./components/JournalPeriod";
 import Footer from "./components/Footer";
+import { Alert, Snackbar } from "@mui/material";
+import { HeaderStudent } from "./components/HeaderStudent";
+import UserMeStudent from "./components/UserMeStudent";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,11 +49,17 @@ function App() {
     (state) => state.auth.data || state.authStudent.data
   );
   const isAdmin = userData?.fullName === "admin";
+  const [openSuccessChangePassword, setOpenSuccessChangePassword] =
+    useState(false);
+  const [messagePassword, setMessagePassword] = useState("");
 
   useEffect(() => {
     dispatch(fetchAuthMe());
     dispatch(fetchAuthStudentMe());
   }, []);
+
+  const handleCloseSuccessPasswordChange = () =>
+    setOpenSuccessChangePassword(false);
 
   return (
     <>
@@ -84,11 +93,23 @@ function App() {
               {isAuthStudent ? (
                 <>
                   <Container className="main-container" maxWidth="lg">
-                    <Header userData={userData} />
+                    <HeaderStudent userData={userData} />
                     <Routes>
                       <Route
                         path="/"
                         element={<HomeStudent userData={userData} />}
+                      />
+                      <Route
+                        path="me"
+                        element={
+                          <UserMeStudent
+                            setOpenSuccessChangePassword={
+                              setOpenSuccessChangePassword
+                            }
+                            setMessagePassword={setMessagePassword}
+                            userData={userData}
+                          />
+                        }
                       />
                       <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
@@ -141,7 +162,15 @@ function App() {
                         </Route>
                         <Route
                           path="me"
-                          element={<UserMe userData={userData} />}
+                          element={
+                            <UserMe
+                              setOpenSuccessChangePassword={
+                                setOpenSuccessChangePassword
+                              }
+                              setMessagePassword={setMessagePassword}
+                              userData={userData}
+                            />
+                          }
                         />
                       </Route>
                       <Route path="*" element={<Navigate to="/" />} />
@@ -165,7 +194,20 @@ function App() {
           </Container>
         </>
       )}
-      <Footer/>
+      <Footer />
+      <Snackbar
+        open={openSuccessChangePassword}
+        autoHideDuration={6000}
+        onClose={handleCloseSuccessPasswordChange}
+      >
+        <Alert
+          onClose={handleCloseSuccessPasswordChange}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          {messagePassword}
+        </Alert>
+      </Snackbar>
     </>
   );
 }
