@@ -10,13 +10,10 @@ function Mark({ studentId, ktpId, modal, setMarkValue, isLoading, modalDelete })
 
   useEffect(() => {
     axios.get(`${url}mark/${studentId}/${ktpId}`).then((data) => {
-      if (data.data.length > 0) {
-        setMark(data.data);
-        setMarkValue(true);
-      }
       setMark(data.data);
-    });
-  }, [modal, modalDelete, location]);
+      setMarkValue(true);
+    })
+  }, [modal, modalDelete, location, setMarkValue]);
 
   const validationMark = (mark) => {
     if (mark === 0) {

@@ -51,7 +51,7 @@ function Journal({ userData }) {
   }, [urlLink]);
 
   useEffect(() => {
-    if (markValue === true || studentValue === true && ktpValue === true) setIsLoading(false);
+    if (studentValue && ktpValue || markValue) setIsLoading(false);
   }, [studentValue, ktpValue, markValue]);
 
   const handleModalMark = () => setModal(true);

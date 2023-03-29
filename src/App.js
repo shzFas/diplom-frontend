@@ -52,9 +52,6 @@ function App() {
     dispatch(fetchAuthStudentMe());
   }, []);
 
-  console.log(isAuth);
-  console.log(isAuthStudent);
-
   return (
     <>
       {isAuth || isAuthStudent ? (
