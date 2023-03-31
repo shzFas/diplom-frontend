@@ -106,6 +106,16 @@ export const PredmetPage = () => {
     } catch (err) {}
   };
 
+  function sortClass(a, b) {
+    if (a.className < b.className) {
+      return -1;
+    }
+    if (a.className > b.className) {
+      return 1;
+    }
+    return 0;
+  }
+
   return (
     <div>
       {loading ? (
@@ -125,7 +135,7 @@ export const PredmetPage = () => {
             </Button>
           </div>
           <div className={styles.predmetList__inner}>
-            {predmet?.classes.map((data) => (
+            {predmet?.classes.sort(sortClass).map((data) => (
               <Card key={data._id} className={styles.predmetList__item}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
