@@ -11,8 +11,9 @@ a {
 }
 
 .main__menu {
-  display: flex;
-  flex-wrap: wrap;
+  display: block ruby;
+  overflow-x: scroll;
+  padding-bottom: 10px;
 }
 
 .predmetList__btn {

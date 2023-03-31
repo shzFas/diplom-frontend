@@ -18,6 +18,7 @@ import {
   StudentRegisterForm,
   TeacherList,
   TeacherRegisterForm,
+  UserAdmin,
 } from "./components/Admin";
 import {
   fetchAuthMe,
@@ -82,6 +83,18 @@ function App() {
                     <Route
                       path="register/student"
                       element={<StudentRegisterForm />}
+                    />
+                    <Route
+                      path="me"
+                      element={
+                        <UserAdmin
+                          setOpenSuccessChangePassword={
+                            setOpenSuccessChangePassword
+                          }
+                          setMessagePassword={setMessagePassword}
+                          userData={userData}
+                        />
+                      }
                     />
                   </Route>
                   <Route path="*" element={<Navigate to="/" />} />
