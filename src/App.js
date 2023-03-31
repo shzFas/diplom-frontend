@@ -14,10 +14,13 @@ import {
 import {
   ClassList,
   PredmetForm,
+  PredmetList,
+  PredmetPage,
   StudentList,
   StudentRegisterForm,
   TeacherList,
   TeacherRegisterForm,
+  UserAdmin,
 } from "./components/Admin";
 import {
   fetchAuthMe,
@@ -82,6 +85,23 @@ function App() {
                     <Route
                       path="register/student"
                       element={<StudentRegisterForm />}
+                    />
+                    <Route
+                      path="me"
+                      element={
+                        <UserAdmin
+                          setOpenSuccessChangePassword={
+                            setOpenSuccessChangePassword
+                          }
+                          setMessagePassword={setMessagePassword}
+                          userData={userData}
+                        />
+                      }
+                    />
+                    <Route path="predmets" element={<PredmetList />} />
+                    <Route
+                      path="predmet/info/:predmetId"
+                      element={<PredmetPage />}
                     />
                   </Route>
                   <Route path="*" element={<Navigate to="/" />} />

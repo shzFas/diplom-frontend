@@ -1,0 +1,17 @@
+.predmetList__inner {
+  display: grid;
+  grid-template-columns: repeat(1, 100%);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.gridClasses {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 1rem;
+  margin-bottom: 20px;
+}
+
+.btnOk {
+  margin-right: 10px !important;
+}
