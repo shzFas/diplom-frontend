@@ -14,6 +14,8 @@ import {
 import {
   ClassList,
   PredmetForm,
+  PredmetList,
+  PredmetPage,
   StudentList,
   StudentRegisterForm,
   TeacherList,
@@ -95,6 +97,11 @@ function App() {
                           userData={userData}
                         />
                       }
+                    />
+                    <Route path="predmets" element={<PredmetList />} />
+                    <Route
+                      path="predmet/info/:predmetId"
+                      element={<PredmetPage />}
                     />
                   </Route>
                   <Route path="*" element={<Navigate to="/" />} />
