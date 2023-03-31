@@ -1,0 +1,14 @@
+export { FinalMark } from "./FinalMark";
+export { Journal } from "./Journal";
+export { JournalPeriod } from "./JournalPeriod";
+export { KTP } from "./KTP";
+export { KTPClass } from "./KTPClass";
+export { KTPForm } from "./KTPForm";
+export { Mark } from "./Mark";
+export { ProgressReload } from "./ProgressReload";
+export { ModalMark } from "./ModalMark";
+export { ModalMarkDelete } from "./ModalMarkDelete";
+export { TableKTP } from "./TableKTP";
+export { PredmetClassList } from "./PredmetClassList";
+export { PredmetTeacher } from "./PredmetTeacher";
+export { UserMe } from "./UserMe";

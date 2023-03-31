@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "@mui/material/Container";
-import { Header } from "./components/Header";
+import { Alert, Snackbar } from "@mui/material";
+import { Header, Footer } from "./components/Global";
 import {
   Home,
   HomeAdmin,
@@ -23,26 +24,25 @@ import {
   UserAdmin,
 } from "./components/Admin";
 import {
+  Journal,
+  JournalPeriod,
+  KTP,
+  KTPClass,
+  KTPForm,
+  ModalMark,
+  ModalMarkDelete,
+  PredmetClassList,
+  PredmetTeacher,
+  TableKTP,
+  UserMe,
+} from "./components/Teacher";
+import { HeaderStudent, UserMeStudent } from "./components/Student";
+import {
   fetchAuthMe,
   fetchAuthStudentMe,
   selectIsAuth,
   selectIsAuthStudent,
 } from "./redux/slices/auth";
-import PredmetTeacher from "./components/PredmetTeacher";
-import PredmetClassList from "./components/PredmetClassList";
-import KTP from "./components/KTP";
-import KTPClass from "./components/KTPClass";
-import KTPForm from "./components/KTPForm";
-import UserMe from "./components/UserMe";
-import Journal from "./components/Journal";
-import ModalMark from "./components/ModalMark";
-import ModalMarkDelete from "./components/ModalMarkDelete";
-import TableKTP from "./components/TableKTP";
-import JournalPeriod from "./components/JournalPeriod";
-import Footer from "./components/Footer";
-import { Alert, Snackbar } from "@mui/material";
-import { HeaderStudent } from "./components/HeaderStudent";
-import UserMeStudent from "./components/UserMeStudent";
 
 function App() {
   const dispatch = useDispatch();
