@@ -11,12 +11,12 @@ import {
 import { Box } from "@mui/system";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { url } from "../../../url";
 import { styleModal } from "./stylemodal";
 import styles from "./PredmetPage.module.scss";
 
-export const PredmetPage = () => {
+export const PredmetPage = ({ setOpenDeletePredmet }) => {
   const predmetId = useParams();
   const [predmet, setPredmet] = useState([]);
   const [classes, setClasses] = useState([]);
@@ -29,6 +29,7 @@ export const PredmetPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [classId, setClassId] = useState("");
+  const [deletePredmet, setDeletePredmet] = useState(false);
 
   const handleModalClass = () => setModal(true);
   const handleModalClassClose = () => setModal(false);
@@ -106,6 +107,15 @@ export const PredmetPage = () => {
     } catch (err) {}
   };
 
+  const handleDeletePredmet = async () => {
+    await axios
+      .delete(`${url}delete/predmet/${predmetId.predmetId}`)
+      .then(() => {
+        setDeletePredmet(true);
+        setOpenDeletePredmet(true);
+      });
+  };
+
   function sortClass(a, b) {
     if (a.className < b.className) {
       return -1;
@@ -115,6 +125,8 @@ export const PredmetPage = () => {
     }
     return 0;
   }
+
+  if (deletePredmet) return <Navigate to="/predmets" />;
 
   return (
     <div>
@@ -132,6 +144,14 @@ export const PredmetPage = () => {
               onClick={handleModalClass}
             >
               Добавить класс
+            </Button>
+            <Button
+              color="error"
+              variant="contained"
+              onClick={handleDeletePredmet}
+              className={styles.btnDeletePredmet}
+            >
+              Удалить предмет
             </Button>
           </div>
           <div className={styles.predmetList__inner}>

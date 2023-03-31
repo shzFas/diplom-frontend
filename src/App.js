@@ -55,6 +55,10 @@ function App() {
   const [openSuccessChangePassword, setOpenSuccessChangePassword] =
     useState(false);
   const [messagePassword, setMessagePassword] = useState("");
+  const [openDeletePredmet, setOpenDeletePredmet] = useState(false);
+
+  const handleCloseSuccessPredmetDeleteError = () =>
+    setOpenDeletePredmet(false);
 
   useEffect(() => {
     dispatch(fetchAuthMe());
@@ -98,10 +102,24 @@ function App() {
                         />
                       }
                     />
-                    <Route path="predmets" element={<PredmetList />} />
+                    <Route
+                      path="predmets"
+                      element={
+                        <PredmetList
+                          openDeletePredmet={openDeletePredmet}
+                          handleCloseSuccessPredmetDeleteError={
+                            handleCloseSuccessPredmetDeleteError
+                          }
+                        />
+                      }
+                    />
                     <Route
                       path="predmet/info/:predmetId"
-                      element={<PredmetPage />}
+                      element={
+                        <PredmetPage
+                          setOpenDeletePredmet={setOpenDeletePredmet}
+                        />
+                      }
                     />
                   </Route>
                   <Route path="*" element={<Navigate to="/" />} />
