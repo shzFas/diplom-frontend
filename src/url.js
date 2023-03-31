@@ -1,1 +1,1 @@
-export const url = `http://localhost:4444/`
+export const url = `https://diplom-backend.onrender.com/`
