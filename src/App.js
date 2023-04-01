@@ -18,6 +18,7 @@ import {
   PredmetList,
   PredmetPage,
   StudentList,
+  StudentProfile,
   StudentRegisterForm,
   TeacherList,
   TeacherRegisterForm,
@@ -89,6 +90,10 @@ function App() {
                     <Route
                       path="register/student"
                       element={<StudentRegisterForm />}
+                    />
+                    <Route
+                      path="student/info/:studentId"
+                      element={<StudentProfile />}
                     />
                     <Route
                       path="me"
