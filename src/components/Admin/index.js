@@ -6,4 +6,5 @@ export { PredmetList } from "./PredmetList";
 export { PredmetPage } from "./PredmetPage";
 export { TeacherRegisterForm } from "./TeacherRegisterForm";
 export { StudentRegisterForm } from "./StudentRegisterForm";
+export { StudentProfile } from "./StudentProfile";
 export { UserAdmin } from "./UserAdmin";
