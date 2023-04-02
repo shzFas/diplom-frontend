@@ -57,9 +57,14 @@ function App() {
     useState(false);
   const [messagePassword, setMessagePassword] = useState("");
   const [openDeletePredmet, setOpenDeletePredmet] = useState(false);
+  const [openKickStudent, setOpenKickStudent] = useState(false);
+  const [openChangeClass, setOpenChangeClass] = useState(false);
 
   const handleCloseSuccessPredmetDeleteError = () =>
     setOpenDeletePredmet(false);
+
+  const handleCloseKickSnackClose = () => setOpenKickStudent(false);
+  const handleCloseChangeClass = () => setOpenChangeClass(false);
 
   useEffect(() => {
     dispatch(fetchAuthMe());
@@ -93,7 +98,12 @@ function App() {
                     />
                     <Route
                       path="student/info/:studentId"
-                      element={<StudentProfile />}
+                      element={
+                        <StudentProfile
+                          setOpenChangeClass={setOpenChangeClass}
+                          setOpenKickStudent={setOpenKickStudent}
+                        />
+                      }
                     />
                     <Route
                       path="me"
@@ -249,6 +259,32 @@ function App() {
           sx={{ width: "100%" }}
         >
           {messagePassword}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openKickStudent}
+        autoHideDuration={6000}
+        onClose={handleCloseKickSnackClose}
+      >
+        <Alert
+          onClose={handleCloseKickSnackClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Студент отчислен
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openChangeClass}
+        autoHideDuration={6000}
+        onClose={handleCloseChangeClass}
+      >
+        <Alert
+          onClose={handleCloseChangeClass}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Класс студента изменен
         </Alert>
       </Snackbar>
     </>
