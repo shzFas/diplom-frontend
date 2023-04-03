@@ -21,6 +21,7 @@ import {
   StudentProfile,
   StudentRegisterForm,
   TeacherList,
+  TeacherProfile,
   TeacherRegisterForm,
   UserAdmin,
 } from "./components/Admin";
@@ -59,11 +60,15 @@ function App() {
   const [openDeletePredmet, setOpenDeletePredmet] = useState(false);
   const [openKickStudent, setOpenKickStudent] = useState(false);
   const [openChangeClass, setOpenChangeClass] = useState(false);
+  const [openKickTeacher, setOpenKickTeacher] = useState(false);
 
   const handleCloseSuccessPredmetDeleteError = () =>
     setOpenDeletePredmet(false);
 
-  const handleCloseKickSnackClose = () => setOpenKickStudent(false);
+  const handleCloseKickSnackClose = () => {
+    setOpenKickTeacher(false);
+    setOpenKickStudent(false);
+  };
   const handleCloseChangeClass = () => setOpenChangeClass(false);
 
   useEffect(() => {
@@ -102,6 +107,14 @@ function App() {
                         <StudentProfile
                           setOpenChangeClass={setOpenChangeClass}
                           setOpenKickStudent={setOpenKickStudent}
+                        />
+                      }
+                    />
+                    <Route
+                      path="teacher/info/:teacherId"
+                      element={
+                        <TeacherProfile
+                          setOpenKickTeacher={setOpenKickTeacher}
                         />
                       }
                     />
@@ -272,6 +285,19 @@ function App() {
           sx={{ width: "100%" }}
         >
           Студент отчислен
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openKickTeacher}
+        autoHideDuration={6000}
+        onClose={handleCloseKickSnackClose}
+      >
+        <Alert
+          onClose={handleCloseKickSnackClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Преподаватель уволен
         </Alert>
       </Snackbar>
       <Snackbar
