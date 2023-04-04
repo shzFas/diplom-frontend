@@ -8,13 +8,16 @@ import Paper from "@mui/material/Paper";
 import { url } from "../../../url";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Button } from "@mui/material";
+import { Alert, Button, Snackbar } from "@mui/material";
 import styles from "./TableKTP.module.scss";
 import { Link, useParams } from "react-router-dom";
 
 export const TableKTP = ({ urlLink, alertOpen }) => {
   const urlLinkPeriod = useParams();
   const [ktp, setKtp] = useState([]);
+  const [deleteKtpMark, setDeleteKtpMark] = useState(false);
+
+  const handleCloseDeleteKtpClose = () => setDeleteKtpMark(false);
 
   useEffect(() => {
     axios
@@ -24,7 +27,7 @@ export const TableKTP = ({ urlLink, alertOpen }) => {
       .then((data) => {
         setKtp(data.data);
       });
-  }, [urlLink, alertOpen, urlLinkPeriod]);
+  }, [urlLink, alertOpen, urlLinkPeriod, deleteKtpMark]);
 
   function sortByDate(a, b) {
     return new Date(a.ktpDate).valueOf() - new Date(b.ktpDate).valueOf();
@@ -34,6 +37,12 @@ export const TableKTP = ({ urlLink, alertOpen }) => {
     if (e === "sor") return "СОР";
     if (e === "soch") return "СОЧ";
     if (e === "default") return "ФО";
+  };
+
+  const handlerDelete = (ktpId) => {
+    axios.delete(`${url}ktp/${ktpId}`).then(() => {
+      setDeleteKtpMark(true);
+    });
   };
 
   return (
@@ -64,6 +73,7 @@ export const TableKTP = ({ urlLink, alertOpen }) => {
                 <TableCell>Содержание урока</TableCell>
                 <TableCell>Дата проведения</TableCell>
                 <TableCell>Макс. балл</TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -78,11 +88,33 @@ export const TableKTP = ({ urlLink, alertOpen }) => {
                     {row.ktpDate.split("-").reverse().join(".")}
                   </TableCell>
                   <TableCell>{row.ktpMaxValue}</TableCell>
+                  <TableCell>
+                    <Button
+                      onClick={() => handlerDelete(row._id)}
+                      color="error"
+                      variant="contained"
+                    >
+                      Удалить
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
+        <Snackbar
+          open={deleteKtpMark}
+          autoHideDuration={6000}
+          onClose={handleCloseDeleteKtpClose}
+        >
+          <Alert
+            onClose={handleCloseDeleteKtpClose}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
+            КТП и все оценки за этот урок удалены
+          </Alert>
+        </Snackbar>
       </div>
     </>
   );
