@@ -38,7 +38,13 @@ import {
   TableKTP,
   UserMe,
 } from "./components/Teacher";
-import { HeaderStudent, UserMeStudent } from "./components/Student";
+import {
+  HeaderStudent,
+  ScoreBoard,
+  ScoreBoardPeriod,
+  StudentMain,
+  UserMeStudent,
+} from "./components/Student";
 import {
   fetchAuthMe,
   fetchAuthStudentMe,
@@ -164,7 +170,21 @@ function App() {
                       <Route
                         path="/"
                         element={<HomeStudent userData={userData} />}
-                      />
+                      >
+                        <Route
+                          path="/"
+                          element={<StudentMain userData={userData} />}
+                        />
+                      </Route>
+                      <Route
+                          path="/score/:predmetId"
+                          element={<ScoreBoardPeriod userData={userData} />}
+                      >
+                        <Route
+                          path=":period"
+                          element={<ScoreBoard userData={userData} />}
+                        />
+                      </Route>
                       <Route
                         path="me"
                         element={

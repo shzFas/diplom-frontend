@@ -1,0 +1,28 @@
+.predmetList__inner {
+  display: grid;
+  grid-template-columns: repeat(1, 100%);
+  gap: 20px;
+}
+.predmetList__item {
+  max-width: 100%;
+}
+.infoInner {
+  display: flex;
+  justify-content: space-between;
+}
+.infoPredmetWrapper {
+  text-align: right;
+}
+.infoTitle {
+  padding: 0;
+  margin: 0;
+}
+.infoPredmetInner {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+}
+.infoPredmet {
+  font-size: 14px;
+  line-height: 18px;
+}
