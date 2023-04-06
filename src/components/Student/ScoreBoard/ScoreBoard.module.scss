@@ -1,0 +1,40 @@
+.emptyMark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  img {
+    width: 100px;
+  }
+  h4 {
+    margin: 0;
+  }
+}
+
+.finalPeriod {
+  position: fixed;
+  bottom: 0;
+  transform: translateX(-50%);
+  left: 50%;
+  width: 80%;
+  background: #fff;
+  z-index: 10;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  height: 96.5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 720px) {
+  .finalPeriod {
+    height: 76.5px;
+  }
+}
