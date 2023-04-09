@@ -14,7 +14,7 @@ import { styleModal } from "./stylemodal";
 import { url } from "../../../url";
 import styles from "./ModalMark.module.scss";
 
-export const ModalMark = ({ handleModalMarkClose, open, setModal }) => {
+export const ModalMark = ({ handleModalMarkClose, open, setModal, t }) => {
   const urlLink = useParams();
   const [student, setStudent] = useState([]);
   const [alertOpen, setAlertOpen] = useState(false);
@@ -118,7 +118,9 @@ export const ModalMark = ({ handleModalMarkClose, open, setModal }) => {
                       onChange={handleMarkValue}
                       value={mark}
                     />
-                    <p>Максимальный балл за ФО: {urlLink.max} баллов</p>
+                    <p>
+                      {t("lessonMaxValue")} ФО: {urlLink.max}
+                    </p>
                   </>
                 ) : (
                   <>
@@ -132,13 +134,15 @@ export const ModalMark = ({ handleModalMarkClose, open, setModal }) => {
                       onChange={handleMarkValue}
                       value={mark}
                     />
-                    <p>Максимальный балл за СОР / СОЧ: {urlLink.max}</p>
+                    <p>
+                      {t("lessonMaxValue")} СОР / СОЧ: {urlLink.max}
+                    </p>
                   </>
                 )}
               </>
             )}
             <div className="">
-              Ученик отсутствовал
+              {t("setStudentFalse")}
               <Checkbox
                 value={studentFalse}
                 onChange={handleInputStudentFalse}
@@ -153,7 +157,7 @@ export const ModalMark = ({ handleModalMarkClose, open, setModal }) => {
                 variant="contained"
                 fullWidth
               >
-                Поставить оценку
+                {t("setMark")}
               </Button>
             </div>
             <div className="">
@@ -164,7 +168,7 @@ export const ModalMark = ({ handleModalMarkClose, open, setModal }) => {
                 variant="contained"
                 fullWidth
               >
-                Отмена
+                {t("cancel")}
               </Button>
             </div>
           </form>

@@ -4,7 +4,7 @@ import { url } from "../../../url";
 import { Alert, Button, Snackbar } from "@mui/material";
 import styles from "./TeacherRegisterForm.module.scss";
 
-export const TeacherRegisterForm = () => {
+export const TeacherRegisterForm = ({ t }) => {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
   const [error, setError] = useState("");
@@ -25,7 +25,10 @@ export const TeacherRegisterForm = () => {
     const predmetName = event.target.className;
     const checked = event.target.checked;
     if (checked) {
-      setCheckboxPredmet((prevClasses) => [...prevClasses, { _id, predmetName }]);
+      setCheckboxPredmet((prevClasses) => [
+        ...prevClasses,
+        { _id, predmetName },
+      ]);
     } else {
       setCheckboxPredmet((prevClasses) =>
         prevClasses.filter((c) => c.id !== _id && c.predmetName !== predmetName)
@@ -45,13 +48,13 @@ export const TeacherRegisterForm = () => {
             permission: checkboxPredmet,
           })
           .then(() => {
-            setTeacherEmail("")
-            setTeacherPassword("")
-            setTeacherName("")
+            setTeacherEmail("");
+            setTeacherPassword("");
+            setTeacherName("");
             setOpenSuccess(true);
           })
           .catch((err) => {
-            console.log(err)
+            console.log(err);
             setError(err.response.data[0].msg);
             setOpenError(true);
           });
@@ -71,15 +74,15 @@ export const TeacherRegisterForm = () => {
   return (
     <>
       <div className="">
-        <h1>Добавьте преподавателя</h1>
+        <h1>{t("addTeacher")}</h1>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="">
-          <p>Регистрация преподавателя: </p>
+          <p>{t("registerTeacher")}: </p>
         </div>
         <div>
-        <div className="">
-            <p>Почта: </p>
+          <div className="">
+            <p>{t("mail")}: </p>
           </div>
           <input
             className={styles.inputPredmet}
@@ -90,7 +93,7 @@ export const TeacherRegisterForm = () => {
             required
           />
           <div className="">
-            <p>Пароль: </p>
+            <p>{t("password")}: </p>
           </div>
           <input
             className={styles.inputPredmet}
@@ -101,7 +104,7 @@ export const TeacherRegisterForm = () => {
             required
           />
           <div className="">
-            <p>Фамилия Имя Преподавателя: </p>
+            <p>{t("teacherNameSurname")}: </p>
           </div>
           <input
             className={styles.inputPredmet}
@@ -114,7 +117,7 @@ export const TeacherRegisterForm = () => {
         </div>
         <div>
           <div className="">
-            <p>Список Предметов для преподавателя: </p>
+            <p>{t("predmetListTitle")}: </p>
           </div>
           <div className={styles.gridClasses}>
             {predmet.map((data) => (
@@ -131,7 +134,7 @@ export const TeacherRegisterForm = () => {
           </div>
         </div>
         <Button type="submit" variant="contained" color="success">
-          Зарегистрировать
+          {t("register")}
         </Button>
       </form>
       <Snackbar

@@ -51,8 +51,10 @@ import {
   selectIsAuth,
   selectIsAuthStudent,
 } from "./redux/slices/auth";
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
   const isAuthStudent = useSelector(selectIsAuthStudent);
@@ -85,6 +87,10 @@ function App() {
   const handleCloseSuccessPasswordChange = () =>
     setOpenSuccessChangePassword(false);
 
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+  };
+
   return (
     <>
       {isAuth || isAuthStudent ? (
@@ -92,25 +98,32 @@ function App() {
           {isAdmin ? (
             <>
               <Container className="main-container" maxWidth="lg">
-                <Header userData={userData} />
+                <Header t={t} userData={userData} />
                 <Routes>
-                  <Route path="/" element={<HomeAdmin userData={userData} />}>
-                    <Route path="student" element={<ClassList />} />
-                    <Route path="student/:classId" element={<StudentList />} />
-                    <Route path="teacher" element={<TeacherList />} />
-                    <Route path="predmet" element={<PredmetForm />} />
+                  <Route
+                    path="/"
+                    element={<HomeAdmin t={t} userData={userData} />}
+                  >
+                    <Route path="student" element={<ClassList t={t} />} />
+                    <Route
+                      path="student/:classId"
+                      element={<StudentList t={t} />}
+                    />
+                    <Route path="teacher" element={<TeacherList t={t} />} />
+                    <Route path="predmet" element={<PredmetForm t={t} />} />
                     <Route
                       path="register/teacher"
-                      element={<TeacherRegisterForm />}
+                      element={<TeacherRegisterForm t={t} />}
                     />
                     <Route
                       path="register/student"
-                      element={<StudentRegisterForm />}
+                      element={<StudentRegisterForm t={t} />}
                     />
                     <Route
                       path="student/info/:studentId"
                       element={
                         <StudentProfile
+                          t={t}
                           setOpenChangeClass={setOpenChangeClass}
                           setOpenKickStudent={setOpenKickStudent}
                         />
@@ -120,6 +133,7 @@ function App() {
                       path="teacher/info/:teacherId"
                       element={
                         <TeacherProfile
+                          t={t}
                           setOpenKickTeacher={setOpenKickTeacher}
                         />
                       }
@@ -128,6 +142,7 @@ function App() {
                       path="me"
                       element={
                         <UserAdmin
+                          t={t}
                           setOpenSuccessChangePassword={
                             setOpenSuccessChangePassword
                           }
@@ -140,6 +155,7 @@ function App() {
                       path="predmets"
                       element={
                         <PredmetList
+                          t={t}
                           openDeletePredmet={openDeletePredmet}
                           handleCloseSuccessPredmetDeleteError={
                             handleCloseSuccessPredmetDeleteError
@@ -151,6 +167,7 @@ function App() {
                       path="predmet/info/:predmetId"
                       element={
                         <PredmetPage
+                          t={t}
                           setOpenDeletePredmet={setOpenDeletePredmet}
                         />
                       }
@@ -165,30 +182,31 @@ function App() {
               {isAuthStudent ? (
                 <>
                   <Container className="main-container" maxWidth="lg">
-                    <HeaderStudent userData={userData} />
+                    <HeaderStudent t={t} userData={userData} />
                     <Routes>
                       <Route
                         path="/"
-                        element={<HomeStudent userData={userData} />}
+                        element={<HomeStudent t={t} userData={userData} />}
                       >
                         <Route
                           path="/"
-                          element={<StudentMain userData={userData} />}
+                          element={<StudentMain t={t} userData={userData} />}
                         />
                       </Route>
                       <Route
-                          path="/score/:predmetId"
-                          element={<ScoreBoardPeriod userData={userData} />}
+                        path="/score/:predmetId"
+                        element={<ScoreBoardPeriod t={t} userData={userData} />}
                       >
                         <Route
                           path=":period"
-                          element={<ScoreBoard userData={userData} />}
+                          element={<ScoreBoard t={t} userData={userData} />}
                         />
                       </Route>
                       <Route
                         path="me"
                         element={
                           <UserMeStudent
+                            t={t}
                             setOpenSuccessChangePassword={
                               setOpenSuccessChangePassword
                             }
@@ -204,24 +222,27 @@ function App() {
               ) : (
                 <>
                   <Container className="main-container" maxWidth="lg">
-                    <Header userData={userData} />
+                    <Header t={t} userData={userData} />
                     <Routes>
-                      <Route path="/" element={<Home userData={userData} />}>
+                      <Route
+                        path="/"
+                        element={<Home t={t} userData={userData} />}
+                      >
                         <Route
                           path="journal"
-                          element={<PredmetTeacher userData={userData} />}
+                          element={<PredmetTeacher t={t} userData={userData} />}
                         />
                         <Route
                           path="journal/:id"
-                          element={<PredmetClassList />}
+                          element={<PredmetClassList t={t} />}
                         />
                         <Route
                           path="journal/:id/:classId"
-                          element={<JournalPeriod />}
+                          element={<JournalPeriod t={t} />}
                         />
                         <Route
                           path="journal/:id/:classId/:period"
-                          element={<Journal userData={userData} />}
+                          element={<Journal t={t} userData={userData} />}
                         >
                           <Route
                             path=":studentId/:teacherId/:ktpId/:type/:max"
@@ -234,15 +255,15 @@ function App() {
                         </Route>
                         <Route
                           path="ktp"
-                          element={<KTP userData={userData} />}
+                          element={<KTP t={t} userData={userData} />}
                         />
                         <Route
                           path="ktp/:predmetId"
-                          element={<KTPClass userData={userData} />}
+                          element={<KTPClass t={t} userData={userData} />}
                         />
                         <Route
                           path="ktp/:predmetId/:classId"
-                          element={<KTPForm userData={userData} />}
+                          element={<KTPForm t={t} userData={userData} />}
                         >
                           <Route path="period/:period" element={<TableKTP />} />
                         </Route>
@@ -250,6 +271,7 @@ function App() {
                           path="me"
                           element={
                             <UserMe
+                              t={t}
                               setOpenSuccessChangePassword={
                                 setOpenSuccessChangePassword
                               }
@@ -271,8 +293,8 @@ function App() {
         <>
           <Container className="main-container" maxWidth="lg">
             <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/loginStudent" element={<LoginStudent />} />
+              <Route path="/login" element={<Login t={t} />} />
+              <Route path="/loginStudent" element={<LoginStudent t={t} />} />
               {/* <Route path="/register" element={<Registration />} /> */}
               {/* Доступно !, только с админ панели :) */}
               <Route path="*" element={<Navigate to="/login" />} />
@@ -280,7 +302,7 @@ function App() {
           </Container>
         </>
       )}
-      <Footer />
+      <Footer changeLanguage={changeLanguage} />
       <Snackbar
         open={openSuccessChangePassword}
         autoHideDuration={6000}

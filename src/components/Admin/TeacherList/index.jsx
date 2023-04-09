@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { url } from "../../../url";
 import styles from "./TeacherList.module.scss";
 
-export const TeacherList = () => {
+export const TeacherList = ({ t }) => {
   const [teacher, setTeacher] = useState([]);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export const TeacherList = () => {
   return (
     <div>
       <div className="permission__title">
-        <h1>Список учителей: </h1>
+        <h1>{t("teacherList")}: </h1>
       </div>
       <div className={styles.permission__inner}>
         {teacher
@@ -36,18 +36,23 @@ export const TeacherList = () => {
                     {data.fullName}
                   </Typography>
                   <div className={styles.infoPredmetWrapper}>
-                    <p className={styles.infoTitle}>Преподаватель: </p>
+                    <p className={styles.infoTitle}>{t("teachList")}: </p>
                     <div className={styles.infoPredmetInner}>
                       {data.permission.map((dataPermission) => (
-                        <span className={styles.infoPredmet}>{dataPermission.predmetName}</span>
+                        <span className={styles.infoPredmet}>
+                          {dataPermission.predmetName}
+                        </span>
                       ))}
                     </div>
                   </div>
                 </div>
               </CardContent>
               <CardActions>
-                <Link to={`/teacher/info/${data._id}`} className="permission__text">
-                  <Button size="small">Информация</Button>
+                <Link
+                  to={`/teacher/info/${data._id}`}
+                  className="permission__text"
+                >
+                  <Button size="small">{t("info")}</Button>
                 </Link>
               </CardActions>
             </Card>

@@ -17,7 +17,7 @@ import {
 import { Box } from "@mui/system";
 import { styleModal } from "./stylemodal";
 
-export const TeacherProfile = ({ setOpenKickTeacher }) => {
+export const TeacherProfile = ({ setOpenKickTeacher, t }) => {
   const urlLink = useParams();
   const [teacher, setTeacher] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -130,14 +130,14 @@ export const TeacherProfile = ({ setOpenKickTeacher }) => {
           variant="contained"
           color="success"
         >
-          Добавить предметы
+          {t("addPredmets")}
         </Button>
         <Button onClick={handleModalKick} variant="contained" color="error">
-          Уволить
+          {t("kickTeacher")}
         </Button>
       </div>
       <div className="">
-        <h3>Предметы: </h3>
+        <h3>{t("subjects")}: </h3>
       </div>
       <div className={styles.predmetList__inner}>
         {isLoading ? (
@@ -154,14 +154,14 @@ export const TeacherProfile = ({ setOpenKickTeacher }) => {
                     to={`/predmet/info/${data._id}`}
                     className="permission__text"
                   >
-                    <Button size="small">Информация</Button>
+                    <Button size="small">{t("info")}</Button>
                   </Link>
                   <Button
                     onClick={() => setPermissionId(data._id)}
                     color="error"
                     size="small"
                   >
-                    Удалить
+                    {t("delete")}
                   </Button>
                 </CardActions>
               </Card>
@@ -182,7 +182,7 @@ export const TeacherProfile = ({ setOpenKickTeacher }) => {
         <Box sx={styleModal}>
           <form onSubmit={handleSubmit}>
             <div className="">
-              <h1>Добавить предметы</h1>
+              <h1>{t("addPredmets")}</h1>
             </div>
             <div className={styles.gridClasses}>
               {predmet.map((data) => (
@@ -203,14 +203,14 @@ export const TeacherProfile = ({ setOpenKickTeacher }) => {
               color="success"
               className={styles.btnChange}
             >
-              Подтвердить
+              {t("accept")}
             </Button>
             <Button
               onClick={handleModalChangePermissionClose}
               variant="contained"
               color="error"
             >
-              Отмена
+              {t("cancel")}
             </Button>
           </form>
         </Box>
@@ -223,7 +223,7 @@ export const TeacherProfile = ({ setOpenKickTeacher }) => {
       >
         <Box sx={styleModal}>
           <div className="">
-            <h1>Отчислить</h1>
+            <h1>{t("kickTeacher")}</h1>
             <div className="">
               <Button
                 className={styles.btnKick}
@@ -231,7 +231,7 @@ export const TeacherProfile = ({ setOpenKickTeacher }) => {
                 variant="contained"
                 color="success"
               >
-                Подтвердить
+                {t("accept")}
               </Button>
             </div>
             <div className="">
@@ -241,7 +241,7 @@ export const TeacherProfile = ({ setOpenKickTeacher }) => {
                 variant="contained"
                 color="error"
               >
-                Отмена
+                {t("cancel")}
               </Button>
             </div>
           </div>

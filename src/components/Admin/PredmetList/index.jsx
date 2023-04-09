@@ -16,6 +16,7 @@ import styles from "./PredmetList.module.scss";
 export const PredmetList = ({
   openDeletePredmet,
   handleCloseSuccessPredmetDeleteError,
+  t,
 }) => {
   const [predmetList, setPredmetList] = useState([]);
 
@@ -28,7 +29,7 @@ export const PredmetList = ({
   return (
     <div>
       <div className="predmetList__title">
-        <h1>Предметы</h1>
+        <h1>{t("subjects")}</h1>
       </div>
       <div className={styles.predmetList__inner}>
         {predmetList.map((data) => (
@@ -43,7 +44,7 @@ export const PredmetList = ({
                 to={`/predmet/info/${data._id}`}
                 className="permission__text"
               >
-                <Button size="small">Информация</Button>
+                <Button size="small">{t("info")}</Button>
               </Link>
             </CardActions>
           </Card>

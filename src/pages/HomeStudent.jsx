@@ -1,12 +1,10 @@
-import { Link, Outlet } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Outlet } from "react-router-dom";
 
-export const HomeStudent = () => {
-
+export const HomeStudent = ({ t }) => {
   return (
     <>
       <div className="main__menu">
-        <h1>Мои предметы</h1>
+        <h1>{t("myPredmets")}</h1>
       </div>
       <Outlet />
     </>

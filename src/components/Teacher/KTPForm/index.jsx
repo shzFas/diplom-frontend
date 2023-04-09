@@ -11,7 +11,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export const KTPForm = ({ userData }) => {
+export const KTPForm = ({ userData, t }) => {
   const urlLink = useParams();
   const [classes, setClasses] = useState([]);
   const [predmet, setPredmet] = useState([]);
@@ -59,7 +59,7 @@ export const KTPForm = ({ userData }) => {
   };
 
   const handleInputKtpPeriod = (e) => {
-    setKtpPeriod(e.target.value)
+    setKtpPeriod(e.target.value);
   };
 
   const handleClose = (event, reason) => {
@@ -106,16 +106,17 @@ export const KTPForm = ({ userData }) => {
   return (
     <>
       <div>
-        <h1>Создайте план на урок:</h1>
+        <h1>{t("ktpFormTitle")}:</h1>
       </div>
       <div className={styles.title}>
         <p>
-          <span>{predmet.predmetName}</span> {classes.className} Класс
+          <span>{predmet.predmetName}</span> {classes.className}{" "}
+          {t("className")}
         </p>
       </div>
       <form onSubmit={handleSubmit} className={styles.form__inner}>
         <div className={styles.form__item}>
-          <p className={styles.form__label}>Тема урока</p>
+          <p className={styles.form__label}>{t("lessonTheme")}</p>
           <TextField
             type="text"
             required
@@ -125,7 +126,7 @@ export const KTPForm = ({ userData }) => {
           />
         </div>
         <div className={styles.form__item}>
-          <p className={styles.form__label}>Дата</p>
+          <p className={styles.form__label}>{t("lessonDate")}</p>
           <input
             className={styles.date_picker}
             required
@@ -135,34 +136,34 @@ export const KTPForm = ({ userData }) => {
           />
         </div>
         <div className={styles.form__item_sor}>
-          <p className={styles.form__label}>Тип урока</p>
+          <p className={styles.form__label}>{t("lessonType")}</p>
           <Select
             value={ktpSorSoch}
             onChange={handleInputKtpSorSoch}
             className={styles.form__switch}
           >
-            <MenuItem value="sor">СОР</MenuItem>
-            <MenuItem value="soch">СОЧ</MenuItem>
-            <MenuItem value="default">Обычный урок</MenuItem>
+            <MenuItem value="sor">{t("ktpSORDD")}</MenuItem>
+            <MenuItem value="soch">{t("ktpSOCHDD")}</MenuItem>
+            <MenuItem value="default">{t("ktpFODD")}</MenuItem>
           </Select>
         </div>
         <div className={styles.form__item_sor}>
-          <p className={styles.form__label}>Четверть</p>
+          <p className={styles.form__label}>{t("period")}</p>
           <Select
             value={ktpPeriod}
             onChange={handleInputKtpPeriod}
             className={styles.form__switch}
           >
-            <MenuItem value="1">1 четверть</MenuItem>
-            <MenuItem value="2">2 четверть</MenuItem>
-            <MenuItem value="3">3 четверть</MenuItem>
-            <MenuItem value="4">4 четверть</MenuItem>
+            <MenuItem value="1">1 {t("period")}</MenuItem>
+            <MenuItem value="2">2 {t("period")}</MenuItem>
+            <MenuItem value="3">3 {t("period")}</MenuItem>
+            <MenuItem value="4">4 {t("period")}</MenuItem>
           </Select>
         </div>
         {maxValue ? (
           <>
             <div className={styles.form__item}>
-              <p className={styles.form__label}>Максимальный балл</p>
+              <p className={styles.form__label}>{t("lessonMaxValue")}</p>
               <input
                 className={styles.date_picker}
                 required
@@ -179,11 +180,11 @@ export const KTPForm = ({ userData }) => {
         )}
         <div className={styles.form__item}>
           <Button type="submit" size="large" variant="contained" fullWidth>
-            Добавить тему урока
+            {t("ktpFormBtn")}
           </Button>
         </div>
       </form>
-      <TableKTP urlLink={urlLink} alertOpen={alertOpen} />
+      <TableKTP t={t} urlLink={urlLink} alertOpen={alertOpen} />
       <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           План успешно добавлен
@@ -200,5 +201,4 @@ export const KTPForm = ({ userData }) => {
       </Snackbar>
     </>
   );
-}
-
+};

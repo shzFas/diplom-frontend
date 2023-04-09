@@ -1,32 +1,32 @@
 import { Link, Outlet } from "react-router-dom";
 import { Button } from "@mui/material";
 
-export const HomeAdmin = () => {
+export const HomeAdmin = ({ t }) => {
   return (
     <>
       <div className="main__menu">
         <Link to="/student" className="predmetList__btn">
-          <Button variant="contained">Ученики</Button>
+          <Button variant="contained">{t("students")}</Button>
         </Link>
         <Link to="/teacher" className="predmetList__btn">
-          <Button variant="contained">Учителя</Button>
+          <Button variant="contained">{t("teachers")}</Button>
         </Link>
         <Link to="/predmets" className="predmetList__btn">
-          <Button variant="contained">Список предметов</Button>
+          <Button variant="contained">{t("predmetListTitle")}</Button>
         </Link>
         <Link to="/predmet" className="predmetList__btn">
           <Button color="success" variant="contained">
-            Добавить предмет
+            {t("predmetCreate")}
           </Button>
         </Link>
         <Link to="/register/teacher" className="predmetList__btn">
           <Button color="success" variant="contained">
-            Регистрация Учителя
+            {t("registerTeacher")}
           </Button>
         </Link>
         <Link to="/register/student" className="predmetList__btn">
           <Button color="success" variant="contained">
-            Регистрация Ученика
+            {t("registerStudent")}
           </Button>
         </Link>
       </div>

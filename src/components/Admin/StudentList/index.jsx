@@ -11,7 +11,7 @@ import { Link, useParams } from "react-router-dom";
 import { url } from "../../../url";
 import styles from "./StudentList.module.scss";
 
-export const StudentList = () => {
+export const StudentList = ({ t }) => {
   const urlLink = useParams();
   const [students, setStudents] = useState([]);
   const [className, setClassName] = useState("");
@@ -41,7 +41,9 @@ export const StudentList = () => {
   return (
     <div>
       <div className="permission__title">
-        <h1>Список учеников {className} класса: </h1>
+        <h1>
+          {t("studentsList")} {className} {t("className")}:{" "}
+        </h1>
       </div>
       <div className={styles.permission__inner}>
         {students.sort(sortByName).map((data) => (
@@ -52,8 +54,11 @@ export const StudentList = () => {
               </Typography>
             </CardContent>
             <CardActions>
-              <Link to={`/student/info/${data._id}`} className="permission__text">
-                <Button size="small">Информация</Button>
+              <Link
+                to={`/student/info/${data._id}`}
+                className="permission__text"
+              >
+                <Button size="small">{t("info")}</Button>
               </Link>
             </CardActions>
           </Card>

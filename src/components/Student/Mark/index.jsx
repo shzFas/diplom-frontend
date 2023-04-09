@@ -5,7 +5,7 @@ import { url } from "../../../url";
 import { typeLesson, handlerDate, markColor } from "../../../formater";
 import "./index.css";
 
-export const Mark = ({ data }) => {
+export const Mark = ({ data, t }) => {
   const [ktpTitle, setKtpTitle] = useState("");
   const [ktpDate, setKtpDate] = useState("");
 
@@ -21,10 +21,16 @@ export const Mark = ({ data }) => {
       <div className={styles.markElemInner}>
         <div className={styles.markTop}>
           <div className="">
-            <div className="">Тема: {ktpTitle}</div>
-            <div className="">Тип: {typeLesson(data.markSochSor)}</div>
+            <div className="">
+              {t("lessonTheme")}: {ktpTitle}
+            </div>
+            <div className="">
+              {t("lessonType")}: {typeLesson(data.markSochSor)}
+            </div>
           </div>
-          <div className="">Дата: {handlerDate(ktpDate)}</div>
+          <div className="">
+            {t("lessonDate")}: {handlerDate(ktpDate)}
+          </div>
         </div>
         <div className={styles.markBottom}>
           <div className="">
@@ -39,7 +45,9 @@ export const Mark = ({ data }) => {
               {data.markMaxValue}
             </span>
           </div>
-          <div className="">Выставлено: {handlerDate(data.createdAt)}</div>
+          <div className="">
+            {t("setMarkDiary")}: {handlerDate(data.createdAt)}
+          </div>
         </div>
       </div>
     </div>
