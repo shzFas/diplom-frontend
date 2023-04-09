@@ -12,7 +12,7 @@ import { Alert, Button, Snackbar } from "@mui/material";
 import styles from "./TableKTP.module.scss";
 import { Link, useParams } from "react-router-dom";
 
-export const TableKTP = ({ urlLink, alertOpen }) => {
+export const TableKTP = ({ urlLink, alertOpen, t }) => {
   const urlLinkPeriod = useParams();
   const [ktp, setKtp] = useState([]);
   const [deleteKtpMark, setDeleteKtpMark] = useState(false);
@@ -48,19 +48,21 @@ export const TableKTP = ({ urlLink, alertOpen }) => {
   return (
     <>
       <div className={styles.buttonLink}>
-        <p>Четверть {urlLinkPeriod?.period}</p>
+        <p>
+          {t("period")} {urlLinkPeriod?.period}
+        </p>
         <div className={styles.btnPeriod}>
           <Link to="period/1" className={styles.btnPeriodLink}>
-            <Button variant="contained">1 четверть</Button>
+            <Button variant="contained">1 {t("period")}</Button>
           </Link>
           <Link to="period/2" className={styles.btnPeriodLink}>
-            <Button variant="contained">2 четверть</Button>
+            <Button variant="contained">2 {t("period")}</Button>
           </Link>
           <Link to="period/3" className={styles.btnPeriodLink}>
-            <Button variant="contained">3 четверть</Button>
+            <Button variant="contained">3 {t("period")}</Button>
           </Link>
           <Link to="period/4" className={styles.btnPeriodLink}>
-            <Button variant="contained">4 четверть</Button>
+            <Button variant="contained">4 {t("period")}</Button>
           </Link>
         </div>
       </div>
@@ -69,10 +71,10 @@ export const TableKTP = ({ urlLink, alertOpen }) => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Тема урока</TableCell>
-                <TableCell>Содержание урока</TableCell>
-                <TableCell>Дата проведения</TableCell>
-                <TableCell>Макс. балл</TableCell>
+                <TableCell>{t("lessonTheme")}</TableCell>
+                <TableCell>{t("lessonType")}</TableCell>
+                <TableCell>{t("lessonDate")}</TableCell>
+                <TableCell>{t("lessonMaxValue")}</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
@@ -94,7 +96,7 @@ export const TableKTP = ({ urlLink, alertOpen }) => {
                       color="error"
                       variant="contained"
                     >
-                      Удалить
+                      {t("delete")}
                     </Button>
                   </TableCell>
                 </TableRow>

@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { url } from "../../../url";
 import styles from "./ClassList.module.scss";
 
-export const ClassList = () => {
+export const ClassList = ({ t }) => {
   const [classes, setClasses] = useState([]);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export const ClassList = () => {
   return (
     <div>
       <div className="permission__title">
-        <h1>Список классов: </h1>
+        <h1>{t("classList")}: </h1>
       </div>
       <div className={styles.permission__inner}>
         {classes.map((data) => (
@@ -35,7 +35,7 @@ export const ClassList = () => {
             </CardContent>
             <CardActions>
               <Link to={data._id} className="permission__text">
-                <Button size="small">Список учеников</Button>
+                <Button size="small">{t("studentsList")}</Button>
               </Link>
             </CardActions>
           </Card>

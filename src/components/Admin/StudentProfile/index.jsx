@@ -8,7 +8,11 @@ import { Button, Modal } from "@mui/material";
 import { Box } from "@mui/system";
 import { styleModal } from "./stylemodal";
 
-export const StudentProfile = ({ setOpenKickStudent, setOpenChangeClass }) => {
+export const StudentProfile = ({
+  setOpenKickStudent,
+  setOpenChangeClass,
+  t,
+}) => {
   const urlLink = useParams();
   const [studentInfo, setStudentInfo] = useState([]);
   const [classes, setClasses] = useState([]);
@@ -77,7 +81,9 @@ export const StudentProfile = ({ setOpenKickStudent, setOpenChangeClass }) => {
       </div>
       <div className={styles.studentInfoItemInfo}>
         <div className="">
-          <h2>{className.className} класс</h2>
+          <h2>
+            {className.className} {t("className")}
+          </h2>
         </div>
         <div className="">
           <h2>{studentInfo.email}</h2>
@@ -90,10 +96,10 @@ export const StudentProfile = ({ setOpenKickStudent, setOpenChangeClass }) => {
           variant="contained"
           color="success"
         >
-          Изменить класс
+          {t("changeClass")}
         </Button>
         <Button onClick={handleModalKick} variant="contained" color="error">
-          Отчислить
+          {t("kickStudent")}
         </Button>
       </div>
       <Modal
@@ -104,7 +110,7 @@ export const StudentProfile = ({ setOpenKickStudent, setOpenChangeClass }) => {
       >
         <Box sx={styleModal}>
           <div className="">
-            <h1>Отчислить</h1>
+            <h1>{t("kickStudent")}</h1>
             <div className="">
               <Button
                 className={styles.btnKick}
@@ -112,7 +118,7 @@ export const StudentProfile = ({ setOpenKickStudent, setOpenChangeClass }) => {
                 variant="contained"
                 color="success"
               >
-                Подтвердить
+                {t("accept")}
               </Button>
             </div>
             <div className="">
@@ -122,7 +128,7 @@ export const StudentProfile = ({ setOpenKickStudent, setOpenChangeClass }) => {
                 variant="contained"
                 color="error"
               >
-                Отмена
+                {t("cancel")}
               </Button>
             </div>
           </div>
@@ -137,7 +143,7 @@ export const StudentProfile = ({ setOpenKickStudent, setOpenChangeClass }) => {
         <Box sx={styleModal}>
           <form onSubmit={handleSubmitClass}>
             <div className="">
-              <h1>Изменить класс</h1>
+              <h1>{t("changeClass")}</h1>
             </div>
             <div className={styles.gridClasses}>
               {classes.map((data) => (
@@ -162,14 +168,14 @@ export const StudentProfile = ({ setOpenKickStudent, setOpenChangeClass }) => {
               color="success"
               className={styles.btnChange}
             >
-              Подтвердить
+              {t("accept")}
             </Button>
             <Button
               onClick={handleModalChangeClassClose}
               variant="contained"
               color="error"
             >
-              Отмена
+              {t("cancel")}
             </Button>
           </form>
         </Box>

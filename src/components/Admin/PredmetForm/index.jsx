@@ -4,7 +4,7 @@ import { url } from "../../../url";
 import { Alert, Button, Snackbar } from "@mui/material";
 import styles from "./PredmetForm.module.scss";
 
-export const PredmetForm = () => {
+export const PredmetForm = ({ t }) => {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
   const [error, setError] = useState("");
@@ -64,11 +64,11 @@ export const PredmetForm = () => {
   return (
     <>
       <div className="">
-        <h1>Добавьте предмет</h1>
+        <h1>{t("predmetCreate")}</h1>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="">
-          <p>Название предмета: </p>
+          <p>{t("predmetName")}: </p>
         </div>
         <div>
           <input
@@ -82,7 +82,7 @@ export const PredmetForm = () => {
         </div>
         <div>
           <div className="">
-            <p>Список классов: </p>
+            <p>{t("classList")}: </p>
           </div>
           <div className={styles.gridClasses}>
             {getClasses.map((data) => (
@@ -93,13 +93,15 @@ export const PredmetForm = () => {
                   className={data?.className}
                   onChange={handleCheckboxChange}
                 />
-                <label htmlFor="class1">{data?.className} Класс</label>
+                <label htmlFor="class1">
+                  {data?.className} {t("className")}
+                </label>
               </div>
             ))}
           </div>
         </div>
         <Button type="submit" variant="contained" color="success">
-          Добавить предмет
+          {t("addPredmet")}
         </Button>
       </form>
       <Snackbar

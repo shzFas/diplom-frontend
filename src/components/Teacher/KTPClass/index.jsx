@@ -11,7 +11,7 @@ import { Link, useParams } from "react-router-dom";
 import styles from "./KtpClass.module.scss";
 import { url } from "../../../url";
 
-export const KTPClass = () => {
+export const KTPClass = ({ t }) => {
   const idPredmet = useParams();
   const [predmetClass, setPredmetClass] = useState([]);
 
@@ -24,7 +24,7 @@ export const KTPClass = () => {
   return (
     <>
       <div className="predmetClass__title">
-        <h1>Список классов для КТП:</h1>
+        <h1>{t("classListKtp")}:</h1>
       </div>
       <div className={styles.predmetClass__inner}>
         {predmetClass.map((data) => {
@@ -37,7 +37,7 @@ export const KTPClass = () => {
               </CardContent>
               <CardActions>
                 <Link to={data._id} className="permission__text">
-                  <Button size="small">Журнал</Button>
+                  <Button size="small">{t("jounalBtn")}</Button>
                 </Link>
               </CardActions>
             </Card>

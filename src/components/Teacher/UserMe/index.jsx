@@ -10,6 +10,7 @@ export const UserMe = ({
   userData,
   setMessagePassword,
   setOpenSuccessChangePassword,
+  t,
 }) => {
   const token = localStorage?.token;
   const dispatch = useDispatch();
@@ -50,11 +51,11 @@ export const UserMe = ({
 
   return (
     <div className="">
-      <h1>Изменить пароль</h1>
+      <h1>{t("passwordChange")}</h1>
       <form onSubmit={handleSubmitChangePassword}>
         <div className="">
           <div className="">
-            <p>Старый пароль: </p>
+            <p>{t("passwordOld")}: </p>
           </div>
           <input
             className={styles.inputPassword}
@@ -68,7 +69,7 @@ export const UserMe = ({
         </div>
         <div className="">
           <div className="">
-            <p>Новый пароль: </p>
+            <p>{t("passwordNew")}: </p>
           </div>
           <input
             className={styles.inputPassword}
@@ -87,7 +88,7 @@ export const UserMe = ({
           variant="contained"
           color="success"
         >
-          Изменить пароль
+          {t("passwordChange")}
         </Button>
       </form>
       <Snackbar

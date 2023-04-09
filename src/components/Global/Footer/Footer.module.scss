@@ -8,6 +8,7 @@
     left: 50%;
     transform: translateX(-50%);
     box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
+    z-index: 20;
 }
 
 .footerInner {
@@ -33,6 +34,15 @@
         height: 40px;
         cursor: pointer;
     }
+}
+
+.langBtn {
+    margin-right: 20px;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
 
 @media (max-width: 720px) {

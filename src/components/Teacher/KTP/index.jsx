@@ -10,11 +10,11 @@ import { Link } from "react-router-dom";
 import photoPredmet from "../../../assets/predmetPastePhoto.jpg";
 import styles from "./Ktp.module.scss";
 
-export const KTP = ({ userData }) => {
+export const KTP = ({ userData, t }) => {
   return (
     <div>
       <div className="permission__title">
-        <h1>КТП для предметов:</h1>
+        <h1>{t("ktpTitle")}:</h1>
       </div>
       <div className={styles.permission__inner}>
         {userData.permission.map((data) => {
@@ -28,7 +28,7 @@ export const KTP = ({ userData }) => {
               </CardContent>
               <CardActions>
                 <Link to={data._id} className="permission__text">
-                  <Button size="small">Список классов</Button>
+                  <Button size="small">{t("classList")}</Button>
                 </Link>
               </CardActions>
             </Card>

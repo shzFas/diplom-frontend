@@ -6,7 +6,7 @@ import styles from "./Header.module.scss";
 import Container from "@mui/material/Container";
 import { logout, logoutStudent } from "../../../redux/slices/auth";
 
-export const Header = ({ userData }) => {
+export const Header = ({ userData, t }) => {
   const dispatch = useDispatch();
   const [userName, setUserName] = useState("");
 
@@ -38,9 +38,9 @@ export const Header = ({ userData }) => {
             <div>Білім</div>
           </Link>
           <div className={styles.buttons}>
-            <span>Здравствуйте,</span> <Link to="/me">{userName}</Link>
+            <span>{t("helloText")},</span> <Link to="/me">{userName}</Link>
             <Button onClick={onClickLogout} variant="contained" color="error">
-              Выйти
+              {t("logout")}
             </Button>
           </div>
         </div>

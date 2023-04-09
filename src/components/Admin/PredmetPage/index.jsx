@@ -16,7 +16,7 @@ import { url } from "../../../url";
 import { styleModal } from "./stylemodal";
 import styles from "./PredmetPage.module.scss";
 
-export const PredmetPage = ({ setOpenDeletePredmet }) => {
+export const PredmetPage = ({ setOpenDeletePredmet, t }) => {
   const predmetId = useParams();
   const [predmet, setPredmet] = useState([]);
   const [classes, setClasses] = useState([]);
@@ -143,7 +143,7 @@ export const PredmetPage = ({ setOpenDeletePredmet }) => {
               variant="contained"
               onClick={handleModalClass}
             >
-              Добавить класс
+              {t("addClass")}
             </Button>
             <Button
               color="error"
@@ -151,7 +151,7 @@ export const PredmetPage = ({ setOpenDeletePredmet }) => {
               onClick={handleDeletePredmet}
               className={styles.btnDeletePredmet}
             >
-              Удалить предмет
+              {t("delete")} {t("subject")}
             </Button>
           </div>
           <div className={styles.predmetList__inner}>
@@ -168,7 +168,7 @@ export const PredmetPage = ({ setOpenDeletePredmet }) => {
                     variant="contained"
                     color="error"
                   >
-                    Удалить
+                    {t("delete")}
                   </Button>
                 </CardActions>
               </Card>
@@ -185,7 +185,7 @@ export const PredmetPage = ({ setOpenDeletePredmet }) => {
         <Box sx={styleModal}>
           <form onSubmit={handleSubmit}>
             <div className="">
-              <h1>Добавьте классы</h1>
+              <h1>{t("addClass")}</h1>
             </div>
             <div className={styles.gridClasses}>
               {getClasses.map((data) => (
@@ -196,7 +196,9 @@ export const PredmetPage = ({ setOpenDeletePredmet }) => {
                     className={data?.className}
                     onChange={handleCheckboxChange}
                   />
-                  <label htmlFor="class1">{data?.className} Класс</label>
+                  <label htmlFor="class1">
+                    {data?.className} {t("className")}
+                  </label>
                 </div>
               ))}
             </div>
@@ -206,14 +208,14 @@ export const PredmetPage = ({ setOpenDeletePredmet }) => {
               color="success"
               className={styles.btnOk}
             >
-              Подтвердить
+              {t("accept")}
             </Button>
             <Button
               onClick={handleModalClassClose}
               variant="contained"
               color="error"
             >
-              Отмена
+              {t("cancel")}
             </Button>
           </form>
         </Box>

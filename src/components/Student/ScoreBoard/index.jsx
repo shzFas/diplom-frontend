@@ -6,7 +6,7 @@ import emptyMark from "../../../assets/emptyMark.svg";
 import styles from "./ScoreBoard.module.scss";
 import { FinalMark, Mark } from "../index";
 
-export const ScoreBoard = ({ userData }) => {
+export const ScoreBoard = ({ userData, t }) => {
   const urlLink = useParams();
   const [mark, setMark] = useState([]);
   const [empty, setEmpty] = useState(false);
@@ -29,13 +29,15 @@ export const ScoreBoard = ({ userData }) => {
   return (
     <div>
       <div className="">
-        <h3>{urlLink.period} четверть</h3>
+        <h3>
+          {urlLink.period} {t("period")}
+        </h3>
       </div>
       {empty ? (
         <>
           <div className={styles.innerMarkList}>
             {mark.map((data) => (
-              <Mark key={data._id} data={data} />
+              <Mark t={t} key={data._id} data={data} />
             ))}
           </div>
         </>
@@ -44,7 +46,7 @@ export const ScoreBoard = ({ userData }) => {
           <div className={styles.emptyMark}>
             <img src={emptyMark} alt="" />
             <div className="">
-              <h4>Оценок - нет</h4>
+              <h4>{t("noMarks")}</h4>
             </div>
           </div>
         </>

@@ -4,7 +4,7 @@ import { url } from "../../../url";
 import { Alert, Button, Snackbar } from "@mui/material";
 import styles from "./StudentRegisterForm.module.scss";
 
-export const StudentRegisterForm = () => {
+export const StudentRegisterForm = ({ t }) => {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
   const [error, setError] = useState("");
@@ -38,7 +38,7 @@ export const StudentRegisterForm = () => {
             setOpenSuccess(true);
           })
           .catch((err) => {
-            console.log(err)
+            console.log(err);
             setError(err.response.data[0].msg);
             setOpenError(true);
           });
@@ -58,15 +58,15 @@ export const StudentRegisterForm = () => {
   return (
     <>
       <div className="">
-        <h1>Добавьте ученика</h1>
+        <h1>{t("addStudent")}</h1>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="">
-          <p>Регистрация Ученика: </p>
+          <p>{t("registerStudent")}: </p>
         </div>
         <div>
           <div className="">
-            <p>Почта: </p>
+            <p>{t("mail")}: </p>
           </div>
           <input
             className={styles.inputPredmet}
@@ -77,7 +77,7 @@ export const StudentRegisterForm = () => {
             required
           />
           <div className="">
-            <p>Пароль: </p>
+            <p>{t("password")}: </p>
           </div>
           <input
             className={styles.inputPredmet}
@@ -88,7 +88,7 @@ export const StudentRegisterForm = () => {
             required
           />
           <div className="">
-            <p>Фамилия Имя Ученика: </p>
+            <p>{t("studentNameSurname")}: </p>
           </div>
           <input
             className={styles.inputPredmet}
@@ -101,7 +101,7 @@ export const StudentRegisterForm = () => {
         </div>
         <div>
           <div className="">
-            <p>Список Классов (не больше 1): </p>
+            <p>{t("classList")}: </p>
           </div>
           <div className={styles.gridClasses}>
             {classes.map((data) => (
@@ -113,14 +113,14 @@ export const StudentRegisterForm = () => {
                     value={data._id}
                     onChange={(event) => setCheckboxClasses(event.target.value)}
                   />
-                  {data.className}
+                  {data.className} {t("className")}
                 </label>
               </div>
             ))}
           </div>
         </div>
         <Button type="submit" variant="contained" color="success">
-          Зарегистрировать
+          {t("register")}
         </Button>
       </form>
       <Snackbar

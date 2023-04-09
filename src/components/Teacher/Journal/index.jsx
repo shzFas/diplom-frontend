@@ -23,7 +23,7 @@ import {
   ProgressReload,
 } from "../index.js";
 
-export const Journal = ({ userData }) => {
+export const Journal = ({ userData, t }) => {
   const urlLink = useParams();
   const [ktp, setKtp] = useState([]);
   const [ktpValue, setKtpValue] = useState(false);
@@ -100,7 +100,7 @@ export const Journal = ({ userData }) => {
                 <TableHead>
                   <TableRow>
                     <TableCell className={styles.tableItemScroll}>
-                      Ученики
+                      {t("students")}
                     </TableCell>
                     {ktp.sort(sortByDate).map((data) => {
                       return (
@@ -117,7 +117,7 @@ export const Journal = ({ userData }) => {
                       Итог:
                     </TableCell>
                     <TableCell className={styles.tableItemScrollItog}>
-                      Рекомендуемая оценка:
+                      {t("markRecomendPeriod")}:
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -187,12 +187,14 @@ export const Journal = ({ userData }) => {
             handleModalMarkDelete={handleModalMark}
             open={modal}
             setModal={setModal}
+            t={t}
           />
           <ModalMarkDelete
             handleModalMarkDeleteClose={handleModalMarkDeleteClose}
             handleModalMarkDelete={handleModalMarkDelete}
             open={modalDelete}
             setModal={setModalDelete}
+            t={t}
           />
         </div>
       )}

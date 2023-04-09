@@ -6,7 +6,7 @@ import styles from "./ModalMarkDelete.module.scss";
 import axios from "axios";
 import { url } from "../../../url";
 
-export const ModalMarkDelete = ({ handleModalMarkDeleteClose, open }) => {
+export const ModalMarkDelete = ({ handleModalMarkDeleteClose, open, t }) => {
   const urlLink = useParams();
   const [alertOpen, setAlertOpen] = useState(false);
 
@@ -38,7 +38,7 @@ export const ModalMarkDelete = ({ handleModalMarkDeleteClose, open }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={styleModal}>
-          <div className={styles.title}>Удалить оценку</div>
+          <div className={styles.title}>{t("deleteMark")}</div>
           <form onSubmit={handleDelete}>
             <div className="">
               <Button
@@ -49,7 +49,7 @@ export const ModalMarkDelete = ({ handleModalMarkDeleteClose, open }) => {
                 className={styles.buttonMarkForm}
                 type="submit"
               >
-                Удалить
+                {t("delete")}
               </Button>
             </div>
             <div className="">
@@ -59,7 +59,7 @@ export const ModalMarkDelete = ({ handleModalMarkDeleteClose, open }) => {
                 variant="contained"
                 fullWidth
               >
-                Отмена
+                {t("cancel")}
               </Button>
             </div>
           </form>
