@@ -14,9 +14,19 @@ import { styleModal } from "./stylemodal";
 import { url } from "../../../url";
 import styles from "./ModalMark.module.scss";
 
-export const ModalMark = ({ handleModalMarkClose, open, setModal, t }) => {
+export const ModalMark = ({
+  handleModalMarkClose,
+  open,
+  setModal,
+  t,
+  studentName,
+  maxMarkValue,
+  ktpId,
+  typeLesson,
+  studentId,
+  teacherId,
+}) => {
   const urlLink = useParams();
-  const [student, setStudent] = useState([]);
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertErrorOpen, setAlertErrorOpen] = useState(false);
   const [studentFalse, setStudentFalse] = useState(false);
@@ -24,18 +34,12 @@ export const ModalMark = ({ handleModalMarkClose, open, setModal, t }) => {
   const [defaultLecture, setDefaultLecture] = useState(false);
 
   useEffect(() => {
-    axios.get(`${url}student/${urlLink?.studentId}`).then((data) => {
-      setStudent(data?.data);
-    });
-  }, [urlLink]);
-
-  useEffect(() => {
-    if (urlLink.type === "default") {
+    if (typeLesson === "default") {
       setDefaultLecture(true);
     } else {
       setDefaultLecture(false);
     }
-  }, [urlLink]);
+  }, [typeLesson]);
 
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
@@ -64,15 +68,15 @@ export const ModalMark = ({ handleModalMarkClose, open, setModal, t }) => {
     try {
       axios
         .post(`${url}marks`, {
-          markTeacher: urlLink.teacherId,
+          markTeacher: teacherId,
           markPredmet: urlLink.id,
-          markStudent: urlLink.studentId,
+          markStudent: studentId,
           markClassStudent: urlLink.classId,
-          markDate: urlLink.ktpId,
+          markDate: ktpId,
           markFalse: studentFalse,
-          markMaxValue: urlLink.max,
+          markMaxValue: maxMarkValue,
           markValue: mark,
-          markSochSor: urlLink.type,
+          markSochSor: typeLesson,
           markPeriod: urlLink.period,
         })
         .then((res) => {
@@ -99,7 +103,7 @@ export const ModalMark = ({ handleModalMarkClose, open, setModal, t }) => {
       >
         <Box sx={styleModal}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            <h3>{student.fullName}</h3>
+            <h3>{studentName}</h3>
           </Typography>
           <form onSubmit={handleSubmit}>
             {studentFalse ? (
@@ -114,12 +118,12 @@ export const ModalMark = ({ handleModalMarkClose, open, setModal, t }) => {
                       type="number"
                       required
                       min={1}
-                      max={urlLink.max}
+                      max={maxMarkValue}
                       onChange={handleMarkValue}
                       value={mark}
                     />
                     <p>
-                      {t("lessonMaxValue")} ФО: {urlLink.max}
+                      {t("lessonMaxValue")} ФО: {maxMarkValue}
                     </p>
                   </>
                 ) : (
@@ -130,12 +134,12 @@ export const ModalMark = ({ handleModalMarkClose, open, setModal, t }) => {
                       type="number"
                       required
                       min={1}
-                      max={urlLink.max}
+                      max={maxMarkValue}
                       onChange={handleMarkValue}
                       value={mark}
                     />
                     <p>
-                      {t("lessonMaxValue")} СОР / СОЧ: {urlLink.max}
+                      {t("lessonMaxValue")} СОР / СОЧ: {maxMarkValue}
                     </p>
                   </>
                 )}

@@ -1,20 +1,18 @@
 import { Alert, Box, Button, Modal, Snackbar } from "@mui/material";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import { styleModal } from "./stylemodal";
 import styles from "./ModalMarkDelete.module.scss";
 import axios from "axios";
 import { url } from "../../../url";
 
-export const ModalMarkDelete = ({ handleModalMarkDeleteClose, open, t }) => {
-  const urlLink = useParams();
+export const ModalMarkDelete = ({ handleModalMarkDeleteClose, open, t, ktpId, studentId }) => {
   const [alertOpen, setAlertOpen] = useState(false);
 
   const handleDelete = (e) => {
     e.preventDefault();
     try {
       axios
-        .delete(`${url}marks/${urlLink.idStudent}/${urlLink.idKtp}`)
+        .delete(`${url}marks/${studentId}/${ktpId}`)
         .then(() => {
           setAlertOpen(true);
           handleModalMarkDeleteClose();
