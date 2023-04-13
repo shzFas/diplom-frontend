@@ -45,6 +45,10 @@
     font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
 
+.langBtn:last-child {
+    margin-right: 0px;
+}
+
 @media (max-width: 720px) {
     .logoImg {
         img {
