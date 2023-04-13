@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import styles from "./Journal.module.scss";
 import { url } from "../../../url";
@@ -33,6 +33,12 @@ export const Journal = ({ userData, t }) => {
   const [modalDelete, setModalDelete] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [markValue, setMarkValue] = useState(false);
+  const [studentName, setStudentName] = useState("");
+  const [maxMarkValue, setMaxMarkValue] = useState(Number);
+  const [typeLesson, setTypeLesson] = useState("");
+  const [ktpId, setKtpId] = useState("");
+  const [teacherId, setTeacherId] = useState("");
+  const [studentId, setStudentId] = useState("");
 
   useEffect(() => {
     axios
@@ -60,11 +66,43 @@ export const Journal = ({ userData, t }) => {
     if ((studentValue && ktpValue) || markValue) setIsLoading(false);
   }, [studentValue, ktpValue, markValue]);
 
-  const handleModalMark = () => setModal(true);
-  const handleModalMarkClose = () => setModal(false);
+  const handleModalMark = (
+    fullnameStudent,
+    maxKtpValue,
+    ktpId,
+    typeLesson,
+    teacherId,
+    studentId
+  ) => {
+    setStudentName(fullnameStudent);
+    setMaxMarkValue(maxKtpValue);
+    setKtpId(ktpId);
+    setTypeLesson(typeLesson);
+    setTeacherId(teacherId);
+    setStudentId(studentId);
+    setModal(true);
+  };
 
-  const handleModalMarkDelete = () => setModalDelete(true);
-  const handleModalMarkDeleteClose = () => setModalDelete(false);
+  const handleModalMarkClose = () => {
+    setStudentName("");
+    setMaxMarkValue(Number);
+    setKtpId("");
+    setTypeLesson("");
+    setTeacherId("");
+    setStudentId("");
+    setModal(false);
+  };
+
+  const handleModalMarkDelete = (studentId, ktpId) => {
+    setStudentId(studentId);
+    setKtpId(ktpId);
+    setModalDelete(true);
+  };
+  const handleModalMarkDeleteClose = () => {
+    setStudentId("");
+    setKtpId("");
+    setModalDelete(false);
+  };
 
   function sortByDate(a, b) {
     return new Date(a.ktpDate).valueOf() - new Date(b.ktpDate).valueOf();
@@ -141,32 +179,31 @@ export const Journal = ({ userData, t }) => {
                         {ktp.map((mark) => (
                           <TableCell className={mark.ktpSorSoch} key={mark._id}>
                             <div className={styles.journal__mark}>
-                              <Link
-                                to={`delete/${data._id}/${mark._id}`}
-                                onClick={handleModalMarkDelete}
-                                className={styles.deleteFunction}
+                              <Mark
+                                key={mark._id + data._id}
+                                modal={modal}
+                                modalDelete={modalDelete}
+                                studentId={data._id}
+                                ktpId={mark._id}
+                                setMarkValue={setMarkValue}
+                                isLoading={isLoading}
+                                handleModalMarkDelete={handleModalMarkDelete}
+                              />
+                              <IconButton
+                                onClick={() =>
+                                  handleModalMark(
+                                    data.fullName,
+                                    mark.ktpMaxValue,
+                                    mark._id,
+                                    mark.ktpSorSoch,
+                                    userData._id,
+                                    data._id
+                                  )
+                                }
+                                color="success"
                               >
-                                <Mark
-                                  key={mark._id + data._id}
-                                  modal={modal}
-                                  modalDelete={modalDelete}
-                                  studentId={data._id}
-                                  ktpId={mark._id}
-                                  setMarkValue={setMarkValue}
-                                  isLoading={isLoading}
-                                />
-                              </Link>
-                              <Link
-                                to={`${data._id}/${userData._id}/${mark._id}/${mark.ktpSorSoch}/${mark.ktpMaxValue}`}
-                                className={`icon`}
-                              >
-                                <IconButton
-                                  onClick={handleModalMark}
-                                  color="success"
-                                >
-                                  <AddIcon />
-                                </IconButton>
-                              </Link>
+                                <AddIcon />
+                              </IconButton>
                             </div>
                           </TableCell>
                         ))}
@@ -188,6 +225,12 @@ export const Journal = ({ userData, t }) => {
             open={modal}
             setModal={setModal}
             t={t}
+            studentName={studentName}
+            maxMarkValue={maxMarkValue}
+            typeLesson={typeLesson}
+            ktpId={ktpId}
+            teacherId={teacherId}
+            studentId={studentId}
           />
           <ModalMarkDelete
             handleModalMarkDeleteClose={handleModalMarkDeleteClose}
@@ -195,6 +238,8 @@ export const Journal = ({ userData, t }) => {
             open={modalDelete}
             setModal={setModalDelete}
             t={t}
+            ktpId={ktpId}
+            studentId={studentId}
           />
         </div>
       )}

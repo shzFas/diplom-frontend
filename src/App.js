@@ -31,8 +31,6 @@ import {
   KTP,
   KTPClass,
   KTPForm,
-  ModalMark,
-  ModalMarkDelete,
   PredmetClassList,
   PredmetTeacher,
   TableKTP,
@@ -243,16 +241,7 @@ function App() {
                         <Route
                           path="journal/:id/:classId/:period"
                           element={<Journal t={t} userData={userData} />}
-                        >
-                          <Route
-                            path=":studentId/:teacherId/:ktpId/:type/:max"
-                            element={<ModalMark />}
-                          />
-                          <Route
-                            path="delete/:idStudent/:idKtp"
-                            element={<ModalMarkDelete />}
-                          />
-                        </Route>
+                        />
                         <Route
                           path="ktp"
                           element={<KTP t={t} userData={userData} />}
