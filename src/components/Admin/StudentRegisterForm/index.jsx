@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "../../../url";
-import { Alert, Button, Snackbar } from "@mui/material";
+import { Button } from "@mui/material";
 import styles from "./StudentRegisterForm.module.scss";
 
-export const StudentRegisterForm = ({ t }) => {
-  const [openSuccess, setOpenSuccess] = useState(false);
-  const [openError, setOpenError] = useState(false);
-  const [error, setError] = useState("");
+export const StudentRegisterForm = ({
+  t,
+  setSnackBarMessage,
+  setOpenSnackbar,
+  setOpenSnackbarError,
+}) => {
   const [classes, setClasses] = useState([]);
   const [checkboxClasses, setCheckboxClasses] = useState("");
   const [studentEmail, setStudentEmail] = useState("");
@@ -35,24 +37,18 @@ export const StudentRegisterForm = ({ t }) => {
             setStudentEmail("");
             setStudentPassword("");
             setStudentName("");
-            setOpenSuccess(true);
+            setOpenSnackbar(true);
+            setSnackBarMessage("Ученик зарегистрирован");
           })
           .catch((err) => {
-            console.log(err);
-            setError(err.response.data[0].msg);
-            setOpenError(true);
+            setSnackBarMessage(err.response.data[0].msg);
+            setOpenSnackbarError(true);
           });
       } else {
-        setError("Выберите класс");
-        setOpenError(true);
+        setSnackBarMessage("Выберите класс");
+        setOpenSnackbarError(true);
       }
     } catch (err) {}
-  };
-
-  const handleCloseSuccessError = (event, reason) => {
-    if (reason === "clickaway") return;
-    setOpenSuccess(false);
-    setOpenError(false);
   };
 
   return (
@@ -123,32 +119,6 @@ export const StudentRegisterForm = ({ t }) => {
           {t("register")}
         </Button>
       </form>
-      <Snackbar
-        open={openSuccess}
-        autoHideDuration={6000}
-        onClose={handleCloseSuccessError}
-      >
-        <Alert
-          onClose={handleCloseSuccessError}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          Ученик зарегистрирован
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openError}
-        autoHideDuration={6000}
-        onClose={handleCloseSuccessError}
-      >
-        <Alert
-          onClose={handleCloseSuccessError}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          {error}
-        </Alert>
-      </Snackbar>
     </>
   );
 };

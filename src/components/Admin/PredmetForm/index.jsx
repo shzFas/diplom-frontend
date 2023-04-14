@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "../../../url";
-import { Alert, Button, Snackbar } from "@mui/material";
+import { Button } from "@mui/material";
 import styles from "./PredmetForm.module.scss";
 
-export const PredmetForm = ({ t }) => {
-  const [openSuccess, setOpenSuccess] = useState(false);
-  const [openError, setOpenError] = useState(false);
-  const [error, setError] = useState("");
+export const PredmetForm = ({
+  t,
+  setSnackBarMessage,
+  setOpenSnackbar,
+  setOpenSnackbarError,
+}) => {
   const [getClasses, setGetClasses] = useState([]);
   const [classes, setClasses] = useState([]);
   const [predmetName, setPredmetName] = useState("");
@@ -42,23 +44,18 @@ export const PredmetForm = ({ t }) => {
           })
           .then(() => {
             setPredmetName("");
-            setOpenSuccess(true);
+            setOpenSnackbar(true);
+            setSnackBarMessage("Предмет добавлен");
           })
           .catch((err) => {
-            setError(err.response.data.message);
-            setOpenError(true);
+            setSnackBarMessage(err.response.data.message);
+            setOpenSnackbarError(true);
           });
       } else {
-        setError("Выберите класс");
-        setOpenError(true);
+        setSnackBarMessage("Выберите класс");
+        setOpenSnackbarError(true);
       }
     } catch (err) {}
-  };
-
-  const handleCloseSuccessError = (event, reason) => {
-    if (reason === "clickaway") return;
-    setOpenSuccess(false);
-    setOpenError(false);
   };
 
   return (
@@ -104,32 +101,6 @@ export const PredmetForm = ({ t }) => {
           {t("addPredmet")}
         </Button>
       </form>
-      <Snackbar
-        open={openSuccess}
-        autoHideDuration={6000}
-        onClose={handleCloseSuccessError}
-      >
-        <Alert
-          onClose={handleCloseSuccessError}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          Предмет добавлен
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openError}
-        autoHideDuration={6000}
-        onClose={handleCloseSuccessError}
-      >
-        <Alert
-          onClose={handleCloseSuccessError}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          {error}
-        </Alert>
-      </Snackbar>
     </>
   );
 };

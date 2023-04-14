@@ -1,4 +1,4 @@
-import { Alert, Button, Snackbar } from "@mui/material";
+import { Button } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -8,18 +8,15 @@ import styles from "./UserMe.module.scss";
 
 export const UserMeStudent = ({
   userData,
-  setMessagePassword,
-  setOpenSuccessChangePassword,
+  setSnackBarMessage,
+  setOpenSnackbar,
+  setOpenSnackbarError,
   t,
 }) => {
   const token = localStorage?.token;
   const dispatch = useDispatch();
   const [newPassword, setNewPassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [openError, setOpenError] = useState(false);
-
-  const handleCloseError = () => setOpenError(false);
 
   const handleSubmitChangePassword = (e) => {
     e.preventDefault();
@@ -38,14 +35,14 @@ export const UserMeStudent = ({
         }
       )
       .then((data) => {
-        setMessagePassword(data.data.message);
-        setOpenSuccessChangePassword(true);
+        setSnackBarMessage(data.data.message);
+        setOpenSnackbar(true);
         dispatch(logoutStudent());
         window.localStorage.removeItem("token");
       })
       .catch((err) => {
-        setMessage(err.response.data.message);
-        setOpenError(true);
+        setSnackBarMessage(err.response.data.message);
+        setOpenSnackbarError(true);
       });
   };
 
@@ -91,19 +88,6 @@ export const UserMeStudent = ({
           {t("passwordChange")}
         </Button>
       </form>
-      <Snackbar
-        open={openError}
-        autoHideDuration={6000}
-        onClose={handleCloseError}
-      >
-        <Alert
-          onClose={handleCloseError}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          {message}
-        </Alert>
-      </Snackbar>
     </div>
   );
 };

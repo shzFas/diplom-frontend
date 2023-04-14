@@ -5,31 +5,33 @@ import axios from "axios";
 import { url } from "../../../url";
 import { Link, Navigate, useParams } from "react-router-dom";
 import {
-  Alert,
   Button,
   Card,
   CardActions,
   CardContent,
   Modal,
-  Snackbar,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { styleModal } from "./stylemodal";
 
-export const TeacherProfile = ({ setOpenKickTeacher, t }) => {
+export const TeacherProfile = ({
+  setSnackBarMessage,
+  setOpenSnackbar,
+  setOpenSnackbarError,
+  openSnackbar,
+  openSnackbarError,
+  t,
+}) => {
   const urlLink = useParams();
   const [teacher, setTeacher] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [permissionId, setPermissionId] = useState("");
-  const [openDeletePermission, setOpenDeletePermission] = useState(false);
-  const [deleteStatus, setDeleteStatus] = useState("");
   const [modalKick, setModalKick] = useState(false);
   const [modalChangePermission, setModalChangePermission] = useState(false);
   const [predmet, setPredmet] = useState([]);
   const [checkboxPredmet, setCheckboxPredmet] = useState([]);
   const [kickTeacher, setKickTeacher] = useState(false);
-  const [openSuccess, setOpenSuccess] = useState(false);
 
   const handleModalChangePermission = () => setModalChangePermission(true);
   const handleModalChangePermissionClose = () =>
@@ -38,16 +40,12 @@ export const TeacherProfile = ({ setOpenKickTeacher, t }) => {
   const handleModalKick = () => setModalKick(true);
   const handleModalKickClose = () => setModalKick(false);
 
-  const handleCloseSuccessError = () => setOpenSuccess(false);
-
-  const handleCloseSuccessPermission = () => setOpenDeletePermission(false);
-
   useEffect(() => {
     axios.get(`${url}teacher/${urlLink.teacherId}`).then((data) => {
       setTeacher(data.data);
       setIsLoading(true);
     });
-  }, [urlLink, openDeletePermission, openSuccess]);
+  }, [urlLink, openSnackbar, openSnackbarError]);
 
   useEffect(() => {
     axios.get(`${url}predmet`).then((data) => {
@@ -59,9 +57,9 @@ export const TeacherProfile = ({ setOpenKickTeacher, t }) => {
     axios
       .delete(`${url}teacher/${urlLink.teacherId}/${permissionId}`)
       .then((data) => {
-        setDeleteStatus(data.data.message);
+        setSnackBarMessage(data.data.message);
         setPermissionId("");
-        setOpenDeletePermission(true);
+        setOpenSnackbarError(true);
       })
       .catch(() => {
         setPermissionId("");
@@ -92,7 +90,8 @@ export const TeacherProfile = ({ setOpenKickTeacher, t }) => {
           permission: checkboxPredmet,
         })
         .then(() => {
-          setOpenSuccess(true);
+          setOpenSnackbar(true);
+          setSnackBarMessage("Предметы добавлены");
           handleModalChangePermissionClose();
           setCheckboxPredmet([]);
         });
@@ -102,7 +101,8 @@ export const TeacherProfile = ({ setOpenKickTeacher, t }) => {
   const handleKickTeacher = () => {
     axios.delete(`${url}delete/teacher/${urlLink.teacherId}`).then(() => {
       setKickTeacher(true);
-      setOpenKickTeacher(true);
+      setOpenSnackbarError(true);
+      setSnackBarMessage("Преподаватель уволен");
     });
   };
 
@@ -247,32 +247,6 @@ export const TeacherProfile = ({ setOpenKickTeacher, t }) => {
           </div>
         </Box>
       </Modal>
-      <Snackbar
-        open={openDeletePermission}
-        autoHideDuration={6000}
-        onClose={handleCloseSuccessPermission}
-      >
-        <Alert
-          onClose={handleCloseSuccessPermission}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          {deleteStatus}
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openSuccess}
-        autoHideDuration={6000}
-        onClose={handleCloseSuccessError}
-      >
-        <Alert
-          onClose={handleCloseSuccessError}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          Предметы добавлены
-        </Alert>
-      </Snackbar>
     </div>
   );
 };

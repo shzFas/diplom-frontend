@@ -1,17 +1,20 @@
-import { Button, MenuItem, Select, Snackbar, TextField } from "@mui/material";
+import { Button, MenuItem, Select, TextField } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./KTPForm.module.scss";
-import MuiAlert from "@mui/material/Alert";
 import { url } from "../../../url";
 import { TableKTP } from "../TableKTP";
 
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
-export const KTPForm = ({ userData, t }) => {
+export const KTPForm = ({
+  userData,
+  t,
+  setSnackBarMessage,
+  setOpenSnackbar,
+  setOpenSnackbarError,
+  openSnackbar,
+  openSnackbarError,
+}) => {
   const urlLink = useParams();
   const [classes, setClasses] = useState([]);
   const [predmet, setPredmet] = useState([]);
@@ -20,9 +23,6 @@ export const KTPForm = ({ userData, t }) => {
   const [ktpSorSoch, setKtpSorSoch] = useState("");
   const [ktpPeriod, setKtpPeriod] = useState("");
   const [ktpMaxValue, setKtpMaxValue] = useState(Number);
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [alertOpenError, setAlertOpenError] = useState(false);
-  const [alertOpenErrorText, setAlertOpenErrorText] = useState("");
   const [maxValue, setMaxValue] = useState(false);
 
   useEffect(() => {
@@ -62,14 +62,6 @@ export const KTPForm = ({ userData, t }) => {
     setKtpPeriod(e.target.value);
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setAlertOpen(false);
-    setAlertOpenError(false);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
@@ -85,15 +77,16 @@ export const KTPForm = ({ userData, t }) => {
           ktpPeriod: ktpPeriod,
         })
         .then((res) => {
-          setAlertOpen(true);
+          setOpenSnackbar(true);
           setKtpTitle("");
           setKtpDate("");
           setKtpSorSoch("");
           setKtpPeriod("");
+          setSnackBarMessage("План успешно добавлен");
         })
         .catch((err) => {
-          setAlertOpenErrorText(err.response.data);
-          setAlertOpenError(true);
+          setSnackBarMessage(err.response.data.message);
+          setOpenSnackbarError(true);
           setKtpTitle("");
           setKtpDate("");
           setKtpSorSoch("");
@@ -184,21 +177,14 @@ export const KTPForm = ({ userData, t }) => {
           </Button>
         </div>
       </form>
-      <TableKTP t={t} urlLink={urlLink} alertOpen={alertOpen} />
-      <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          План успешно добавлен
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={alertOpenError}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          {alertOpenErrorText.message}
-        </Alert>
-      </Snackbar>
+      <TableKTP
+        t={t}
+        urlLink={urlLink}
+        setSnackBarMessage={setSnackBarMessage}
+        setOpenSnackbarError={setOpenSnackbarError}
+        openSnackbar={openSnackbar}
+        openSnackbarError={openSnackbarError}
+      />
     </>
   );
 };

@@ -1,30 +1,28 @@
-import { Alert, Box, Button, Modal, Snackbar } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Button, Modal } from "@mui/material";
+import React from "react";
 import { styleModal } from "./stylemodal";
 import styles from "./ModalMarkDelete.module.scss";
 import axios from "axios";
 import { url } from "../../../url";
 
-export const ModalMarkDelete = ({ handleModalMarkDeleteClose, open, t, ktpId, studentId }) => {
-  const [alertOpen, setAlertOpen] = useState(false);
-
+export const ModalMarkDelete = ({
+  handleModalMarkDeleteClose,
+  open,
+  t,
+  ktpId,
+  studentId,
+  setSnackBarMessage,
+  setOpenSnackbar,
+}) => {
   const handleDelete = (e) => {
     e.preventDefault();
     try {
-      axios
-        .delete(`${url}marks/${studentId}/${ktpId}`)
-        .then(() => {
-          setAlertOpen(true);
-          handleModalMarkDeleteClose();
-        });
+      axios.delete(`${url}marks/${studentId}/${ktpId}`).then(() => {
+        setOpenSnackbar(true);
+        setSnackBarMessage("Оценка удалена");
+        handleModalMarkDeleteClose();
+      });
     } catch (err) {}
-  };
-
-  const handleCloseAlert = (reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setAlertOpen(false);
   };
 
   return (
@@ -63,19 +61,6 @@ export const ModalMarkDelete = ({ handleModalMarkDeleteClose, open, t, ktpId, st
           </form>
         </Box>
       </Modal>
-      <Snackbar
-        open={alertOpen}
-        autoHideDuration={6000}
-        onClose={handleCloseAlert}
-      >
-        <Alert
-          onClose={handleCloseAlert}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          Оценка удалена
-        </Alert>
-      </Snackbar>
     </>
   );
 };

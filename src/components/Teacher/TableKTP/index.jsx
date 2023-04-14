@@ -8,16 +8,20 @@ import Paper from "@mui/material/Paper";
 import { url } from "../../../url";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Alert, Button, Snackbar } from "@mui/material";
+import { Button } from "@mui/material";
 import styles from "./TableKTP.module.scss";
 import { Link, useParams } from "react-router-dom";
 
-export const TableKTP = ({ urlLink, alertOpen, t }) => {
+export const TableKTP = ({
+  urlLink,
+  t,
+  setSnackBarMessage,
+  setOpenSnackbarError,
+  openSnackbar,
+  openSnackbarError,
+}) => {
   const urlLinkPeriod = useParams();
   const [ktp, setKtp] = useState([]);
-  const [deleteKtpMark, setDeleteKtpMark] = useState(false);
-
-  const handleCloseDeleteKtpClose = () => setDeleteKtpMark(false);
 
   useEffect(() => {
     axios
@@ -27,7 +31,7 @@ export const TableKTP = ({ urlLink, alertOpen, t }) => {
       .then((data) => {
         setKtp(data.data);
       });
-  }, [urlLink, alertOpen, urlLinkPeriod, deleteKtpMark]);
+  }, [urlLink, openSnackbar, openSnackbarError, urlLinkPeriod]);
 
   function sortByDate(a, b) {
     return new Date(a.ktpDate).valueOf() - new Date(b.ktpDate).valueOf();
@@ -41,7 +45,8 @@ export const TableKTP = ({ urlLink, alertOpen, t }) => {
 
   const handlerDelete = (ktpId) => {
     axios.delete(`${url}ktp/${ktpId}`).then(() => {
-      setDeleteKtpMark(true);
+      setOpenSnackbarError(true);
+      setSnackBarMessage("КТП и все оценки за этот урок удалены");
     });
   };
 
@@ -104,19 +109,6 @@ export const TableKTP = ({ urlLink, alertOpen, t }) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <Snackbar
-          open={deleteKtpMark}
-          autoHideDuration={6000}
-          onClose={handleCloseDeleteKtpClose}
-        >
-          <Alert
-            onClose={handleCloseDeleteKtpClose}
-            severity="error"
-            sx={{ width: "100%" }}
-          >
-            КТП и все оценки за этот урок удалены
-          </Alert>
-        </Snackbar>
       </div>
     </>
   );

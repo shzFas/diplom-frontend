@@ -1,10 +1,8 @@
 import {
-  Alert,
   Button,
   Card,
   CardActions,
   CardContent,
-  Snackbar,
   Typography,
 } from "@mui/material";
 import axios from "axios";
@@ -13,11 +11,7 @@ import { Link } from "react-router-dom";
 import { url } from "../../../url";
 import styles from "./PredmetList.module.scss";
 
-export const PredmetList = ({
-  openDeletePredmet,
-  handleCloseSuccessPredmetDeleteError,
-  t,
-}) => {
+export const PredmetList = ({ t }) => {
   const [predmetList, setPredmetList] = useState([]);
 
   useEffect(() => {
@@ -50,19 +44,6 @@ export const PredmetList = ({
           </Card>
         ))}
       </div>
-      <Snackbar
-        open={openDeletePredmet}
-        autoHideDuration={6000}
-        onClose={handleCloseSuccessPredmetDeleteError}
-      >
-        <Alert
-          onClose={handleCloseSuccessPredmetDeleteError}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          Предмет удален
-        </Alert>
-      </Snackbar>
     </div>
   );
 };

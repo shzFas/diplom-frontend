@@ -9,8 +9,9 @@ import { Box } from "@mui/system";
 import { styleModal } from "./stylemodal";
 
 export const StudentProfile = ({
-  setOpenKickStudent,
-  setOpenChangeClass,
+  setSnackBarMessage,
+  setOpenSnackbar,
+  setOpenSnackbarError,
   t,
 }) => {
   const urlLink = useParams();
@@ -50,7 +51,8 @@ export const StudentProfile = ({
   const handleKickStudent = () => {
     axios.delete(`${url}student/${urlLink.studentId}`).then(() => {
       setKickStudent(true);
-      setOpenKickStudent(true);
+      setOpenSnackbarError(true);
+      setSnackBarMessage("Студент отчислен");
     });
   };
 
@@ -62,7 +64,8 @@ export const StudentProfile = ({
       })
       .then(() => {
         setChangeClassStudent(true);
-        setOpenChangeClass(true);
+        setOpenSnackbar(true);
+        setSnackBarMessage("Класс студента изменен");
       });
   };
 
