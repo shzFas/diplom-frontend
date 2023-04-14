@@ -23,7 +23,13 @@ import {
   ProgressReload,
 } from "../index.js";
 
-export const Journal = ({ userData, t }) => {
+export const Journal = ({
+  userData,
+  t,
+  setSnackBarMessage,
+  setOpenSnackbar,
+  setOpenSnackbarError,
+}) => {
   const urlLink = useParams();
   const [ktp, setKtp] = useState([]);
   const [ktpValue, setKtpValue] = useState(false);
@@ -231,6 +237,9 @@ export const Journal = ({ userData, t }) => {
             ktpId={ktpId}
             teacherId={teacherId}
             studentId={studentId}
+            setSnackBarMessage={setSnackBarMessage}
+            setOpenSnackbar={setOpenSnackbar}
+            setOpenSnackbarError={setOpenSnackbarError}
           />
           <ModalMarkDelete
             handleModalMarkDeleteClose={handleModalMarkDeleteClose}
@@ -240,6 +249,8 @@ export const Journal = ({ userData, t }) => {
             t={t}
             ktpId={ktpId}
             studentId={studentId}
+            setSnackBarMessage={setSnackBarMessage}
+            setOpenSnackbar={setOpenSnackbar}
           />
         </div>
       )}

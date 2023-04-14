@@ -1,11 +1,9 @@
 import {
-  Alert,
   Button,
   Card,
   CardActions,
   CardContent,
   Modal,
-  Snackbar,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -16,30 +14,23 @@ import { url } from "../../../url";
 import { styleModal } from "./stylemodal";
 import styles from "./PredmetPage.module.scss";
 
-export const PredmetPage = ({ setOpenDeletePredmet, t }) => {
+export const PredmetPage = ({
+  setSnackBarMessage,
+  setOpenSnackbar,
+  setOpenSnackbarError,
+  t,
+}) => {
   const predmetId = useParams();
   const [predmet, setPredmet] = useState([]);
   const [classes, setClasses] = useState([]);
   const [getClasses, setGetClasses] = useState([]);
   const [modal, setModal] = useState(false);
-  const [openSuccess, setOpenSuccess] = useState(false);
-  const [openError, setOpenError] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
-  const [deleteStatus, setDeleteStatus] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [classId, setClassId] = useState("");
   const [deletePredmet, setDeletePredmet] = useState(false);
 
   const handleModalClass = () => setModal(true);
   const handleModalClassClose = () => setModal(false);
-
-  const handleCloseSuccessError = (event, reason) => {
-    if (reason === "clickaway") return;
-    setOpenSuccess(false);
-    setOpenError(false);
-    setOpenDelete(false);
-  };
 
   useEffect(() => {
     axios.get(`${url}classList`).then((data) => {
@@ -58,9 +49,9 @@ export const PredmetPage = ({ setOpenDeletePredmet, t }) => {
     axios
       .delete(`${url}predmet/${predmetId.predmetId}/${classId}`)
       .then((data) => {
-        setDeleteStatus(data.data.message);
+        setSnackBarMessage(data.data.message);
         setClassId("");
-        setOpenDelete(true);
+        setOpenSnackbarError(true);
       })
       .catch(() => {
         setClassId("");
@@ -89,20 +80,21 @@ export const PredmetPage = ({ setOpenDeletePredmet, t }) => {
             classes,
           })
           .then((data) => {
-            setOpenSuccess(true);
+            setOpenSnackbar(true);
+            setSnackBarMessage("Классы добавлены");
             setModal(false);
             if (data.data.message === "Новые классы не добавлены") {
-              setOpenError(true);
-              setError(data.data.message);
+              setOpenSnackbarError(true);
+              setSnackBarMessage(data.data.message);
             }
           })
           .catch((err) => {
-            setError(err.response.data.message);
-            setOpenError(true);
+            setSnackBarMessage(err.response.data.message);
+            setOpenSnackbarError(true);
           });
       } else {
-        setError("Выберите класс");
-        setOpenError(true);
+        setSnackBarMessage("Выберите класс");
+        setOpenSnackbarError(true);
       }
     } catch (err) {}
   };
@@ -112,7 +104,8 @@ export const PredmetPage = ({ setOpenDeletePredmet, t }) => {
       .delete(`${url}delete/predmet/${predmetId.predmetId}`)
       .then(() => {
         setDeletePredmet(true);
-        setOpenDeletePredmet(true);
+        setOpenSnackbarError(true);
+        setSnackBarMessage("Предмет удален");
       });
   };
 
@@ -220,45 +213,6 @@ export const PredmetPage = ({ setOpenDeletePredmet, t }) => {
           </form>
         </Box>
       </Modal>
-      <Snackbar
-        open={openSuccess}
-        autoHideDuration={6000}
-        onClose={handleCloseSuccessError}
-      >
-        <Alert
-          onClose={handleCloseSuccessError}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          Классы добавлены
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openDelete}
-        autoHideDuration={6000}
-        onClose={handleCloseSuccessError}
-      >
-        <Alert
-          onClose={handleCloseSuccessError}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          {deleteStatus}
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openError}
-        autoHideDuration={6000}
-        onClose={handleCloseSuccessError}
-      >
-        <Alert
-          onClose={handleCloseSuccessError}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          {error}
-        </Alert>
-      </Snackbar>
     </div>
   );
 };

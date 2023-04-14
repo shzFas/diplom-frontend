@@ -1,12 +1,4 @@
-import {
-  Alert,
-  Box,
-  Button,
-  Checkbox,
-  Modal,
-  Snackbar,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Checkbox, Modal, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -25,10 +17,11 @@ export const ModalMark = ({
   typeLesson,
   studentId,
   teacherId,
+  setSnackBarMessage,
+  setOpenSnackbar,
+  setOpenSnackbarError,
 }) => {
   const urlLink = useParams();
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [alertErrorOpen, setAlertErrorOpen] = useState(false);
   const [studentFalse, setStudentFalse] = useState(false);
   const [mark, setMark] = useState(Number);
   const [defaultLecture, setDefaultLecture] = useState(false);
@@ -40,14 +33,6 @@ export const ModalMark = ({
       setDefaultLecture(false);
     }
   }, [typeLesson]);
-
-  const handleCloseAlert = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setAlertOpen(false);
-    setAlertErrorOpen(false);
-  };
 
   const handleInputStudentFalse = (e) => {
     if (e.target.checked === true) {
@@ -80,13 +65,15 @@ export const ModalMark = ({
           markPeriod: urlLink.period,
         })
         .then((res) => {
-          setAlertOpen(true);
+          setOpenSnackbar(true);
+          setSnackBarMessage("Оценка выставлена");
           setMark();
           setModal(false);
           setStudentFalse(false);
         })
         .catch(() => {
-          setAlertErrorOpen(true);
+          setOpenSnackbarError(true);
+          setSnackBarMessage("Ошибка");
         });
     } catch (err) {
       console.log(err);
@@ -178,32 +165,6 @@ export const ModalMark = ({
           </form>
         </Box>
       </Modal>
-      <Snackbar
-        open={alertOpen}
-        autoHideDuration={6000}
-        onClose={handleCloseAlert}
-      >
-        <Alert
-          onClose={handleCloseAlert}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          Оценка выставлена
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={alertErrorOpen}
-        autoHideDuration={6000}
-        onClose={handleCloseAlert}
-      >
-        <Alert
-          onClose={handleCloseAlert}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          Ошибка
-        </Alert>
-      </Snackbar>
     </>
   );
 };

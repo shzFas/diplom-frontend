@@ -3,7 +3,12 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "@mui/material/Container";
 import { Alert, Snackbar } from "@mui/material";
-import { Header, Footer } from "./components/Global";
+import {
+  Header,
+  Footer,
+  SnackbarSuccess,
+  SnackbarError,
+} from "./components/Global";
 import {
   Home,
   HomeAdmin,
@@ -60,30 +65,23 @@ function App() {
     (state) => state.auth.data || state.authStudent.data
   );
   const isAdmin = userData?.fullName === "admin";
-  const [openSuccessChangePassword, setOpenSuccessChangePassword] =
-    useState(false);
-  const [messagePassword, setMessagePassword] = useState("");
   const [openDeletePredmet, setOpenDeletePredmet] = useState(false);
-  const [openKickStudent, setOpenKickStudent] = useState(false);
-  const [openChangeClass, setOpenChangeClass] = useState(false);
-  const [openKickTeacher, setOpenKickTeacher] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [openSnackbarError, setOpenSnackbarError] = useState(false);
+  const [snackBarMessage, setSnackBarMessage] = useState("");
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+    setOpenSnackbarError(false);
+  };
 
   const handleCloseSuccessPredmetDeleteError = () =>
     setOpenDeletePredmet(false);
-
-  const handleCloseKickSnackClose = () => {
-    setOpenKickTeacher(false);
-    setOpenKickStudent(false);
-  };
-  const handleCloseChangeClass = () => setOpenChangeClass(false);
 
   useEffect(() => {
     dispatch(fetchAuthMe());
     dispatch(fetchAuthStudentMe());
   }, []);
-
-  const handleCloseSuccessPasswordChange = () =>
-    setOpenSuccessChangePassword(false);
 
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
@@ -108,22 +106,47 @@ function App() {
                       element={<StudentList t={t} />}
                     />
                     <Route path="teacher" element={<TeacherList t={t} />} />
-                    <Route path="predmet" element={<PredmetForm t={t} />} />
+                    <Route
+                      path="predmet"
+                      element={
+                        <PredmetForm
+                          setSnackBarMessage={setSnackBarMessage}
+                          setOpenSnackbar={setOpenSnackbar}
+                          setOpenSnackbarError={setOpenSnackbarError}
+                          t={t}
+                        />
+                      }
+                    />
                     <Route
                       path="register/teacher"
-                      element={<TeacherRegisterForm t={t} />}
+                      element={
+                        <TeacherRegisterForm
+                          setSnackBarMessage={setSnackBarMessage}
+                          setOpenSnackbar={setOpenSnackbar}
+                          setOpenSnackbarError={setOpenSnackbarError}
+                          t={t}
+                        />
+                      }
                     />
                     <Route
                       path="register/student"
-                      element={<StudentRegisterForm t={t} />}
+                      element={
+                        <StudentRegisterForm
+                          setSnackBarMessage={setSnackBarMessage}
+                          setOpenSnackbar={setOpenSnackbar}
+                          setOpenSnackbarError={setOpenSnackbarError}
+                          t={t}
+                        />
+                      }
                     />
                     <Route
                       path="student/info/:studentId"
                       element={
                         <StudentProfile
                           t={t}
-                          setOpenChangeClass={setOpenChangeClass}
-                          setOpenKickStudent={setOpenKickStudent}
+                          setSnackBarMessage={setSnackBarMessage}
+                          setOpenSnackbar={setOpenSnackbar}
+                          setOpenSnackbarError={setOpenSnackbarError}
                         />
                       }
                     />
@@ -132,7 +155,11 @@ function App() {
                       element={
                         <TeacherProfile
                           t={t}
-                          setOpenKickTeacher={setOpenKickTeacher}
+                          setSnackBarMessage={setSnackBarMessage}
+                          setOpenSnackbar={setOpenSnackbar}
+                          setOpenSnackbarError={setOpenSnackbarError}
+                          openSnackbar={openSnackbar}
+                          openSnackbarError={openSnackbarError}
                         />
                       }
                     />
@@ -141,32 +168,22 @@ function App() {
                       element={
                         <UserAdmin
                           t={t}
-                          setOpenSuccessChangePassword={
-                            setOpenSuccessChangePassword
-                          }
-                          setMessagePassword={setMessagePassword}
+                          setSnackBarMessage={setSnackBarMessage}
+                          setOpenSnackbar={setOpenSnackbar}
+                          setOpenSnackbarError={setOpenSnackbarError}
                           userData={userData}
                         />
                       }
                     />
-                    <Route
-                      path="predmets"
-                      element={
-                        <PredmetList
-                          t={t}
-                          openDeletePredmet={openDeletePredmet}
-                          handleCloseSuccessPredmetDeleteError={
-                            handleCloseSuccessPredmetDeleteError
-                          }
-                        />
-                      }
-                    />
+                    <Route path="predmets" element={<PredmetList t={t} />} />
                     <Route
                       path="predmet/info/:predmetId"
                       element={
                         <PredmetPage
                           t={t}
-                          setOpenDeletePredmet={setOpenDeletePredmet}
+                          setSnackBarMessage={setSnackBarMessage}
+                          setOpenSnackbar={setOpenSnackbar}
+                          setOpenSnackbarError={setOpenSnackbarError}
                         />
                       }
                     />
@@ -205,10 +222,9 @@ function App() {
                         element={
                           <UserMeStudent
                             t={t}
-                            setOpenSuccessChangePassword={
-                              setOpenSuccessChangePassword
-                            }
-                            setMessagePassword={setMessagePassword}
+                            setSnackBarMessage={setSnackBarMessage}
+                            setOpenSnackbar={setOpenSnackbar}
+                            setOpenSnackbarError={setOpenSnackbarError}
                             userData={userData}
                           />
                         }
@@ -240,7 +256,15 @@ function App() {
                         />
                         <Route
                           path="journal/:id/:classId/:period"
-                          element={<Journal t={t} userData={userData} />}
+                          element={
+                            <Journal
+                              setSnackBarMessage={setSnackBarMessage}
+                              setOpenSnackbar={setOpenSnackbar}
+                              setOpenSnackbarError={setOpenSnackbarError}
+                              t={t}
+                              userData={userData}
+                            />
+                          }
                         />
                         <Route
                           path="ktp"
@@ -252,7 +276,17 @@ function App() {
                         />
                         <Route
                           path="ktp/:predmetId/:classId"
-                          element={<KTPForm t={t} userData={userData} />}
+                          element={
+                            <KTPForm
+                              setSnackBarMessage={setSnackBarMessage}
+                              setOpenSnackbar={setOpenSnackbar}
+                              setOpenSnackbarError={setOpenSnackbarError}
+                              openSnackbar={openSnackbar}
+                              openSnackbarError={openSnackbarError}
+                              t={t}
+                              userData={userData}
+                            />
+                          }
                         >
                           <Route path="period/:period" element={<TableKTP />} />
                         </Route>
@@ -261,10 +295,9 @@ function App() {
                           element={
                             <UserMe
                               t={t}
-                              setOpenSuccessChangePassword={
-                                setOpenSuccessChangePassword
-                              }
-                              setMessagePassword={setMessagePassword}
+                              setSnackBarMessage={setSnackBarMessage}
+                              setOpenSnackbar={setOpenSnackbar}
+                              setOpenSnackbarError={setOpenSnackbarError}
                               userData={userData}
                             />
                           }
@@ -292,58 +325,16 @@ function App() {
         </>
       )}
       <Footer changeLanguage={changeLanguage} />
-      <Snackbar
-        open={openSuccessChangePassword}
-        autoHideDuration={6000}
-        onClose={handleCloseSuccessPasswordChange}
-      >
-        <Alert
-          onClose={handleCloseSuccessPasswordChange}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          {messagePassword}
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openKickStudent}
-        autoHideDuration={6000}
-        onClose={handleCloseKickSnackClose}
-      >
-        <Alert
-          onClose={handleCloseKickSnackClose}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          Студент отчислен
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openKickTeacher}
-        autoHideDuration={6000}
-        onClose={handleCloseKickSnackClose}
-      >
-        <Alert
-          onClose={handleCloseKickSnackClose}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          Преподаватель уволен
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openChangeClass}
-        autoHideDuration={6000}
-        onClose={handleCloseChangeClass}
-      >
-        <Alert
-          onClose={handleCloseChangeClass}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          Класс студента изменен
-        </Alert>
-      </Snackbar>
+      <SnackbarSuccess
+        openSnackbar={openSnackbar}
+        handleCloseSnackbar={handleCloseSnackbar}
+        snackBarMessage={snackBarMessage}
+      />
+      <SnackbarError
+        openSnackbarError={openSnackbarError}
+        handleCloseSnackbar={handleCloseSnackbar}
+        snackBarMessage={snackBarMessage}
+      />
     </>
   );
 }
