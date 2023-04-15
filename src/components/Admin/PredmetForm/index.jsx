@@ -9,16 +9,17 @@ export const PredmetForm = ({
   setSnackBarMessage,
   setOpenSnackbar,
   setOpenSnackbarError,
+  currLang
 }) => {
   const [getClasses, setGetClasses] = useState([]);
   const [classes, setClasses] = useState([]);
   const [predmetName, setPredmetName] = useState("");
 
   useEffect(() => {
-    axios.get(`${url}classList`).then((data) => {
+    axios.get(`${url}classList?lang=${currLang}`).then((data) => {
       setGetClasses(data.data);
     });
-  }, []);
+  }, [currLang]);
 
   const handleCheckboxChange = (event) => {
     const _id = event.target.id;
@@ -38,14 +39,14 @@ export const PredmetForm = ({
     try {
       if (classes.length > 0) {
         await axios
-          .post(`${url}predmet`, {
+          .post(`${url}predmet?lang=${currLang}`, {
             predmetName,
             classes,
           })
-          .then(() => {
+          .then((data) => {
             setPredmetName("");
             setOpenSnackbar(true);
-            setSnackBarMessage("Предмет добавлен");
+            setSnackBarMessage(data.data.message);
           })
           .catch((err) => {
             setSnackBarMessage(err.response.data.message);

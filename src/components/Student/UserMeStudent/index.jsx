@@ -12,6 +12,7 @@ export const UserMeStudent = ({
   setOpenSnackbar,
   setOpenSnackbarError,
   t,
+  currLang
 }) => {
   const token = localStorage?.token;
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export const UserMeStudent = ({
 
     axios
       .post(
-        `${url}auth/change-password/student/${userData._id}`,
+        `${url}auth/change-password/student/${userData._id}?lang=${currLang}`,
         {
           oldPassword: oldPassword,
           newPassword: newPassword,

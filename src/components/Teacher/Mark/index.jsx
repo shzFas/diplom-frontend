@@ -12,16 +12,17 @@ export const Mark = ({
   isLoading,
   modalDelete,
   handleModalMarkDelete,
+  currLang
 }) => {
   const [mark, setMark] = useState([]);
   const location = useLocation();
 
   useEffect(() => {
-    axios.get(`${url}mark/${studentId}/${ktpId}`).then((data) => {
+    axios.get(`${url}mark/${studentId}/${ktpId}?lang=${currLang}`).then((data) => {
       setMark(data.data);
       setMarkValue(true);
     });
-  }, [modal, modalDelete, location, setMarkValue]);
+  }, [modal, modalDelete, location, setMarkValue, currLang]);
 
   const validationMark = (mark) => {
     if (mark === 0) {

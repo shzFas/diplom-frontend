@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "@mui/material/Container";
-import { Alert, Snackbar } from "@mui/material";
 import {
   Header,
   Footer,
@@ -58,6 +57,7 @@ import { useTranslation } from "react-i18next";
 
 function App() {
   const { t, i18n } = useTranslation();
+  const currLang = i18n.language;
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
   const isAuthStudent = useSelector(selectIsAuthStudent);
@@ -65,7 +65,6 @@ function App() {
     (state) => state.auth.data || state.authStudent.data
   );
   const isAdmin = userData?.fullName === "admin";
-  const [openDeletePredmet, setOpenDeletePredmet] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [openSnackbarError, setOpenSnackbarError] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
@@ -74,9 +73,6 @@ function App() {
     setOpenSnackbar(false);
     setOpenSnackbarError(false);
   };
-
-  const handleCloseSuccessPredmetDeleteError = () =>
-    setOpenDeletePredmet(false);
 
   useEffect(() => {
     dispatch(fetchAuthMe());
@@ -100,12 +96,18 @@ function App() {
                     path="/"
                     element={<HomeAdmin t={t} userData={userData} />}
                   >
-                    <Route path="student" element={<ClassList t={t} />} />
+                    <Route
+                      path="student"
+                      element={<ClassList t={t} currLang={currLang} />}
+                    />
                     <Route
                       path="student/:classId"
                       element={<StudentList t={t} />}
                     />
-                    <Route path="teacher" element={<TeacherList t={t} />} />
+                    <Route
+                      path="teacher"
+                      element={<TeacherList currLang={currLang} t={t} />}
+                    />
                     <Route
                       path="predmet"
                       element={
@@ -114,6 +116,7 @@ function App() {
                           setOpenSnackbar={setOpenSnackbar}
                           setOpenSnackbarError={setOpenSnackbarError}
                           t={t}
+                          currLang={currLang}
                         />
                       }
                     />
@@ -125,6 +128,7 @@ function App() {
                           setOpenSnackbar={setOpenSnackbar}
                           setOpenSnackbarError={setOpenSnackbarError}
                           t={t}
+                          currLang={currLang}
                         />
                       }
                     />
@@ -136,6 +140,7 @@ function App() {
                           setOpenSnackbar={setOpenSnackbar}
                           setOpenSnackbarError={setOpenSnackbarError}
                           t={t}
+                          currLang={currLang}
                         />
                       }
                     />
@@ -147,6 +152,7 @@ function App() {
                           setSnackBarMessage={setSnackBarMessage}
                           setOpenSnackbar={setOpenSnackbar}
                           setOpenSnackbarError={setOpenSnackbarError}
+                          currLang={currLang}
                         />
                       }
                     />
@@ -160,6 +166,7 @@ function App() {
                           setOpenSnackbarError={setOpenSnackbarError}
                           openSnackbar={openSnackbar}
                           openSnackbarError={openSnackbarError}
+                          currLang={currLang}
                         />
                       }
                     />
@@ -172,6 +179,7 @@ function App() {
                           setOpenSnackbar={setOpenSnackbar}
                           setOpenSnackbarError={setOpenSnackbarError}
                           userData={userData}
+                          currLang={currLang}
                         />
                       }
                     />
@@ -184,6 +192,7 @@ function App() {
                           setSnackBarMessage={setSnackBarMessage}
                           setOpenSnackbar={setOpenSnackbar}
                           setOpenSnackbarError={setOpenSnackbarError}
+                          currLang={currLang}
                         />
                       }
                     />
@@ -205,16 +214,34 @@ function App() {
                       >
                         <Route
                           path="/"
-                          element={<StudentMain t={t} userData={userData} />}
+                          element={
+                            <StudentMain
+                              currLang={currLang}
+                              t={t}
+                              userData={userData}
+                            />
+                          }
                         />
                       </Route>
                       <Route
                         path="/score/:predmetId"
-                        element={<ScoreBoardPeriod t={t} userData={userData} />}
+                        element={
+                          <ScoreBoardPeriod
+                            currLang={currLang}
+                            t={t}
+                            userData={userData}
+                          />
+                        }
                       >
                         <Route
                           path=":period"
-                          element={<ScoreBoard t={t} userData={userData} />}
+                          element={
+                            <ScoreBoard
+                              currLang={currLang}
+                              t={t}
+                              userData={userData}
+                            />
+                          }
                         />
                       </Route>
                       <Route
@@ -226,6 +253,7 @@ function App() {
                             setOpenSnackbar={setOpenSnackbar}
                             setOpenSnackbarError={setOpenSnackbarError}
                             userData={userData}
+                            currLang={currLang}
                           />
                         }
                       />
@@ -248,7 +276,9 @@ function App() {
                         />
                         <Route
                           path="journal/:id"
-                          element={<PredmetClassList t={t} />}
+                          element={
+                            <PredmetClassList currLang={currLang} t={t} />
+                          }
                         />
                         <Route
                           path="journal/:id/:classId"
@@ -263,6 +293,7 @@ function App() {
                               setOpenSnackbarError={setOpenSnackbarError}
                               t={t}
                               userData={userData}
+                              currLang={currLang}
                             />
                           }
                         />
@@ -272,7 +303,13 @@ function App() {
                         />
                         <Route
                           path="ktp/:predmetId"
-                          element={<KTPClass t={t} userData={userData} />}
+                          element={
+                            <KTPClass
+                              currLang={currLang}
+                              t={t}
+                              userData={userData}
+                            />
+                          }
                         />
                         <Route
                           path="ktp/:predmetId/:classId"
@@ -285,6 +322,7 @@ function App() {
                               openSnackbarError={openSnackbarError}
                               t={t}
                               userData={userData}
+                              currLang={currLang}
                             />
                           }
                         >
@@ -299,6 +337,7 @@ function App() {
                               setOpenSnackbar={setOpenSnackbar}
                               setOpenSnackbarError={setOpenSnackbarError}
                               userData={userData}
+                              currLang={currLang}
                             />
                           }
                         />

@@ -11,14 +11,14 @@ import { Link } from "react-router-dom";
 import { url } from "../../../url";
 import styles from "./ClassList.module.scss";
 
-export const ClassList = ({ t }) => {
+export const ClassList = ({ t, currLang }) => {
   const [classes, setClasses] = useState([]);
 
   useEffect(() => {
-    axios.get(`${url}classList`).then((data) => {
+    axios.get(`${url}classList?lang=${currLang}`).then((data) => {
       setClasses(data.data);
     });
-  }, []);
+  }, [currLang]);
 
   return (
     <div>

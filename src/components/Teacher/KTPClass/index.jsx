@@ -11,15 +11,15 @@ import { Link, useParams } from "react-router-dom";
 import styles from "./KtpClass.module.scss";
 import { url } from "../../../url";
 
-export const KTPClass = ({ t }) => {
+export const KTPClass = ({ t, currLang }) => {
   const idPredmet = useParams();
   const [predmetClass, setPredmetClass] = useState([]);
 
   useEffect(() => {
-    axios.get(`${url}predmet/${idPredmet.predmetId}`).then((data) => {
+    axios.get(`${url}predmet/${idPredmet.predmetId}?lang=${currLang}`).then((data) => {
       setPredmetClass(data.data.classes);
     });
-  }, [idPredmet]);
+  }, [idPredmet, currLang]);
 
   return (
     <>

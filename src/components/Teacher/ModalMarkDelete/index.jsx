@@ -13,13 +13,15 @@ export const ModalMarkDelete = ({
   studentId,
   setSnackBarMessage,
   setOpenSnackbar,
+  currLang
 }) => {
+
   const handleDelete = (e) => {
     e.preventDefault();
     try {
-      axios.delete(`${url}marks/${studentId}/${ktpId}`).then(() => {
+      axios.delete(`${url}marks/${studentId}/${ktpId}?lang=${currLang}}`).then((res) => {
         setOpenSnackbar(true);
-        setSnackBarMessage("Оценка удалена");
+        setSnackBarMessage(res.data.message);
         handleModalMarkDeleteClose();
       });
     } catch (err) {}

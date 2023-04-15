@@ -12,6 +12,7 @@ export const UserAdmin = ({
   setSnackBarMessage,
   setOpenSnackbar,
   setOpenSnackbarError,
+  currLang
 }) => {
   const token = localStorage?.token;
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export const UserAdmin = ({
 
     axios
       .post(
-        `${url}auth/change-password/teacher/${userData._id}`,
+        `${url}auth/change-password/teacher/${userData._id}?lang=${currLang}`,
         {
           oldPassword: oldPassword,
           newPassword: newPassword,

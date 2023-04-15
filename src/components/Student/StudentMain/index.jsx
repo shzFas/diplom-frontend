@@ -11,18 +11,18 @@ import { Link } from "react-router-dom";
 import { url } from "../../../url";
 import styles from "./StudentMain.module.scss";
 
-export const StudentMain = ({ userData, t }) => {
+export const StudentMain = ({ userData, t, currLang }) => {
   const [predmetList, setPredmetList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios.get(`${url}predmet/class/${userData.classId}`).then((data) => {
+    axios.get(`${url}predmet/class/${userData.classId}?lang=${currLang}`).then((data) => {
       if (data?.data.length > 0) {
         setIsLoading(true);
         setPredmetList(data?.data);
       }
     });
-  }, [userData]);
+  }, [userData, currLang]);
 
   return (
     <div>

@@ -27,15 +27,15 @@ const links = [
   },
 ];
 
-export const ScoreBoardPeriod = ({ t }) => {
+export const ScoreBoardPeriod = ({ t, currLang }) => {
   const urlLink = useParams();
   const [predmetName, setPredmetName] = useState("");
 
   useEffect(() => {
-    axios.get(`${url}predmet/${urlLink.predmetId}`).then((data) => {
+    axios.get(`${url}predmet/${urlLink.predmetId}?lang=${currLang}`).then((data) => {
       setPredmetName(data?.data.predmetName);
     });
-  }, [urlLink]);
+  }, [urlLink, currLang]);
 
   return (
     <>

@@ -14,6 +14,7 @@ export const KTPForm = ({
   setOpenSnackbarError,
   openSnackbar,
   openSnackbarError,
+  currLang,
 }) => {
   const urlLink = useParams();
   const [classes, setClasses] = useState([]);
@@ -26,16 +27,20 @@ export const KTPForm = ({
   const [maxValue, setMaxValue] = useState(false);
 
   useEffect(() => {
-    axios.get(`${url}classList/${urlLink.classId}`).then((data) => {
-      setClasses(data.data);
-    });
-  }, [urlLink.classId]);
+    axios
+      .get(`${url}classList/${urlLink.classId}?lang=${currLang}`)
+      .then((data) => {
+        setClasses(data.data);
+      });
+  }, [urlLink.classId, currLang]);
 
   useEffect(() => {
-    axios.get(`${url}predmet/${urlLink.predmetId}`).then((data) => {
-      setPredmet(data.data);
-    });
-  }, [urlLink.predmetId]);
+    axios
+      .get(`${url}predmet/${urlLink.predmetId}?lang=${currLang}`)
+      .then((data) => {
+        setPredmet(data.data);
+      });
+  }, [urlLink.predmetId, currLang]);
 
   const handleInputKtpTitle = (e) => {
     setKtpTitle(e.target.value);
@@ -66,7 +71,7 @@ export const KTPForm = ({
     e.preventDefault();
     try {
       axios
-        .post(`${url}ktp`, {
+        .post(`${url}ktp?lang=${currLang}`, {
           ktpTitle: ktpTitle,
           ktpDate: ktpDate,
           ktpPredmet: urlLink.predmetId,
@@ -82,7 +87,7 @@ export const KTPForm = ({
           setKtpDate("");
           setKtpSorSoch("");
           setKtpPeriod("");
-          setSnackBarMessage("План успешно добавлен");
+          setSnackBarMessage(res.data.message);
         })
         .catch((err) => {
           setSnackBarMessage(err.response.data.message);
@@ -184,6 +189,7 @@ export const KTPForm = ({
         setOpenSnackbarError={setOpenSnackbarError}
         openSnackbar={openSnackbar}
         openSnackbarError={openSnackbarError}
+        currLang={currLang}
       />
     </>
   );

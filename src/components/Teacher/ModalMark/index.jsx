@@ -20,6 +20,7 @@ export const ModalMark = ({
   setSnackBarMessage,
   setOpenSnackbar,
   setOpenSnackbarError,
+  currLang
 }) => {
   const urlLink = useParams();
   const [studentFalse, setStudentFalse] = useState(false);
@@ -52,7 +53,7 @@ export const ModalMark = ({
     e.preventDefault();
     try {
       axios
-        .post(`${url}marks`, {
+        .post(`${url}marks?lang=${currLang}`, {
           markTeacher: teacherId,
           markPredmet: urlLink.id,
           markStudent: studentId,
@@ -66,14 +67,14 @@ export const ModalMark = ({
         })
         .then((res) => {
           setOpenSnackbar(true);
-          setSnackBarMessage("Оценка выставлена");
+          setSnackBarMessage(res.data.message);
           setMark();
           setModal(false);
           setStudentFalse(false);
         })
-        .catch(() => {
+        .catch((err) => {
           setOpenSnackbarError(true);
-          setSnackBarMessage("Ошибка");
+          setSnackBarMessage(err.response.data.message);
         });
     } catch (err) {
       console.log(err);

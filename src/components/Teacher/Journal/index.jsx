@@ -29,6 +29,7 @@ export const Journal = ({
   setSnackBarMessage,
   setOpenSnackbar,
   setOpenSnackbarError,
+  currLang,
 }) => {
   const urlLink = useParams();
   const [ktp, setKtp] = useState([]);
@@ -49,7 +50,7 @@ export const Journal = ({
   useEffect(() => {
     axios
       .get(
-        `${url}ktp/period/${urlLink?.classId}/${urlLink?.period}/${urlLink.id}`
+        `${url}ktp/period/${urlLink?.classId}/${urlLink?.period}/${urlLink.id}?lang=${currLang}`
       )
       .then((data) => {
         if (data.data.length > 0) {
@@ -57,16 +58,18 @@ export const Journal = ({
         }
         setKtp(data.data);
       });
-  }, [urlLink]);
+  }, [urlLink, currLang]);
 
   useEffect(() => {
-    axios.get(`${url}students/${urlLink?.classId}`).then((data) => {
-      if (data.data.length > 0) {
-        setStudentValue(true);
-      }
-      setStudent(data.data);
-    });
-  }, [urlLink]);
+    axios
+      .get(`${url}students/${urlLink?.classId}?lang=${currLang}`)
+      .then((data) => {
+        if (data.data.length > 0) {
+          setStudentValue(true);
+        }
+        setStudent(data.data);
+      });
+  }, [urlLink, currLang]);
 
   useEffect(() => {
     if ((studentValue && ktpValue) || markValue) setIsLoading(false);
@@ -194,6 +197,7 @@ export const Journal = ({
                                 setMarkValue={setMarkValue}
                                 isLoading={isLoading}
                                 handleModalMarkDelete={handleModalMarkDelete}
+                                currLang={currLang}
                               />
                               <IconButton
                                 onClick={() =>
@@ -217,6 +221,7 @@ export const Journal = ({
                           studentId={data._id}
                           predmetId={urlLink.id}
                           modal={modal}
+                          currLang={currLang}
                         />
                       </TableRow>
                     </>
@@ -240,6 +245,7 @@ export const Journal = ({
             setSnackBarMessage={setSnackBarMessage}
             setOpenSnackbar={setOpenSnackbar}
             setOpenSnackbarError={setOpenSnackbarError}
+            currLang={currLang}
           />
           <ModalMarkDelete
             handleModalMarkDeleteClose={handleModalMarkDeleteClose}
@@ -251,6 +257,7 @@ export const Journal = ({
             studentId={studentId}
             setSnackBarMessage={setSnackBarMessage}
             setOpenSnackbar={setOpenSnackbar}
+            currLang={currLang}
           />
         </div>
       )}
