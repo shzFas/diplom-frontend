@@ -183,7 +183,7 @@ function App() {
                         />
                       }
                     />
-                    <Route path="predmets" element={<PredmetList t={t} />} />
+                    <Route path="predmets" element={<PredmetList t={t} currLang={currLang} />} />
                     <Route
                       path="predmet/info/:predmetId"
                       element={

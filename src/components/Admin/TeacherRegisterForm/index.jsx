@@ -50,12 +50,12 @@ export const TeacherRegisterForm = ({
             fullName: teacherName,
             permission: checkboxPredmet,
           })
-          .then((data) => {
+          .then(() => {
             setTeacherEmail("");
             setTeacherPassword("");
             setTeacherName("");
             setOpenSnackbar(true);
-            setSnackBarMessage(data.data.message);
+            setSnackBarMessage(t("registered"));
           })
           .catch((err) => {
             setSnackBarMessage(err.response.data[0].msg);
