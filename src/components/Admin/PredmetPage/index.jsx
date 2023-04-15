@@ -19,6 +19,7 @@ export const PredmetPage = ({
   setOpenSnackbar,
   setOpenSnackbarError,
   t,
+  currLang
 }) => {
   const predmetId = useParams();
   const [predmet, setPredmet] = useState([]);
@@ -33,21 +34,21 @@ export const PredmetPage = ({
   const handleModalClassClose = () => setModal(false);
 
   useEffect(() => {
-    axios.get(`${url}classList`).then((data) => {
+    axios.get(`${url}classList?lang=${currLang}`).then((data) => {
       setGetClasses(data.data);
     });
-  }, []);
+  }, [currLang]);
 
   useEffect(() => {
-    axios.get(`${url}predmet/${predmetId.predmetId}`).then((data) => {
+    axios.get(`${url}predmet/${predmetId.predmetId}?lang=${currLang}`).then((data) => {
       setPredmet(data.data);
       setLoading(false);
     });
-  }, [predmetId, modal, classId]);
+  }, [predmetId, modal, classId, currLang]);
 
   useEffect(() => {
     axios
-      .delete(`${url}predmet/${predmetId.predmetId}/${classId}`)
+      .delete(`${url}predmet/${predmetId.predmetId}/${classId}?lang=${currLang}`)
       .then((data) => {
         setSnackBarMessage(data.data.message);
         setClassId("");
@@ -56,7 +57,7 @@ export const PredmetPage = ({
       .catch(() => {
         setClassId("");
       });
-  }, [predmetId, classId]);
+  }, [predmetId, classId, currLang]);
 
   const handleCheckboxChange = (event) => {
     const _id = event.target.id;
@@ -76,12 +77,12 @@ export const PredmetPage = ({
     try {
       if (classes.length > 0) {
         await axios
-          .put(`${url}predmet/${predmetId.predmetId}`, {
+          .put(`${url}predmet/${predmetId.predmetId}?lang=${currLang}`, {
             classes,
           })
           .then((data) => {
             setOpenSnackbar(true);
-            setSnackBarMessage("Классы добавлены");
+            setSnackBarMessage(data.data.message);
             setModal(false);
             if (data.data.message === "Новые классы не добавлены") {
               setOpenSnackbarError(true);
@@ -101,11 +102,11 @@ export const PredmetPage = ({
 
   const handleDeletePredmet = async () => {
     await axios
-      .delete(`${url}delete/predmet/${predmetId.predmetId}`)
-      .then(() => {
+      .delete(`${url}delete/predmet/${predmetId.predmetId}?lang=${currLang}`)
+      .then((data) => {
         setDeletePredmet(true);
         setOpenSnackbarError(true);
-        setSnackBarMessage("Предмет удален");
+        setSnackBarMessage(data.data.message);
       });
   };
 

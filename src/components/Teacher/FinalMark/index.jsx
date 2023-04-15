@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { url } from "../../../url";
 
-export const FinalMark = ({ studentId, predmetId, modal }) => {
+export const FinalMark = ({ studentId, predmetId, modal, currLang }) => {
   const urlLink = useParams();
   const location = useLocation();
   const [markLesson, setMarkLesson] = useState([]);
@@ -16,19 +16,21 @@ export const FinalMark = ({ studentId, predmetId, modal }) => {
   useEffect(() => {
     axios
       .get(
-        `${url}marks/final/${studentId}/${predmetId}/default/${urlLink?.period}`
+        `${url}marks/final/${studentId}/${predmetId}/default/${urlLink?.period}?lang=${currLang}`
       )
       .then((data) => {
         setMarkLesson(data.data);
       });
     axios
-      .get(`${url}marks/final/${studentId}/${predmetId}/sor/${urlLink?.period}`)
+      .get(
+        `${url}marks/final/${studentId}/${predmetId}/sor/${urlLink?.period}?lang=${currLang}`
+      )
       .then((data) => {
         setMarkSor(data.data);
       });
     axios
       .get(
-        `${url}marks/final/${studentId}/${predmetId}/soch/${urlLink?.period}`
+        `${url}marks/final/${studentId}/${predmetId}/soch/${urlLink?.period}?lang=${currLang}`
       )
       .then((data) => {
         setMarkSoch(data.data);
@@ -91,4 +93,4 @@ export const FinalMark = ({ studentId, predmetId, modal }) => {
       )}
     </>
   );
-}
+};

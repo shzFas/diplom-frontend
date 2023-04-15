@@ -13,6 +13,7 @@ export const StudentProfile = ({
   setOpenSnackbar,
   setOpenSnackbarError,
   t,
+  currLang,
 }) => {
   const urlLink = useParams();
   const [studentInfo, setStudentInfo] = useState([]);
@@ -31,41 +32,47 @@ export const StudentProfile = ({
   const handleModalKickClose = () => setModalKick(false);
 
   useEffect(() => {
-    axios.get(`${url}classList`).then((data) => {
+    axios.get(`${url}classList?lang=${currLang}`).then((data) => {
       setClasses(data.data);
     });
-  }, []);
+  }, [currLang]);
 
   useEffect(() => {
-    axios.get(`${url}student/${urlLink.studentId}`).then((data) => {
-      setStudentInfo(data.data);
-    });
-  }, [urlLink]);
+    axios
+      .get(`${url}student/${urlLink.studentId}?lang=${currLang}`)
+      .then((data) => {
+        setStudentInfo(data.data);
+      });
+  }, [urlLink, currLang]);
 
   useEffect(() => {
-    axios.get(`${url}classList/${studentInfo.classId}`).then((data) => {
-      setClassName(data.data);
-    });
-  }, [studentInfo.classId]);
+    axios
+      .get(`${url}classList/${studentInfo.classId}?lang=${currLang}`)
+      .then((data) => {
+        setClassName(data.data);
+      });
+  }, [studentInfo.classId, currLang]);
 
   const handleKickStudent = () => {
-    axios.delete(`${url}student/${urlLink.studentId}`).then(() => {
-      setKickStudent(true);
-      setOpenSnackbarError(true);
-      setSnackBarMessage("Студент отчислен");
-    });
+    axios
+      .delete(`${url}student/${urlLink.studentId}?lang=${currLang}`)
+      .then((data) => {
+        setKickStudent(true);
+        setOpenSnackbarError(true);
+        setSnackBarMessage(data.data.message);
+      });
   };
 
   const handleSubmitClass = (event) => {
     event.preventDefault();
     axios
-      .put(`${url}student/changeClass/${urlLink.studentId}`, {
+      .put(`${url}student/changeClass/${urlLink.studentId}?lang=${currLang}`, {
         classId: checkboxClasses,
       })
-      .then(() => {
+      .then((data) => {
         setChangeClassStudent(true);
         setOpenSnackbar(true);
-        setSnackBarMessage("Класс студента изменен");
+        setSnackBarMessage(data.data.message);
       });
   };
 

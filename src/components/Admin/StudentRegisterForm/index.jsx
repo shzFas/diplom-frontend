@@ -9,6 +9,7 @@ export const StudentRegisterForm = ({
   setSnackBarMessage,
   setOpenSnackbar,
   setOpenSnackbarError,
+  currLang
 }) => {
   const [classes, setClasses] = useState([]);
   const [checkboxClasses, setCheckboxClasses] = useState("");
@@ -17,28 +18,28 @@ export const StudentRegisterForm = ({
   const [studentName, setStudentName] = useState("");
 
   useEffect(() => {
-    axios.get(`${url}classList`).then((data) => {
+    axios.get(`${url}classList?lang=${currLang}`).then((data) => {
       setClasses(data.data);
     });
-  }, []);
+  }, [currLang]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       if (checkboxClasses.length > 0) {
         await axios
-          .post(`${url}auth/registerStudent`, {
+          .post(`${url}auth/registerStudent?lang=${currLang}`, {
             email: studentEmail,
             password: studentPassword,
             fullName: studentName,
             classId: checkboxClasses,
           })
-          .then(() => {
+          .then((data) => {
             setStudentEmail("");
             setStudentPassword("");
             setStudentName("");
             setOpenSnackbar(true);
-            setSnackBarMessage("Ученик зарегистрирован");
+            setSnackBarMessage(data.data.message);
           })
           .catch((err) => {
             setSnackBarMessage(err.response.data[0].msg);

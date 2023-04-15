@@ -9,6 +9,7 @@ export const TeacherRegisterForm = ({
   setSnackBarMessage,
   setOpenSnackbar,
   setOpenSnackbarError,
+  currLang
 }) => {
   const [predmet, setPredmet] = useState([]);
   const [checkboxPredmet, setCheckboxPredmet] = useState([]);
@@ -17,10 +18,10 @@ export const TeacherRegisterForm = ({
   const [teacherName, setTeacherName] = useState("");
 
   useEffect(() => {
-    axios.get(`${url}predmet`).then((data) => {
+    axios.get(`${url}predmet?lang=${currLang}`).then((data) => {
       setPredmet(data.data);
     });
-  }, []);
+  }, [currLang]);
 
   const handleCheckboxChange = (event) => {
     const _id = event.target.id;
@@ -43,18 +44,18 @@ export const TeacherRegisterForm = ({
     try {
       if (checkboxPredmet.length > 0) {
         await axios
-          .post(`${url}auth/register`, {
+          .post(`${url}auth/register?lang=${currLang}`, {
             email: teacherEmail,
             password: teacherPassword,
             fullName: teacherName,
             permission: checkboxPredmet,
           })
-          .then(() => {
+          .then((data) => {
             setTeacherEmail("");
             setTeacherPassword("");
             setTeacherName("");
             setOpenSnackbar(true);
-            setSnackBarMessage("Учитель зарегистрирован");
+            setSnackBarMessage(data.data.message);
           })
           .catch((err) => {
             setSnackBarMessage(err.response.data[0].msg);

@@ -4,29 +4,29 @@ import axios from '../../axios';
 /* Преподаватель, Админка */
 
 export const fetchAuth = createAsyncThunk('auth/fetchAuth', async (params) => {
-  const { data } = await axios.post('/auth/login', params);
+  const { data } = await axios.post('/auth/login?lang=ru', params);
   return data;
 });
 
 export const fetchRegister = createAsyncThunk('auth/fetchRegister', async (params) => {
-  const { data } = await axios.post('/auth/register', params);
+  const { data } = await axios.post('/auth/register?lang=ru', params);
   return data;
 });
 
 export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
-  const { data } = await axios.get('/auth/me');
+  const { data } = await axios.get('/auth/me?lang=ru');
   return data;
 });
 
 /* Ученик */
 
 export const fetchAuthStudent = createAsyncThunk('authStudent/fetchAuthStudent', async (params) => {
-  const { data } = await axios.post('/auth/loginStudent', params);
+  const { data } = await axios.post('/auth/loginStudent?lang=ru', params);
   return data;
 });
 
 export const fetchAuthStudentMe = createAsyncThunk('authStudent/fetchAuthStudentMe', async () => {
-  const { data } = await axios.get('/auth/student/me');
+  const { data } = await axios.get('/auth/student/me?lang=ru');
   return data;
 });
 

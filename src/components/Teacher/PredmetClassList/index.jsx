@@ -11,15 +11,15 @@ import { Link, useParams } from "react-router-dom";
 import styles from "./PredmetClassList.module.scss";
 import { url } from "../../../url";
 
-export const PredmetClassList = ({ t }) => {
+export const PredmetClassList = ({ t, currLang }) => {
   const idPredmet = useParams();
   const [predmetClass, setPredmetClass] = useState([]);
 
   useEffect(() => {
-    axios.get(`${url}predmet/${idPredmet.id}`).then((data) => {
+    axios.get(`${url}predmet/${idPredmet.id}?lang=${currLang}`).then((data) => {
       setPredmetClass(data.data.classes);
     });
-  }, [idPredmet]);
+  }, [idPredmet, currLang]);
 
   return (
     <>

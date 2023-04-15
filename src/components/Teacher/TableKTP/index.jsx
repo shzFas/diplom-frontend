@@ -19,6 +19,7 @@ export const TableKTP = ({
   setOpenSnackbarError,
   openSnackbar,
   openSnackbarError,
+  currLang
 }) => {
   const urlLinkPeriod = useParams();
   const [ktp, setKtp] = useState([]);
@@ -26,12 +27,12 @@ export const TableKTP = ({
   useEffect(() => {
     axios
       .get(
-        `${url}ktp/period/${urlLink.classId}/${urlLinkPeriod.period}/${urlLink.predmetId}/`
+        `${url}ktp/period/${urlLink.classId}/${urlLinkPeriod.period}/${urlLink.predmetId}?lang=${currLang}`
       )
       .then((data) => {
         setKtp(data.data);
       });
-  }, [urlLink, openSnackbar, openSnackbarError, urlLinkPeriod]);
+  }, [urlLink, openSnackbar, openSnackbarError, urlLinkPeriod, currLang]);
 
   function sortByDate(a, b) {
     return new Date(a.ktpDate).valueOf() - new Date(b.ktpDate).valueOf();
@@ -44,9 +45,9 @@ export const TableKTP = ({
   };
 
   const handlerDelete = (ktpId) => {
-    axios.delete(`${url}ktp/${ktpId}`).then(() => {
+    axios.delete(`${url}ktp/${ktpId}?lang=${currLang}`).then((res) => {
       setOpenSnackbarError(true);
-      setSnackBarMessage("КТП и все оценки за этот урок удалены");
+      setSnackBarMessage(res.data.message);
     });
   };
 

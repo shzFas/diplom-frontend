@@ -22,6 +22,7 @@ export const TeacherProfile = ({
   openSnackbar,
   openSnackbarError,
   t,
+  currLang
 }) => {
   const urlLink = useParams();
   const [teacher, setTeacher] = useState([]);
@@ -41,21 +42,21 @@ export const TeacherProfile = ({
   const handleModalKickClose = () => setModalKick(false);
 
   useEffect(() => {
-    axios.get(`${url}teacher/${urlLink.teacherId}`).then((data) => {
+    axios.get(`${url}teacher/${urlLink.teacherId}?lang=${currLang}`).then((data) => {
       setTeacher(data.data);
       setIsLoading(true);
     });
-  }, [urlLink, openSnackbar, openSnackbarError]);
+  }, [urlLink, openSnackbar, openSnackbarError, currLang]);
 
   useEffect(() => {
-    axios.get(`${url}predmet`).then((data) => {
+    axios.get(`${url}predmet?lang=${currLang}`).then((data) => {
       setPredmet(data.data);
     });
-  }, []);
+  }, [currLang]);
 
   useEffect(() => {
     axios
-      .delete(`${url}teacher/${urlLink.teacherId}/${permissionId}`)
+      .delete(`${url}teacher/${urlLink.teacherId}/${permissionId}?lang=${currLang}`)
       .then((data) => {
         setSnackBarMessage(data.data.message);
         setPermissionId("");
@@ -64,7 +65,7 @@ export const TeacherProfile = ({
       .catch(() => {
         setPermissionId("");
       });
-  }, [urlLink, permissionId]);
+  }, [urlLink, permissionId, currLang]);
 
   const handleCheckboxChange = (event) => {
     const _id = event.target.id;
@@ -86,12 +87,12 @@ export const TeacherProfile = ({
     event.preventDefault();
     try {
       await axios
-        .put(`${url}teacher/${urlLink.teacherId}`, {
+        .put(`${url}teacher/${urlLink.teacherId}?lang=${currLang}`, {
           permission: checkboxPredmet,
         })
-        .then(() => {
+        .then((data) => {
           setOpenSnackbar(true);
-          setSnackBarMessage("Предметы добавлены");
+          setSnackBarMessage(data.data.message);
           handleModalChangePermissionClose();
           setCheckboxPredmet([]);
         });
@@ -99,10 +100,10 @@ export const TeacherProfile = ({
   };
 
   const handleKickTeacher = () => {
-    axios.delete(`${url}delete/teacher/${urlLink.teacherId}`).then(() => {
+    axios.delete(`${url}delete/teacher/${urlLink.teacherId}?lang=${currLang}`).then((data) => {
       setKickTeacher(true);
       setOpenSnackbarError(true);
-      setSnackBarMessage("Преподаватель уволен");
+      setSnackBarMessage(data.data.message);
     });
   };
 

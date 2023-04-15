@@ -6,7 +6,7 @@ import emptyMark from "../../../assets/emptyMark.svg";
 import styles from "./ScoreBoard.module.scss";
 import { FinalMark, Mark } from "../index";
 
-export const ScoreBoard = ({ userData, t }) => {
+export const ScoreBoard = ({ userData, t, currLang }) => {
   const urlLink = useParams();
   const [mark, setMark] = useState([]);
   const [empty, setEmpty] = useState(false);
@@ -14,7 +14,7 @@ export const ScoreBoard = ({ userData, t }) => {
   useEffect(() => {
     axios
       .get(
-        `${url}marks/all/${userData._id}/${urlLink.predmetId}/${urlLink.period}`
+        `${url}marks/all/${userData._id}/${urlLink.predmetId}/${urlLink.period}?lang=${currLang}}`
       )
       .then((data) => {
         if (data.data.length > 0) {
@@ -24,7 +24,7 @@ export const ScoreBoard = ({ userData, t }) => {
           setEmpty(false);
         }
       });
-  }, [userData, urlLink]);
+  }, [userData, urlLink, currLang]);
 
   return (
     <div>
