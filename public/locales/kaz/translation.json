@@ -62,5 +62,6 @@
     "addStudent": "Қосыңыз студенттің",
     "predmetName": "Пәннің атауы",
     "teacherNameSurname": "Оқытушының Аты-Жөні",
-    "studentNameSurname": "Студенттің Аты-Жөні"
+    "studentNameSurname": "Студенттің Аты-Жөні",
+    "registered": "Тіркеу сәтті аяқталды"
 }

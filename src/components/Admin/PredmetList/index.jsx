@@ -11,14 +11,14 @@ import { Link } from "react-router-dom";
 import { url } from "../../../url";
 import styles from "./PredmetList.module.scss";
 
-export const PredmetList = ({ t }) => {
+export const PredmetList = ({ t, currLang }) => {
   const [predmetList, setPredmetList] = useState([]);
 
   useEffect(() => {
-    axios.get(`${url}predmet`).then((data) => {
+    axios.get(`${url}predmet?lang=${currLang}`).then((data) => {
       setPredmetList(data.data);
     });
-  }, []);
+  }, [currLang]);
 
   return (
     <div>

@@ -34,12 +34,12 @@ export const StudentRegisterForm = ({
             fullName: studentName,
             classId: checkboxClasses,
           })
-          .then((data) => {
+          .then(() => {
             setStudentEmail("");
             setStudentPassword("");
             setStudentName("");
             setOpenSnackbar(true);
-            setSnackBarMessage(data.data.message);
+            setSnackBarMessage(t("registered"));
           })
           .catch((err) => {
             setSnackBarMessage(err.response.data[0].msg);

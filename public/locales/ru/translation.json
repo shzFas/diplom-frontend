@@ -62,5 +62,6 @@
     "addStudent": "Добавьте студента",
     "predmetName": "Название предмета",
     "teacherNameSurname": "Фамилия Имя Преподавателя",
-    "studentNameSurname": "Фамилия Имя Студента"
+    "studentNameSurname": "Фамилия Имя Студента",
+    "registered": "Зарегистрирован"
 }
