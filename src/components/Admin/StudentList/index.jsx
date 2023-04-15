@@ -11,22 +11,22 @@ import { Link, useParams } from "react-router-dom";
 import { url } from "../../../url";
 import styles from "./StudentList.module.scss";
 
-export const StudentList = ({ t }) => {
+export const StudentList = ({ t, currLang }) => {
   const urlLink = useParams();
   const [students, setStudents] = useState([]);
   const [className, setClassName] = useState("");
 
   useEffect(() => {
-    axios.get(`${url}students/${urlLink.classId}`).then((data) => {
+    axios.get(`${url}students/${urlLink.classId}?lang=${currLang}`).then((data) => {
       setStudents(data.data);
     });
-  }, [urlLink]);
+  }, [urlLink, currLang]);
 
   useEffect(() => {
-    axios.get(`${url}classList/${urlLink.classId}`).then((data) => {
+    axios.get(`${url}classList/${urlLink.classId}?lang=${currLang}`).then((data) => {
       setClassName(data.data.className);
     });
-  }, [urlLink]);
+  }, [urlLink, currLang]);
 
   function sortByName(a, b) {
     if (a.fullName > b.fullName) {

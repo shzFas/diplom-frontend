@@ -102,7 +102,7 @@ function App() {
                     />
                     <Route
                       path="student/:classId"
-                      element={<StudentList t={t} />}
+                      element={<StudentList currLang={currLang} t={t} />}
                     />
                     <Route
                       path="teacher"
