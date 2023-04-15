@@ -19,7 +19,7 @@ export const ModalMarkDelete = ({
   const handleDelete = (e) => {
     e.preventDefault();
     try {
-      axios.delete(`${url}marks/${studentId}/${ktpId}?lang=${currLang}}`).then((res) => {
+      axios.delete(`${url}marks/${studentId}/${ktpId}?lang=${currLang}`).then((res) => {
         setOpenSnackbar(true);
         setSnackBarMessage(res.data.message);
         handleModalMarkDeleteClose();
