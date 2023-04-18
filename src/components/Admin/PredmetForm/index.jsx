@@ -39,7 +39,7 @@ export const PredmetForm = ({
     try {
       if (classes.length > 0) {
         await axios
-          .post(`${url}predmet?lang=${currLang}`, {
+          .post(`${url}subject?lang=${currLang}`, {
             predmetName,
             classes,
           })
