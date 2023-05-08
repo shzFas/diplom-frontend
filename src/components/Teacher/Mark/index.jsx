@@ -12,7 +12,8 @@ export const Mark = ({
   isLoading,
   modalDelete,
   handleModalMarkDelete,
-  currLang
+  currLang,
+  chat_id
 }) => {
   const [mark, setMark] = useState([]);
   const location = useLocation();
@@ -68,7 +69,7 @@ export const Mark = ({
                     className="styleMarkDefault"
                     style={markColor(data?.markValue)}
                     key={data._id}
-                    onClick={() => handleModalMarkDelete(studentId, ktpId)}
+                    onClick={() => handleModalMarkDelete(studentId, ktpId, chat_id)}
                   >
                     {validationMark(data?.markValue)}
                   </span>
