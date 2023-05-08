@@ -63,5 +63,9 @@
     "predmetName": "Название предмета",
     "teacherNameSurname": "Фамилия Имя Преподавателя",
     "studentNameSurname": "Фамилия Имя Студента",
-    "registered": "Зарегистрирован"
+    "registered": "Зарегистрирован",
+    "telegramTitle": "Уведомления на Telegram",
+    "telegramDescription": "Напишите нашему боту команду /start чтобы привязать телеграмм для уведомлений",
+    "telegramNick": "Ваш ник в Telegram(без @)",
+    "telegramNickSet": "Привязать Telegram"
 }

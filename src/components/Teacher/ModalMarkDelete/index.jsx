@@ -4,6 +4,7 @@ import { styleModal } from "./stylemodal";
 import styles from "./ModalMarkDelete.module.scss";
 import axios from "axios";
 import { url } from "../../../url";
+import { textDeleteTelegram } from "../../../telegram";
 
 export const ModalMarkDelete = ({
   handleModalMarkDeleteClose,
@@ -13,17 +14,27 @@ export const ModalMarkDelete = ({
   studentId,
   setSnackBarMessage,
   setOpenSnackbar,
-  currLang
+  currLang,
+  studentChatId,
+  subjectName
 }) => {
 
   const handleDelete = (e) => {
     e.preventDefault();
     try {
-      axios.delete(`${url}marks/${studentId}/${ktpId}?lang=${currLang}`).then((res) => {
-        setOpenSnackbar(true);
-        setSnackBarMessage(res.data.message);
-        handleModalMarkDeleteClose();
-      });
+      if (studentChatId && studentChatId.trim() !== '') {
+        axios.delete(`${url}marks/${studentId}/${ktpId}/${studentChatId}/${textDeleteTelegram(subjectName)}?lang=${currLang}`).then((res) => {
+          setOpenSnackbar(true);
+          setSnackBarMessage(res.data.message);
+          handleModalMarkDeleteClose();
+        });
+      } else {
+        axios.delete(`${url}marks/${studentId}/${ktpId}?lang=${currLang}`).then((res) => {
+          setOpenSnackbar(true);
+          setSnackBarMessage(res.data.message);
+          handleModalMarkDeleteClose();
+        });
+      }
     } catch (err) {}
   };
 

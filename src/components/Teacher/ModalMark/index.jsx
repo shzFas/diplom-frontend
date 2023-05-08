@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { styleModal } from "./stylemodal";
 import { url } from "../../../url";
 import styles from "./ModalMark.module.scss";
+import { textTelegram } from "../../../telegram";
 
 export const ModalMark = ({
   handleModalMarkClose,
@@ -16,6 +17,8 @@ export const ModalMark = ({
   ktpId,
   typeLesson,
   studentId,
+  studentChatId,
+  subjectName,
   teacherId,
   setSnackBarMessage,
   setOpenSnackbar,
@@ -52,8 +55,9 @@ export const ModalMark = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      axios
-        .post(`${url}marks?lang=${currLang}`, {
+      if (studentChatId && studentChatId.trim() !== '') {
+        axios
+        .post(`${url}marks/${studentChatId}/${textTelegram(subjectName, mark, typeLesson)}?lang=${currLang}`, {
           markTeacher: teacherId,
           markPredmet: urlLink.id,
           markStudent: studentId,
@@ -76,6 +80,32 @@ export const ModalMark = ({
           setOpenSnackbarError(true);
           setSnackBarMessage(err.response.data.message);
         });
+      } else {
+        axios
+        .post(`${url}marks`, {
+          markTeacher: teacherId,
+          markPredmet: urlLink.id,
+          markStudent: studentId,
+          markClassStudent: urlLink.classId,
+          markDate: ktpId,
+          markFalse: studentFalse,
+          markMaxValue: maxMarkValue,
+          markValue: mark,
+          markSochSor: typeLesson,
+          markPeriod: urlLink.period,
+        })
+        .then((res) => {
+          setOpenSnackbar(true);
+          setSnackBarMessage(res.data.message);
+          setMark();
+          setModal(false);
+          setStudentFalse(false);
+        })
+        .catch((err) => {
+          setOpenSnackbarError(true);
+          setSnackBarMessage(err.response.data.message);
+        });
+      }
     } catch (err) {
       console.log(err);
     }

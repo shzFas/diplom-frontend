@@ -63,5 +63,9 @@
     "predmetName": "Пәннің атауы",
     "teacherNameSurname": "Оқытушының Аты-Жөні",
     "studentNameSurname": "Студенттің Аты-Жөні",
-    "registered": "Тіркеу сәтті аяқталды"
+    "registered": "Тіркеу сәтті аяқталды",
+    "telegramTitle": "Уведомления на Telegram",
+    "telegramDescription": "Напишите нашему боту команду /start чтобы привязать телеграмм для уведомлений",
+    "telegramNick": "Ваш ник в Telegram(без @)",
+    "telegramNickSet": "Привязать Telegram"
 }

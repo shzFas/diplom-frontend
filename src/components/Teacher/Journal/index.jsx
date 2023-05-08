@@ -44,8 +44,14 @@ export const Journal = ({
   const [maxMarkValue, setMaxMarkValue] = useState(Number);
   const [typeLesson, setTypeLesson] = useState("");
   const [ktpId, setKtpId] = useState("");
+  const [subjectName, setSubjectName] = useState("");
   const [teacherId, setTeacherId] = useState("");
   const [studentId, setStudentId] = useState("");
+  const [studentChatId, setStudentChatId] = useState("");
+
+  useEffect(() => {
+    axios.get(`${url}predmet/${urlLink.id}`).then((data) => {setSubjectName(data.data.predmetName)})
+  }, [urlLink])
 
   useEffect(() => {
     axios
@@ -81,7 +87,8 @@ export const Journal = ({
     ktpId,
     typeLesson,
     teacherId,
-    studentId
+    studentId,
+    chatId
   ) => {
     setStudentName(fullnameStudent);
     setMaxMarkValue(maxKtpValue);
@@ -89,6 +96,7 @@ export const Journal = ({
     setTypeLesson(typeLesson);
     setTeacherId(teacherId);
     setStudentId(studentId);
+    setStudentChatId(chatId);
     setModal(true);
   };
 
@@ -99,17 +107,20 @@ export const Journal = ({
     setTypeLesson("");
     setTeacherId("");
     setStudentId("");
+    setStudentChatId("");
     setModal(false);
   };
 
-  const handleModalMarkDelete = (studentId, ktpId) => {
+  const handleModalMarkDelete = (studentId, ktpId, chat_id) => {
     setStudentId(studentId);
     setKtpId(ktpId);
+    setStudentChatId(chat_id)
     setModalDelete(true);
   };
   const handleModalMarkDeleteClose = () => {
     setStudentId("");
     setKtpId("");
+    setStudentChatId("")
     setModalDelete(false);
   };
 
@@ -198,6 +209,7 @@ export const Journal = ({
                                 isLoading={isLoading}
                                 handleModalMarkDelete={handleModalMarkDelete}
                                 currLang={currLang}
+                                chat_id={data.telegram_id}
                               />
                               <IconButton
                                 onClick={() =>
@@ -207,7 +219,8 @@ export const Journal = ({
                                     mark._id,
                                     mark.ktpSorSoch,
                                     userData._id,
-                                    data._id
+                                    data._id,
+                                    data.telegram_id
                                   )
                                 }
                                 color="success"
@@ -242,6 +255,8 @@ export const Journal = ({
             ktpId={ktpId}
             teacherId={teacherId}
             studentId={studentId}
+            studentChatId={studentChatId}
+            subjectName={subjectName}
             setSnackBarMessage={setSnackBarMessage}
             setOpenSnackbar={setOpenSnackbar}
             setOpenSnackbarError={setOpenSnackbarError}
@@ -255,6 +270,8 @@ export const Journal = ({
             t={t}
             ktpId={ktpId}
             studentId={studentId}
+            studentChatId={studentChatId}
+            subjectName={subjectName}
             setSnackBarMessage={setSnackBarMessage}
             setOpenSnackbar={setOpenSnackbar}
             currLang={currLang}
